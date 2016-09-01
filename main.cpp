@@ -33,8 +33,19 @@ int main(int argc, char *argv[]) {
     //gameLoop()
 
     //drawRect
-    SDL_Renderer* renderer = NULL;
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+    SDL_Rect r;
+    r.x = 50;
+    r.y = 50;
+    r.w = 50;
+    r.h = 50;
+    
+    SDL_SetRenderDrawColor( renderer, 0, 0, 255, 255 );
+    SDL_RenderFillRect( renderer, &r );
+    
+    SDL_RenderPresent(renderer);
+    
 
     SDL_Delay(3000); // Pause execution for 3000 milliseconds, for example
 
