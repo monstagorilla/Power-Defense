@@ -1,6 +1,7 @@
 #pragma once
 
 #include "util.h"
+#include "Sprite.h"
 
 class GameObject{
 public:

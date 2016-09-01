@@ -12,4 +12,4 @@ class Sprite{
 	Point pos; 
 	float rotation;
 	float scale;
-}
+};
