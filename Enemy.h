@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "GameObject.h"
 #include "util.h"
 
 class Enemy : GameObject {
@@ -9,10 +10,12 @@ public:
     Enemy();
     virtual ~Enemy();
 
+    virtual void update();
+
 private:
     int maxHealth;
     int Health;
     float speed;
     std::vector<Point> path;
-    std::vector<T>::size_type pathIndex;
-}
+    std::vector<Point>::size_type pathIndex;
+};
