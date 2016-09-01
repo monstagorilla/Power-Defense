@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "GameObject.h"
+#include "Tower.h"
 #include "util.h"
 
 class Enemy : GameObject {
@@ -11,10 +12,11 @@ public:
     virtual ~Enemy();
 
     virtual void update();
+    void hit(Tower& source, int damage);
 
 private:
     int maxHealth;
-    int Health;
+    int health;
     float speed;
     std::vector<Point> path;
     std::vector<Point>::size_type pathIndex;

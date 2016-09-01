@@ -10,3 +10,7 @@ void Enemy::update(){
     }
     pos.moveTowards(path[pathIndex], speed);
 }
+
+void Enemy::hit(Tower& source, int damage){
+    health -= damage;
+}
