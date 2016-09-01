@@ -14,5 +14,5 @@ private:
     int Health;
     float speed;
     std::vector<Point> path;
-    int pathIndex;
+    std::vector<T>::size_type pathIndex;
 }
