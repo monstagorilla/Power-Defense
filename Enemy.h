@@ -7,7 +7,7 @@
 #include "util.h"
 #include "Point.h"
 
-class Enemy : public virtual GameObject {
+class Enemy : public GameObject {
 public:
     Enemy(std::vector<Point> path, int health, float speed);
     virtual ~Enemy();
