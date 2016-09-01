@@ -1,6 +1,6 @@
 #pragma once
 
-#include "util.h"
+#include "Point.h"
 
 class Sprite{
 	public:
