@@ -7,10 +7,10 @@ class Tower: GameObject{
 	virtual ~Tower();
 
 	virtual void update();
-	virtual void shoot():
+	virtual void shoot();
 		
 	float rotation;
 	float cooldown;
 	float range;
 	int price;
-}
+};
