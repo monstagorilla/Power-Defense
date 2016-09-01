@@ -52,8 +52,8 @@ int main(int argc, char *argv[]) {
 	//Test Sprite
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	Sprite testSprite = Sprite(renderer);
-	testSprite.
-
+	testSprite.loadImage("assets/TowerBase.png");
+	testSprite.draw();
 
     SDL_Delay(3000); // Pause execution for 3000 milliseconds, for example
 

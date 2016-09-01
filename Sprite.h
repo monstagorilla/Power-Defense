@@ -13,11 +13,11 @@ using namespace std;
 class Sprite{
 	public:
 	Sprite();
-	Sprite(const SDL_Renderer* renderer)
-	virtual ~Sprite(const string path);
+	Sprite(SDL_Renderer* renderer);
+	virtual ~Sprite();
 	
 	virtual void draw();
-	virtual void loadImage(const string path);
+	virtual void loadImage(const char* path);
 	
 	SDL_Texture* image;
 	SDL_Renderer* renderer; 
