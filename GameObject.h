@@ -1,8 +1,8 @@
 #pragma once
 
 struct Point{
-    int xPos;
-    int yPos;
+    int x;
+    int y;
 };
 
 class GameObject{
