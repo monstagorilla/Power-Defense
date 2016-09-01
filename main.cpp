@@ -1,6 +1,7 @@
 #include <SDL2/SDL.h>
 
 #include "GameObject.h"
+#include "Sprite.h"
 #include "config.h"
 
 void initGame() {
@@ -33,6 +34,7 @@ int main(int argc, char *argv[]) {
     //gameLoop()
 
     //drawRect
+	/*
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     SDL_Rect r;
@@ -45,7 +47,13 @@ int main(int argc, char *argv[]) {
     SDL_RenderFillRect( renderer, &r );
     
     SDL_RenderPresent(renderer);
-    
+    */
+	
+	//Test Sprite
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	Sprite testSprite = Sprite(renderer);
+	testSprite.
+
 
     SDL_Delay(3000); // Pause execution for 3000 milliseconds, for example
 
