@@ -1,10 +1,10 @@
 #include "GameObject.h"
  
-class Tower: GameObject{
+class Tower: public GameObject{
 	public:
 
 	Tower();
-	virtual ~Tower();
+	~Tower();
 
 	virtual void update();
 	virtual void shoot();

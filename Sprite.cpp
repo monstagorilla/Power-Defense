@@ -26,8 +26,8 @@ void Sprite::draw(){
 }
 
 void Sprite::loadImage(const char* path){
-SDL_Texture* texture = NULL;
-texture = IMG_LoadTexture( renderer, path );
+    SDL_Texture* texture = NULL;
+    texture = IMG_LoadTexture( renderer, path );
     if ( texture == NULL )
     {
         std::cout << "Failed to load texture " << path << " error : " << SDL_GetError() << std::endl;

@@ -5,8 +5,6 @@
 
 class GameObject{
 public:
-    GameObject();
-    virtual ~GameObject();
 
     virtual void update() = 0;
 

@@ -1,9 +1,9 @@
 CXX=clang++
 CXXFLAGS=-O2
-LIBS=-lSDL2
+LIBS=-lSDL2 -lSDL2_image
 
-PowerDefense: main.cpp Enemy.o Sprite.o Tower.o
-	$(CXX) $(CXXFLAGS) $(LIBS) -o $@ $<
+PowerDefense: main.cpp Sprite.o Tower.o
+	$(CXX) $(CXXFLAGS) $(LIBS) -o $@ $+
 
 Enemy.o: Enemy.cpp Enemy.h
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
