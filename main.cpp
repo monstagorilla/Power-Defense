@@ -1,6 +1,7 @@
+#include <SDL2/SDL.h>
+
 #include "GameObject.h"
 #include "config.h"
-#include "SDL.h"
 
 void initGame(){
 	std::vector<GameObject> gameObjects;  
