@@ -1,4 +1,4 @@
-CXX=g++
+CXX=clang++
 CXXFLAGS=-lSDL2
 
 PowerDefense: main.cpp
