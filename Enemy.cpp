@@ -1,7 +1,14 @@
 #include "Enemy.h"
 #include "util.h"
-Enemy::Enemy(){
-    // TODO: implement this
+#include "Point.h"
+
+Enemy::Enemy(std::vector<Point> path, int health, float speed){
+    this->path 	    = path;
+    this->pos        = path[0];
+    this->pathIndex  = 1;
+    this->health     = health;
+    this->maxHealth  = health;
+    this->speed      = speed;
 }
 
 void Enemy::update(){

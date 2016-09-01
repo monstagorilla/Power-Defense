@@ -5,10 +5,11 @@
 #include "GameObject.h"
 #include "Tower.h"
 #include "util.h"
+#include "Point.h"
 
-class Enemy : GameObject {
+class Enemy : public virtual GameObject {
 public:
-    Enemy();
+    Enemy(std::vector<Point> path, int health, float speed);
     virtual ~Enemy();
 
     virtual void update();
