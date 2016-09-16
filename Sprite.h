@@ -17,11 +17,14 @@ class Sprite{
 	virtual ~Sprite();
 	
 	virtual void draw();
-	virtual void loadImage(const char* path);
+	virtual void loadImage(string path);
 	
-	SDL_Texture* image;
+	SDL_Texture* texture;
 	SDL_Renderer* renderer; 
-	Point pos; 
+	Point pos;
+	int width;
+	int height;
+
 	float rotation;
 	float scale;
 };
