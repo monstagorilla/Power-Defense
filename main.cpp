@@ -16,8 +16,8 @@ void gameLoop() {
 }
 
 SDL_Window& createWindow() {
-    SDL_Window *window = SDL_CreateWindow("POWERDEFENSE", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
     SDL_Init(SDL_INIT_VIDEO);
+    SDL_Window *window = SDL_CreateWindow("POWERDEFENSE", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
 
     // Check that the window was successfully created
     if (window == NULL) {
