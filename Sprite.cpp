@@ -11,15 +11,16 @@ Sprite::Sprite(){
 	texture = NULL;
 }
 
-Sprite::Sprite(SDL_Renderer *renderer){
-	pos.x = 0;
-	pos.y = 0;
-    width = 0;
-    height = 0;
+Sprite::Sprite(const int x, const int y, const int width, const int height,  const string path, SDL_Renderer *renderer){
+	this->pos.x = x;
+    this->pos.y = y;
+    this->width = width;
+    this->height = height;
 	rotation = 0;
 	scale = 0;
-	texture = 0;
-	this->renderer = renderer;
+    texture = NULL;
+    this->renderer = renderer;
+    loadImage(path);
 }
 
 Sprite::~Sprite(){
@@ -45,7 +46,7 @@ void Sprite::loadImage(const string path){
     }
 
     SDL_Texture *texture = NULL;
-    texture = SDL_CreateTextureFromSurface(renderer, surface);
+    texture = SDL_CreateTextureFromSurface(this->renderer, surface);
     if ( texture == NULL )
     {
         std::cout << "Failed to load texture "  << " error : " << SDL_GetError() << std::endl;
