@@ -1,13 +1,17 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <string>
 #include <unistd.h>
 #include <time.h>
 
 #include "GameObject.h"
 #include "config.h"
+#include "colors.h"
+#include "TextOutput.h"
 
 int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
     SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
     *window = SDL_CreateWindow("PowerDefense", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
     if (*window == NULL) {
         cout << "Could not create window: " << SDL_GetError() << endl;
@@ -66,7 +70,8 @@ void gameLoop(SDL_Renderer *renderer) {
             }
         }
         SDL_RenderPresent(renderer);
-        
+        cout<<"test"<<endl;
+
         time(&t1);
         if (t1 - t0 < 1000000 / FRAMES_PER_SECOND) {
             usleep(1000000 / FRAMES_PER_SECOND - (t1 - t0));
@@ -82,8 +87,10 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    gameLoop(renderer);
+    SDL_RenderPresent(renderer);
 
+    gameLoop(renderer);
+    usleep(10000000);
     SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;
