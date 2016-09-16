@@ -1,56 +1,32 @@
 #include <SDL2/SDL.h>
 #include <string>
+#include <unistd.h>
 
 #include "GameObject.h"
 #include "config.h"
 
-void initGame() {
-    //std::vector<GameObject> gameObjects;
-}
-
-void gameLoop() {
-    bool isRunning = true;
-    while (isRunning) {
-
-    }
-}
-
-SDL_Window& createWindow() {
-    SDL_Window *window = SDL_CreateWindow("POWERDEFENSE", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
+int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
     SDL_Init(SDL_INIT_VIDEO);
-
-    // Check that the window was successfully created
-    if (window == NULL) {
-        printf("Could not create window: %s\n", SDL_GetError());
-        // throw RuntimeException("foo");
+    *window = SDL_CreateWindow("PowerDefense", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
+    if (*window == NULL) {
+        cout << "Could not create window: " << SDL_GetError() << endl;
+        return 1;
+    } else {
+        *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
+        if (*renderer == NULL) {
+            cout << "Could not create renderer: " << SDL_GetError() << endl;
+            return 1;
+        }
     }
-    return *window;
+    return 0;
 }
 
-int main(int argc, char *argv[]) {
-    SDL_Window& window = createWindow();
+void gameLoop(SDL_Renderer *renderer) {
 
-    //gameLoop()
-
-
-    //Test Sprite
-    //string path = "/home/jonas/ClionProjects/Power-Defense/assets/TowerBase.png"; //Attention!! absolute direction
-    SDL_Renderer *renderer = SDL_CreateRenderer(&window, -1, SDL_RENDERER_ACCELERATED);
-
-    Sprite testSprite = Sprite(renderer);
-    testSprite.pos.x = 0;
-    testSprite.pos.y = 0;
-    testSprite.width = WINDOW_WIDTH / 11;
-    testSprite.height = WINDOW_HEIGHT / 11;
-    testSprite.loadImage(CMAKE_SOURCE_DIR + "/assets/TowerBase.png");
-    
-    Sprite testSprite2 = Sprite(renderer);
-    testSprite2.pos.x = 0;
-    testSprite2.pos.y = 0;
-    testSprite2.width = WINDOW_WIDTH/11;
-    testSprite2.height = WINDOW_HEIGHT/11;
-    testSprite2.loadImage(CMAKE_SOURCE_DIR + "/assets/TowerTurret.png");
-
+    Sprite testSprite = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
+                               string(CMAKE_SOURCE_DIR) + "/assets/TowerBase.png", renderer);
+    Sprite testSprite2 = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
+                                string(CMAKE_SOURCE_DIR) + "/assets/TowerTurret.png", renderer);
     for (int i = 0; i < 11; i++) {
         for (int j = 0; j < 11; j++) {
             testSprite.draw();
@@ -67,15 +43,38 @@ int main(int argc, char *argv[]) {
         testSprite2.pos.y += testSprite2.height;
     }
 
-    SDL_RenderPresent(renderer);
+    bool isRunning = true;
+    SDL_Event ev;
+    Point mousePos;
+    mousePos.x = 0;
+    mousePos.y = 0;
+    while (isRunning) {
+        //handle events
+        while (SDL_PollEvent(&ev) != 0) {
+            switch (ev.type) {
+                case SDL_QUIT:
+                    isRunning = false;
+                    break;
+                case SDL_MOUSEMOTION:
+                    mousePos.x = ev.motion.x;
+                    mousePos.y = ev.motion.y;
+            }
+        }
+        SDL_RenderPresent(renderer);
+        usleep(100);
+    }
+}
 
-    SDL_Delay(30000); // Pause execution for 3000 milliseconds, for example
+int main(int argc, char *argv[]) {
+    SDL_Window *window = NULL;
+    SDL_Renderer *renderer = NULL;
+    if (initWindowAndRenderer(&window, &renderer) != 0) {
+        return 1;
+    }
 
-    // Close and destroy the window
-    SDL_DestroyWindow(&window);
+    gameLoop(renderer);
 
-    // Clean up
+    SDL_DestroyWindow(window);
     SDL_Quit();
-
     return 0;
 }
