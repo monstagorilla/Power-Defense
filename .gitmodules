@@ -1,0 +1,3 @@
+[submodule "dependencies/tmxparser"]
+	path = dependencies/tmxparser
+	url = https://github.com/andrewrk/tmxparser
