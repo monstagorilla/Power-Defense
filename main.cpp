@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "config.h"
 
+
 int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
     SDL_Init(SDL_INIT_VIDEO);
     *window = SDL_CreateWindow("PowerDefense", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
@@ -15,18 +16,13 @@ int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
         *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
         if (*renderer == NULL) {
             cout << "Could not create renderer: " << SDL_GetError() << endl;
-            return 1;
+            return 2;
         }
-    }
-    return 0;
-}
 
 void gameLoop(SDL_Renderer *renderer) {
 
-    Sprite testSprite = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
-                               string(CMAKE_SOURCE_DIR) + "/assets/TowerBase.png", renderer);
-    Sprite testSprite2 = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
-                                string(CMAKE_SOURCE_DIR) + "/assets/TowerTurret.png", renderer);
+    Sprite testSprite = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11, string(CMAKE_SOURCE_DIR) + "/assets/TowerBase.png", renderer);
+    Sprite testSprite2 = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11, string(CMAKE_SOURCE_DIR) + "/assets/TowerTurret.png", renderer);
     for (int i = 0; i < 11; i++) {
         for (int j = 0; j < 11; j++) {
             testSprite.draw();
