@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <string>
 
 #include "GameObject.h"
 #include "config.h"
@@ -41,17 +42,14 @@ int main(int argc, char *argv[]) {
     testSprite.pos.y = 0;
     testSprite.width = WINDOW_WIDTH / 11;
     testSprite.height = WINDOW_HEIGHT / 11;
-
-    testSprite.loadImage(string(SDL_GetBasePath()) + "assets/TowerBase.png");
-    //testSprite.loadImage("/home/jonas/ClionProjects/Power-Defense/assets/TowerBase.png");
-    cout << string(SDL_GetBasePath());
-
+    testSprite.loadImage(CMAKE_SOURCE_DIR + "/assets/TowerBase.png");
+    
     Sprite testSprite2 = Sprite(renderer);
     testSprite2.pos.x = 0;
     testSprite2.pos.y = 0;
-    testSprite2.width = WINDOW_WIDTH / 11;
-    testSprite2.height = WINDOW_HEIGHT / 11;
-    testSprite2.loadImage("/home/jonas/ClionProjects/Power-Defense/assets/TowerTurret.xcf");
+    testSprite2.width = WINDOW_WIDTH/11;
+    testSprite2.height = WINDOW_HEIGHT/11;
+    testSprite2.loadImage(CMAKE_SOURCE_DIR + "/assets/TowerTurret.png");
 
     for (int i = 0; i < 11; i++) {
         for (int j = 0; j < 11; j++) {
