@@ -36,7 +36,7 @@ void Sprite::draw(){
 	SDL_RenderCopyEx(this->renderer, this->texture, NULL, &destRect, rotation, NULL, SDL_FLIP_NONE);
 }
 
-void Sprite::loadImage(string path){
+void Sprite::loadImage(const string path){
     SDL_Surface* surface = NULL;
     surface = IMG_Load(path.c_str());
     if ( surface == NULL )
