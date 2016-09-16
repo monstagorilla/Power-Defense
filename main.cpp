@@ -19,6 +19,7 @@ int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
             return 2;
         }
     }
+    return 0;
 }
 
 void gameLoop(SDL_Renderer *renderer) {
