@@ -8,6 +8,7 @@
 #include "config.h"
 #include "colors.h"
 #include "TextOutput.h"
+#include "tmxparser/Tmx.h"
 
 int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
     SDL_Init(SDL_INIT_VIDEO);

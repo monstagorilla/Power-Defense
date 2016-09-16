@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="32" tileheight="32" nextobjectid="3">
+ <tileset firstgid="1" name="Green Tiles" tilewidth="32" tileheight="32" tilecount="15" columns="5">
+  <image source="GreenTiles.png" width="160" height="96"/>
+  <terraintypes>
+   <terrain name="Walls" tile="-1"/>
+   <terrain name="Ground" tile="-1"/>
+   <terrain name="Jewel" tile="-1"/>
+  </terraintypes>
+  <tile id="0" terrain="1,1,1,0"/>
+  <tile id="1" terrain="1,1,0,0"/>
+  <tile id="2" terrain="1,1,0,1"/>
+  <tile id="3" terrain="0,0,0,1"/>
+  <tile id="4" terrain="0,0,1,0"/>
+  <tile id="5" terrain="1,0,1,0"/>
+  <tile id="6" terrain="0,0,0,0"/>
+  <tile id="7" terrain="0,1,0,1"/>
+  <tile id="8" terrain="0,1,0,0"/>
+  <tile id="9" terrain="1,0,0,0"/>
+  <tile id="10" terrain="1,0,1,1"/>
+  <tile id="11" terrain="0,0,1,1"/>
+  <tile id="12" terrain="0,1,1,1"/>
+  <tile id="13" terrain="2,2,2,2"/>
+  <tile id="14" terrain="1,1,1,1"/>
+ </tileset>
+ <layer name="Walls" width="16" height="12">
+  <data encoding="csv">
+12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,5,
+15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,6,
+2,2,2,2,2,2,2,2,2,2,2,2,2,3,15,6,
+4,12,12,12,12,12,12,12,12,5,4,12,12,13,15,6,
+8,15,15,15,15,15,15,15,15,6,8,15,15,15,15,6,
+8,15,1,2,2,2,2,3,15,6,8,15,1,2,2,10,
+8,15,11,12,12,12,5,8,15,11,13,15,11,12,12,5,
+8,15,15,15,15,15,6,8,15,15,15,15,15,15,15,6,
+9,2,2,2,3,15,6,9,2,2,3,15,1,3,15,6,
+7,7,7,7,8,15,11,12,12,5,8,15,11,13,15,6,
+7,7,7,7,8,15,15,15,14,6,8,15,15,15,15,6,
+7,7,7,7,9,2,2,2,2,10,9,2,2,2,2,10
+</data>
+ </layer>
+ <objectgroup name="Path">
+  <object id="1" name="EnemyPath_1" x="0" y="48">
+   <polyline points="0,0 464,0 464,96 368,96 368,288 464,288 464,192 272,192 272,96 48,96 48,192 176,192 176,288 0,288"/>
+  </object>
+ </objectgroup>
+</map>
