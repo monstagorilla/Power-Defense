@@ -98,6 +98,9 @@ void gameLoop(SDL_Renderer *renderer) {
 }
 
 int main(int argc, char *argv[]) {
+    Tmx::Map map;
+    map.ParseFile(string(CMAKE_SOURCE_DIR) + "/assets/map1.tmx");
+    cout << map.GetErrorText() << endl;
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
     if (initWindowAndRenderer(&window, &renderer) != 0) {
