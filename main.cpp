@@ -18,9 +18,10 @@ int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
             cout << "Could not create renderer: " << SDL_GetError() << endl;
             return 2;
         }
+    }
+}
 
 void gameLoop(SDL_Renderer *renderer) {
-
     Sprite testSprite = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11, string(CMAKE_SOURCE_DIR) + "/assets/TowerBase.png", renderer);
     Sprite testSprite2 = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11, string(CMAKE_SOURCE_DIR) + "/assets/TowerTurret.png", renderer);
     for (int i = 0; i < 11; i++) {
