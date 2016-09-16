@@ -1,10 +1,10 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include <unistd.h>
+#include <time.h>
 
 #include "GameObject.h"
 #include "config.h"
-
 
 int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
     SDL_Init(SDL_INIT_VIDEO);
@@ -23,8 +23,10 @@ int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
 }
 
 void gameLoop(SDL_Renderer *renderer) {
-    Sprite testSprite = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11, string(CMAKE_SOURCE_DIR) + "/assets/TowerBase.png", renderer);
-    Sprite testSprite2 = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11, string(CMAKE_SOURCE_DIR) + "/assets/TowerTurret.png", renderer);
+    Sprite testSprite = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
+                               string(CMAKE_SOURCE_DIR) + "/assets/TowerBase.png", renderer);
+    Sprite testSprite2 = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
+                                string(CMAKE_SOURCE_DIR) + "/assets/TowerTurret.png", renderer);
     for (int i = 0; i < 11; i++) {
         for (int j = 0; j < 11; j++) {
             testSprite.draw();
@@ -46,8 +48,13 @@ void gameLoop(SDL_Renderer *renderer) {
     Point mousePos;
     mousePos.x = 0;
     mousePos.y = 0;
+
+    time_t t0;
+    time_t t1;
     while (isRunning) {
-        //handle events
+        time(&t0);
+
+        //handling events
         while (SDL_PollEvent(&ev) != 0) {
             switch (ev.type) {
                 case SDL_QUIT:
@@ -59,8 +66,13 @@ void gameLoop(SDL_Renderer *renderer) {
             }
         }
         SDL_RenderPresent(renderer);
-        usleep(100);
+        
+        time(&t1);
+        if (t1 - t0 < 1000000 / FRAMES_PER_SECOND) {
+            usleep(1000000 / FRAMES_PER_SECOND - (t1 - t0));
+        }
     }
+
 }
 
 int main(int argc, char *argv[]) {
