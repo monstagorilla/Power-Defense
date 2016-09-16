@@ -58,7 +58,25 @@ void gameLoop(SDL_Renderer *renderer) {
     time_t t1;
     while (isRunning) {
         time(&t0);
+        testSprite.pos.x = 0;
+        testSprite.pos.y = 0;
+        testSprite2.pos.x = 0;
+        testSprite2.pos.y = 0;
+        testSprite2.rotation += 1;
+        for (int i = 0; i < 11; i++) {
+            for (int j = 0; j < 11; j++) {
+                testSprite.draw();
+                testSprite.pos.x += testSprite.width;
 
+                testSprite2.draw();
+                testSprite2.pos.x += testSprite2.width;
+            }
+            testSprite.pos.x = 0;
+            testSprite.pos.y += testSprite.height;
+
+            testSprite2.pos.x = 0;
+            testSprite2.pos.y += testSprite2.height;
+        }
         //handling events
         while (SDL_PollEvent(&ev) != 0) {
             switch (ev.type) {
@@ -71,14 +89,12 @@ void gameLoop(SDL_Renderer *renderer) {
             }
         }
         SDL_RenderPresent(renderer);
-        cout<<"test"<<endl;
 
         time(&t1);
         if (t1 - t0 < 1000000 / FRAMES_PER_SECOND) {
             usleep(1000000 / FRAMES_PER_SECOND - (t1 - t0));
         }
     }
-
 }
 
 int main(int argc, char *argv[]) {
