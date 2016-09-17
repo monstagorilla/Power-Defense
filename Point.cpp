@@ -7,7 +7,7 @@ void Point::moveTowards(const Point other, float length){
         this->x = other.x;
         this->y = other.y;
     } else {
-        this->x += (other.x - other.x) * length/dist;
-        this->y += (other.y - other.y) * length/dist;
+        this->x += (other.x - this->x) * length/dist;
+        this->y += (other.y - this->y) * length/dist;
     }
 }

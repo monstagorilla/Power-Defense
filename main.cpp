@@ -12,6 +12,9 @@
 #include "TextOutput.h"
 #include "tmxparser/Tmx.h"
 
+static Map map("/assets/map1.tmx");
+static std::vector<GameObject*> allGameObjects; // YOLO
+
 int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
     SDL_Init(SDL_INIT_VIDEO);
     TTF_Init();
@@ -30,38 +33,10 @@ int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
 }
 
 void spawnEnemy(std::vector<Enemy> &enemies, Map &map, SDL_Renderer *renderer) {
-    Enemy enemy = Enemy(map, 100, 10.0, renderer);
-    enemies.push_back(enemy);
-}
-
-void updateEnemies(std::vector<Enemy> &enemies) {
-    for (int i = 0; i < enemies.size(); i++) {
-        enemies[i].update();
-    }
+    allGameObjects.push_back(new Enemy(map, 100, 1.0, renderer));
 }
 
 void gameLoop(SDL_Renderer *renderer, std::vector<Enemy> &enemies) {
-    /*
-    Sprite testSprite = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
-                               string(CMAKE_SOURCE_DIR) + "/assets/TowerBase.png", renderer);
-    Sprite testSprite2 = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
-                                string(CMAKE_SOURCE_DIR) + "/assets/TowerTurret.png", renderer);
-    for (int i = 0; i < 11; i++) {
-        for (int j = 0; j < 11; j++) {
-            testSprite.draw();
-            testSprite.pos.x += testSprite.width;
-
-            testSprite2.draw();
-            testSprite2.pos.x += testSprite2.width;
-            testSprite2.rotation += 360 / 100;
-        }
-        testSprite.pos.x = 0;
-        testSprite.pos.y += testSprite.height;
-
-        testSprite2.pos.x = 0;
-        testSprite2.pos.y += testSprite2.height;
-    }
-    */
     bool isRunning = true;
     SDL_Event ev;
     Point mousePos;
@@ -72,28 +47,6 @@ void gameLoop(SDL_Renderer *renderer, std::vector<Enemy> &enemies) {
     time_t t1;
     while (isRunning) {
         time(&t0);
-
-        /*
-        testSprite.pos.x = 0;
-        testSprite.pos.y = 0;
-        testSprite2.pos.x = 0;
-        testSprite2.pos.y = 0;
-        testSprite2.rotation += 1;
-        for (int i = 0; i < 11; i++) {
-            for (int j = 0; j < 11; j++) {
-                testSprite.draw();
-                testSprite.pos.x += testSprite.width;
-
-                testSprite2.draw();
-                testSprite2.pos.x += testSprite2.width;
-            }
-            testSprite.pos.x = 0;
-            testSprite.pos.y += testSprite.height;
-
-            testSprite2.pos.x = 0;
-            testSprite2.pos.y += testSprite2.height;
-        }
-         */
 
         //handling events
         while (SDL_PollEvent(&ev) != 0) {
@@ -107,16 +60,14 @@ void gameLoop(SDL_Renderer *renderer, std::vector<Enemy> &enemies) {
             }
         }
 
-        updateEnemies(enemies);
-
-        for(int i = 0; i < enemies.size(); i++){
-            for (int j = 0; j < enemies[i].sprites.size(); j++){
-                enemies[i].sprites[j].draw();
+        for (GameObject* object : allGameObjects){
+            object->update();
+            for (Sprite sprite : object->sprites){
+                sprite.draw();
             }
         }
-
         SDL_RenderPresent(renderer);
-
+        SDL_RenderClear(renderer);
         time(&t1);
         if (t1 - t0 < 1000000 / FRAMES_PER_SECOND) {
             usleep(1000000 / FRAMES_PER_SECOND - (t1 - t0));
@@ -125,7 +76,6 @@ void gameLoop(SDL_Renderer *renderer, std::vector<Enemy> &enemies) {
 }
 
 int main(int argc, char *argv[]) {
-    Map map("/assets/map1.tmx");
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
     if (initWindowAndRenderer(&window, &renderer) != 0) {
