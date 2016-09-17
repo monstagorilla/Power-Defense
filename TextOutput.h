@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 class TextOutput {
 public:
     static TextOutput *getInstance(SDL_Renderer *renderer) {
@@ -10,7 +11,7 @@ public:
         return instance;
     }
 
-    void drawText(const string text, const int x, const int y, const int w, const int h, const int font,
+    void drawText(const std::string text, const int x, const int y, const int w, const int h, const int font,
                   const SDL_Color color) {
         if (font >= 0 && font < fonts.size()) {
             SDL_Surface *surfaceMessage = TTF_RenderText_Solid(fonts[font], text.c_str(), color);
@@ -22,7 +23,7 @@ public:
             destRect.h = h;
             SDL_RenderCopy(renderer, message, NULL, &destRect);
         } else {
-            cout << "Illegal FontIndex" << endl;
+            std::cout << "Illegal FontIndex" << std::endl;
         }
     }
 
@@ -33,7 +34,7 @@ private:
 
     TextOutput(SDL_Renderer *renderer) {
         this->renderer = renderer;
-        addFont(string(CMAKE_SOURCE_DIR) + "/fonts/orangejuice.ttf", 100);
+        addFont(std::string(CMAKE_SOURCE_DIR) + "/fonts/orangejuice.ttf", 100);
     }
 
     TextOutput(const TextOutput &);
@@ -42,11 +43,11 @@ private:
 
     }
 
-    void addFont(const string path, const int textSize) {
+    void addFont(const std::string path, const int textSize) {
         const char *cpath = path.c_str();
         TTF_Font *font = TTF_OpenFont(cpath, textSize);
         if (font == NULL) {
-            cout << SDL_GetError();
+            std::cout << SDL_GetError();
         } else {
             fonts.push_back(font);
         }
