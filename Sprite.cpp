@@ -11,7 +11,7 @@ Sprite::Sprite(){
 	texture = NULL;
 }
 
-Sprite::Sprite(const int x, const int y, const int width, const int height,  const string path, SDL_Renderer *renderer){
+Sprite::Sprite(const int x, const int y, const int width, const int height,  const std::string path, SDL_Renderer *renderer){
 	this->pos.x = x;
     this->pos.y = y;
     this->width = width;
@@ -37,7 +37,7 @@ void Sprite::draw(){
 	SDL_RenderCopyEx(this->renderer, this->texture, NULL, &destRect, rotation, NULL, SDL_FLIP_NONE);
 }
 
-void Sprite::loadImage(const string path){
+void Sprite::loadImage(const std::string path){
     SDL_Surface* surface = NULL;
     surface = IMG_Load(path.c_str());
     if ( surface == NULL )
