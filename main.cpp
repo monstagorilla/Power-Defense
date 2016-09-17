@@ -17,29 +17,30 @@ int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
     TTF_Init();
     *window = SDL_CreateWindow("PowerDefense", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
     if (*window == NULL) {
-        cout << "Could not create window: " << SDL_GetError() << endl;
+        std::cout << "Could not create window: " << SDL_GetError() << std::endl;
         return 1;
     } else {
         *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
         if (*renderer == NULL) {
-            cout << "Could not create renderer: " << SDL_GetError() << endl;
+            std::cout << "Could not create renderer: " << SDL_GetError() << std::endl;
             return 2;
         }
     }
     return 0;
 }
 
-void spawnEnemy(vector <Enemy> &enemies){
-    enemies.push_back(Enemy(, 100, 10));
+void spawnEnemy(std::vector<Enemy> &enemies, Map &map, SDL_Renderer *renderer) {
+    Enemy enemy = Enemy(map, 100, 10.0, renderer);
+    enemies.push_back(enemy);
 }
 
-void updateEnemies(vector <Enemy> &enemies){
-    for (int i = 0; i < enemies.size(); i++){
+void updateEnemies(std::vector<Enemy> &enemies) {
+    for (int i = 0; i < enemies.size(); i++) {
         enemies[i].update();
     }
 }
 
-void gameLoop(SDL_Renderer *renderer, vector <Enemy> &enemies) {
+void gameLoop(SDL_Renderer *renderer, std::vector<Enemy> &enemies) {
     /*
     Sprite testSprite = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
                                string(CMAKE_SOURCE_DIR) + "/assets/TowerBase.png", renderer);
@@ -105,9 +106,16 @@ void gameLoop(SDL_Renderer *renderer, vector <Enemy> &enemies) {
                     mousePos.y = ev.motion.y;
             }
         }
-        SDL_RenderPresent(renderer);
 
         updateEnemies(enemies);
+
+        for(int i = 0; i < enemies.size(); i++){
+            for (int j = 0; j < enemies[i].sprites.size(); j++){
+                enemies[i].sprites[j].draw();
+            }
+        }
+
+        SDL_RenderPresent(renderer);
 
         time(&t1);
         if (t1 - t0 < 1000000 / FRAMES_PER_SECOND) {
@@ -125,8 +133,8 @@ int main(int argc, char *argv[]) {
     }
     SDL_RenderPresent(renderer);
 
-    vector<Enemy> enemies;
-    spawnEnemy(enemies);
+    std::vector<Enemy> enemies;
+    spawnEnemy(enemies, map, renderer);
 
     gameLoop(renderer, enemies);
     SDL_DestroyWindow(window);
