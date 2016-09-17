@@ -33,7 +33,7 @@ int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
 }
 
 void spawnEnemy(std::vector<Enemy> &enemies, Map &map, SDL_Renderer *renderer) {
-    allGameObjects.push_back(new Enemy(map, 100, 1.0, renderer));
+    allGameObjects.push_back(new Enemy(map, 100, 10.0, renderer));
 }
 
 void gameLoop(SDL_Renderer *renderer, std::vector<Enemy> &enemies) {
