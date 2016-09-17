@@ -1,3 +1,5 @@
+#pragma once
+
 #include "tmxparser/Tmx.h"
 #include "Point.h"
 
