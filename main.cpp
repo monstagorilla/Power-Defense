@@ -5,6 +5,7 @@
 #include <time.h>
 
 #include "GameObject.h"
+#include "Enemy.h"
 #include "config.h"
 #include "colors.h"
 #include "TextOutput.h"
@@ -27,7 +28,18 @@ int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
     return 0;
 }
 
-void gameLoop(SDL_Renderer *renderer) {
+void spawnEnemy(vector <Enemy> &enemies){
+    enemies.push_back(Enemy(, 100, 10));
+}
+
+void updateEnemies(vector <Enemy> &enemies){
+    for (int i = 0; i < enemies.size(); i++){
+        enemies[i].update();
+    }
+}
+
+void gameLoop(SDL_Renderer *renderer, vector <Enemy> &enemies) {
+    /*
     Sprite testSprite = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
                                string(CMAKE_SOURCE_DIR) + "/assets/TowerBase.png", renderer);
     Sprite testSprite2 = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
@@ -47,7 +59,7 @@ void gameLoop(SDL_Renderer *renderer) {
         testSprite2.pos.x = 0;
         testSprite2.pos.y += testSprite2.height;
     }
-
+    */
     bool isRunning = true;
     SDL_Event ev;
     Point mousePos;
@@ -58,6 +70,8 @@ void gameLoop(SDL_Renderer *renderer) {
     time_t t1;
     while (isRunning) {
         time(&t0);
+
+        /*
         testSprite.pos.x = 0;
         testSprite.pos.y = 0;
         testSprite2.pos.x = 0;
@@ -77,6 +91,8 @@ void gameLoop(SDL_Renderer *renderer) {
             testSprite2.pos.x = 0;
             testSprite2.pos.y += testSprite2.height;
         }
+         */
+
         //handling events
         while (SDL_PollEvent(&ev) != 0) {
             switch (ev.type) {
@@ -89,6 +105,8 @@ void gameLoop(SDL_Renderer *renderer) {
             }
         }
         SDL_RenderPresent(renderer);
+
+        updateEnemies(enemies);
 
         time(&t1);
         if (t1 - t0 < 1000000 / FRAMES_PER_SECOND) {
@@ -106,10 +124,12 @@ int main(int argc, char *argv[]) {
     if (initWindowAndRenderer(&window, &renderer) != 0) {
         return 1;
     }
-
     SDL_RenderPresent(renderer);
 
-    gameLoop(renderer);
+    vector<Enemy> enemies;
+    spawnEnemy(enemies);
+
+    gameLoop(renderer, enemies);
     SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;
