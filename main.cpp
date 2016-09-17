@@ -5,6 +5,7 @@
 #include <time.h>
 
 #include "GameObject.h"
+#include "Map.h"
 #include "config.h"
 #include "colors.h"
 #include "TextOutput.h"
@@ -98,9 +99,7 @@ void gameLoop(SDL_Renderer *renderer) {
 }
 
 int main(int argc, char *argv[]) {
-    Tmx::Map map;
-    map.ParseFile(string(CMAKE_SOURCE_DIR) + "/assets/map1.tmx");
-    cout << map.GetErrorText() << endl;
+    Map map("/assets/map1.tmx");
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
     if (initWindowAndRenderer(&window, &renderer) != 0) {
