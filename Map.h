@@ -15,5 +15,5 @@ class Map {
         std::vector<Point> path;
         int getHeight(){ return tmxmap.GetHeight(); };
         int getWidth (){ return tmxmap.GetWidth();  };
-        bool isGround(int x, int y) { return terrain[x][y] == Ground; };
+        bool isGround(int x, int y);
 };

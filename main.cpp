@@ -11,6 +11,8 @@
 #include "TextOutput.h"
 #include "tmxparser/Tmx.h"
 
+static Map lemap("/assets/map1.tmx");
+
 int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
     SDL_Init(SDL_INIT_VIDEO);
     TTF_Init();
@@ -29,26 +31,10 @@ int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
 }
 
 void gameLoop(SDL_Renderer *renderer) {
-    Sprite testSprite = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
+    Sprite testSprite = Sprite(0, 0, WINDOW_WIDTH / 22, WINDOW_HEIGHT / 22,
                                string(CMAKE_SOURCE_DIR) + "/assets/TowerBase.png", renderer);
-    Sprite testSprite2 = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
+    Sprite testSprite2 = Sprite(0, 0, WINDOW_WIDTH / 22, WINDOW_HEIGHT / 22,
                                 string(CMAKE_SOURCE_DIR) + "/assets/TowerTurret.png", renderer);
-    for (int i = 0; i < 11; i++) {
-        for (int j = 0; j < 11; j++) {
-            testSprite.draw();
-            testSprite.pos.x += testSprite.width;
-
-            testSprite2.draw();
-            testSprite2.pos.x += testSprite2.width;
-            testSprite2.rotation += 360 / 100;
-        }
-        testSprite.pos.x = 0;
-        testSprite.pos.y += testSprite.height;
-
-        testSprite2.pos.x = 0;
-        testSprite2.pos.y += testSprite2.height;
-    }
-
     bool isRunning = true;
     SDL_Event ev;
     Point mousePos;
@@ -64,12 +50,14 @@ void gameLoop(SDL_Renderer *renderer) {
         testSprite2.pos.x = 0;
         testSprite2.pos.y = 0;
         testSprite2.rotation += 1;
-        for (int i = 0; i < 11; i++) {
-            for (int j = 0; j < 11; j++) {
-                testSprite.draw();
+        for (int i = 0; i < 22; i++) {
+            for (int j = 0; j < 22; j++) {
+                if(lemap.isGround(i, j)){
+                    testSprite.draw();
+                    testSprite2.draw();
+                }
                 testSprite.pos.x += testSprite.width;
 
-                testSprite2.draw();
                 testSprite2.pos.x += testSprite2.width;
             }
             testSprite.pos.x = 0;
@@ -99,7 +87,7 @@ void gameLoop(SDL_Renderer *renderer) {
 }
 
 int main(int argc, char *argv[]) {
-    Map map("/assets/map1.tmx");
+    lemap = Map("/assets/map1.tmx");
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
     if (initWindowAndRenderer(&window, &renderer) != 0) {

@@ -26,3 +26,11 @@ Map::Map(const std::string& filename) {
         std::cout << std::endl;
     }
 }
+
+bool Map::isGround(int x, int y) {
+    if(x < 0 or y < 0 or x >= terrain.size() or y >= terrain[0].size()){
+        return true;
+    } else {
+        return terrain[x][y] == Ground;
+    }
+}
