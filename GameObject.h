@@ -10,4 +10,5 @@ public:
 
     Point pos;
     std::vector<Sprite> sprites;
+	int ID;
 };

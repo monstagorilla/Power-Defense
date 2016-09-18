@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 class TextOutput {
 public:
     static TextOutput *getInstance(SDL_Renderer *renderer) {
