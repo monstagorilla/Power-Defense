@@ -1,49 +1,42 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <string>
 #include <unistd.h>
 #include <time.h>
 
 #include "GameObject.h"
+#include "Enemy.h"
+#include "Map.h"
 #include "config.h"
+#include "colors.h"
+#include "TextOutput.h"
 #include "tmxparser/Tmx.h"
+
+static Map map("/assets/map1.tmx");
+static std::vector<GameObject*> allGameObjects; // YOLO
 
 int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
     SDL_Init(SDL_INIT_VIDEO);
+    TTF_Init();
     *window = SDL_CreateWindow("PowerDefense", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
     if (*window == NULL) {
-        cout << "Could not create window: " << SDL_GetError() << endl;
+        std::cout << "Could not create window: " << SDL_GetError() << std::endl;
         return 1;
     } else {
         *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
         if (*renderer == NULL) {
-            cout << "Could not create renderer: " << SDL_GetError() << endl;
+            std::cout << "Could not create renderer: " << SDL_GetError() << std::endl;
             return 2;
         }
     }
     return 0;
 }
 
-void gameLoop(SDL_Renderer *renderer) {
-    Sprite testSprite = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
-                               string(CMAKE_SOURCE_DIR) + "/assets/TowerBase.png", renderer);
-    Sprite testSprite2 = Sprite(0, 0, WINDOW_WIDTH / 11, WINDOW_HEIGHT / 11,
-                                string(CMAKE_SOURCE_DIR) + "/assets/TowerTurret.png", renderer);
-    for (int i = 0; i < 11; i++) {
-        for (int j = 0; j < 11; j++) {
-            testSprite.draw();
-            testSprite.pos.x += testSprite.width;
+void spawnEnemy(std::vector<Enemy> &enemies, Map &map, SDL_Renderer *renderer) {
+    allGameObjects.push_back(new Enemy(map, 100, 10.0, renderer));
+}
 
-            testSprite2.draw();
-            testSprite2.pos.x += testSprite2.width;
-            testSprite2.rotation += 360 / 100;
-        }
-        testSprite.pos.x = 0;
-        testSprite.pos.y += testSprite.height;
-
-        testSprite2.pos.x = 0;
-        testSprite2.pos.y += testSprite2.height;
-    }
-
+void gameLoop(SDL_Renderer *renderer, std::vector<Enemy> &enemies) {
     bool isRunning = true;
     SDL_Event ev;
     Point mousePos;
@@ -66,14 +59,20 @@ void gameLoop(SDL_Renderer *renderer) {
                     mousePos.y = ev.motion.y;
             }
         }
+
+        for (GameObject* object : allGameObjects){
+            object->update();
+            for (Sprite sprite : object->sprites){
+                sprite.draw();
+            }
+        }
         SDL_RenderPresent(renderer);
-        
+        SDL_RenderClear(renderer);
         time(&t1);
         if (t1 - t0 < 1000000 / FRAMES_PER_SECOND) {
             usleep(1000000 / FRAMES_PER_SECOND - (t1 - t0));
         }
     }
-
 }
 
 int main(int argc, char *argv[]) {
@@ -82,9 +81,12 @@ int main(int argc, char *argv[]) {
     if (initWindowAndRenderer(&window, &renderer) != 0) {
         return 1;
     }
+    SDL_RenderPresent(renderer);
 
-    gameLoop(renderer);
+    std::vector<Enemy> enemies;
+    spawnEnemy(enemies, map, renderer);
 
+    gameLoop(renderer, enemies);
     SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;

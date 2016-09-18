@@ -8,16 +8,14 @@
 #include "Point.h"
 #include "util.h"
 
-using namespace std;
-
 class Sprite{
 	public:
 	Sprite();
-	Sprite(const int x, const int y, const int width, const int height,  const string path, SDL_Renderer *renderer);
+	Sprite(const int x, const int y, const int width, const int height,  const std::string path, SDL_Renderer *renderer);
 	virtual ~Sprite();
 	
 	virtual void draw();
-	virtual void loadImage(string path);
+	virtual void loadImage(std::string path);
 	
 	SDL_Texture* texture;
 	SDL_Renderer* renderer; 
