@@ -24,13 +24,11 @@ Enemy::~Enemy(){
 void Enemy::update() {
     if (distance(pos, map.path[pathIndex]) < 0.1) {
         pathIndex++;
-        std::cout << pos.x << ", " << pos.y << " yolo" << std::endl;
     }
     pos.moveTowards(map.path[pathIndex], speed);
 
     for(int i = 0; i < sprites.size(); i++){
         sprites[i].pos = this->pos;
-        std::cout << sprites[i].pos.x << ", " << sprites[i].pos.y << std::endl;
     }
 }
 

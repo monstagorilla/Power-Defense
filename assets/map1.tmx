@@ -40,8 +40,8 @@
 </data>
  </layer>
  <objectgroup name="Path">
-  <object id="1" name="EnemyPath_1" x="0" y="48">
-   <polyline points="0,0 464,0 464,96 368,96 368,288 464,288 464,192 272,192 272,96 48,96 48,192 176,192 176,288 0,288"/>
+  <object id="1" name="EnemyPath_1" x="0" y="0">
+   <polyline points="0,48 464,48 464,144 368,144 368,336 464,336 464,240 272,240 272,144 48,144 48,240 176,240 176,336 272,336"/>
   </object>
  </objectgroup>
 </map>
