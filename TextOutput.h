@@ -52,7 +52,7 @@ private:
         }
     }
 
-    class MemoryHandler {
+    class MemoryHandler {TextOutput *TextOutput::instance = NULL;
     public:
         ~MemoryHandler() {
             if (TextOutput::instance != NULL) {
