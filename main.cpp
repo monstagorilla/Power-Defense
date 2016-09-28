@@ -43,12 +43,6 @@ void spawnEnemy(std::vector<Enemy> &enemies, Map &map, SDL_Renderer *renderer) {
 	allGameObjects.push_back(new Enemy(map, 100, 5.0));
 }
 
-bool initGameObjectImages(){
-	//Tower
-	std::vector<std::string> towerPaths = {"/assets/TowerBase.png", "/assets/TowerTurret.png"};
-	loadImage(towerPaths, Tower::textures);
-}
-
 void gameLoop(std::vector<Enemy> &enemies) {
 	bool isRunning = true;
 	SDL_Event ev;
@@ -100,12 +94,11 @@ int main(int argc, char *argv[]) {
 	if (initWindowAndRenderer(&window) != 0) {
 		return 1;
 	}
-	initGameObjectImages();
 
 	std::vector<Enemy> enemies;
 	allGameObjects.push_back(new Tower(300, 300));
 	allGameObjects.push_back(new Tower(100, 320));
-	allGameObjects.push_back(new Tower(100,  60));
+	allGameObjects.push_back(new Tower(100, 100));
 
 	gameLoop(enemies);
 	SDL_DestroyWindow(window);

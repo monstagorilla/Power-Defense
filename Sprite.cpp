@@ -1,14 +1,17 @@
 #include "Sprite.h"
 #include "globals.h"
+#include "TextureCache.h"
 
-Sprite::Sprite(const int x, const int y, const int width, const int height,  SDL_Texture* texture){
+extern std::unordered_map<std::string, SDL_Texture*> textureCache;
+
+Sprite::Sprite(const int x, const int y, const int width, const int height, std::string path){
 	this->pos.x = x;
     this->pos.y = y;
     this->width = width;
     this->height = height;
 	rotation = 0;
 	scale = 0;
-    this->texture = texture;
+    this->texture = getTexture(path);
 }
 
 Sprite::~Sprite(){

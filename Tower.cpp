@@ -8,17 +8,6 @@
 
 extern SDL_Renderer *renderer;
 
-Tower::Tower() {
-	pos.x = 0;
-	pos.y = 0;
-	//sprites
-	rotation = 0;
-	cooldown = 2;
-	range = 150;
-	price = 100;
-	ID = 2;
-}
-
 Tower::Tower(const int x, const int y) {
 	pos.x = x;
 	pos.y = y;
@@ -28,8 +17,8 @@ Tower::Tower(const int x, const int y) {
 	range = 300;
 	price = 100;
 	ID = 2;
-	for (int i = 0; i < textures.size(); i++) {
-		this->sprites.push_back(Sprite(pos.x, pos.y, TILE_WIDTH, TILE_WIDTH, this->textures[i]));
+	for (std::string path : {"/assets/TowerBase.png", "/assets/TowerTurret.png"}) {
+		this->sprites.push_back(Sprite(pos.x, pos.y, TILE_WIDTH, TILE_WIDTH, path));
 	}
 }
 

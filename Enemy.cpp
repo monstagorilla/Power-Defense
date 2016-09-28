@@ -15,9 +15,7 @@ Enemy::Enemy(Map &map, int health, float speed) : map(map) {
 	this->maxHealth = health;
 	this->speed = speed;
 	ID = 1;
-	for (int i = 0; i < textures.size(); i++) {
-		this->sprites.push_back(Sprite(pos.x, pos.y, TILE_WIDTH, TILE_WIDTH, textures[i]));
-	}
+	this->sprites.push_back(Sprite(pos.x, pos.y, TILE_WIDTH, TILE_WIDTH, "/assets/Enemy.png"));
 }
 
 Enemy::~Enemy() {
