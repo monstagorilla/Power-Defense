@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <time.h>
 
+
 #include "GameObject.h"
 #include "Enemy.h"
 #include "Map.h"
@@ -12,11 +13,16 @@
 #include "colors.h"
 #include "TextOutput.h"
 #include "tmxparser/Tmx.h"
+#include "util.h"
+#include "globals.h"
 
-static Map map("/assets/map1.tmx");
+std::vector<SDL_Texture*> Tower::textures;
+
+Map map("/assets/map1.tmx");
 std::vector<GameObject *> allGameObjects; // YOLO
+SDL_Renderer* renderer;
 
-int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
+int initWindowAndRenderer(SDL_Window **window) {
 	SDL_Init(SDL_INIT_VIDEO);
 	TTF_Init();
 	*window = SDL_CreateWindow("PowerDefense", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
@@ -24,8 +30,8 @@ int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
 		std::cout << "Could not create window: " << SDL_GetError() << std::endl;
 		return 1;
 	} else {
-		*renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
-		if (*renderer == NULL) {
+		renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_ACCELERATED);
+		if (renderer == NULL) {
 			std::cout << "Could not create renderer: " << SDL_GetError() << std::endl;
 			return 2;
 		}
@@ -34,10 +40,16 @@ int initWindowAndRenderer(SDL_Window **window, SDL_Renderer **renderer) {
 }
 
 void spawnEnemy(std::vector<Enemy> &enemies, Map &map, SDL_Renderer *renderer) {
-	allGameObjects.push_back(new Enemy(map, 100, 5.0, renderer));
+	allGameObjects.push_back(new Enemy(map, 100, 5.0));
 }
 
-void gameLoop(SDL_Renderer *renderer, std::vector<Enemy> &enemies) {
+bool initGameObjectImages(){
+	//Tower
+	std::vector<std::string> towerPaths = {"/assets/TowerBase.png", "/assets/TowerTurret.png"};
+	loadImage(towerPaths, Tower::textures);
+}
+
+void gameLoop(std::vector<Enemy> &enemies) {
 	bool isRunning = true;
 	SDL_Event ev;
 	Point mousePos;
@@ -85,17 +97,17 @@ void gameLoop(SDL_Renderer *renderer, std::vector<Enemy> &enemies) {
 int main(int argc, char *argv[]) {
 	SDL_Window *window = NULL;
 	SDL_Renderer *renderer = NULL;
-	if (initWindowAndRenderer(&window, &renderer) != 0) {
+	if (initWindowAndRenderer(&window) != 0) {
 		return 1;
 	}
-	SDL_RenderPresent(renderer);
+	initGameObjectImages();
 
 	std::vector<Enemy> enemies;
-	allGameObjects.push_back(new Tower(300, 300, renderer));
-	allGameObjects.push_back(new Tower(100, 320, renderer));
-	allGameObjects.push_back(new Tower(100, 60, renderer));
+	allGameObjects.push_back(new Tower(300, 300));
+	allGameObjects.push_back(new Tower(100, 320));
+	allGameObjects.push_back(new Tower(100,  60));
 
-	gameLoop(renderer, enemies);
+	gameLoop(enemies);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 	return 0;

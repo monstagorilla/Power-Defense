@@ -8,17 +8,16 @@
 #include "config.h"
 
 
-Enemy::Enemy(Map &map, int health, float speed, SDL_Renderer *renderer) : map(map) {
+Enemy::Enemy(Map &map, int health, float speed) : map(map) {
 	this->pos = map.path[0];
 	this->pathIndex = 1;
 	this->health = health;
 	this->maxHealth = health;
 	this->speed = speed;
-	this->renderer = renderer;
 	ID = 1;
-	this->sprites.push_back(
-			Sprite(pos.x, pos.y, TILE_WIDTH, TILE_WIDTH, std::string(CMAKE_SOURCE_DIR) + "/assets/Enemy.png",
-				   renderer));
+	for (int i = 0; i < textures.size(); i++) {
+		this->sprites.push_back(Sprite(pos.x, pos.y, TILE_WIDTH, TILE_WIDTH, textures[i]));
+	}
 }
 
 Enemy::~Enemy() {
