@@ -18,7 +18,7 @@
 
 std::vector<SDL_Texture*> Tower::textures;
 
-Map map("/assets/map1.tmx");
+Map map;
 std::vector<GameObject *> allGameObjects; // YOLO
 SDL_Renderer* renderer;
 
@@ -73,6 +73,7 @@ void gameLoop(std::vector<Enemy> &enemies) {
 			}
 		}
 
+		map.draw();
 		for (GameObject *object : allGameObjects) {
 			object->update();
 			for (Sprite sprite : object->sprites) {
@@ -96,10 +97,11 @@ int main(int argc, char *argv[]) {
 	}
 
 	std::vector<Enemy> enemies;
-	allGameObjects.push_back(new Tower(300, 300));
-	allGameObjects.push_back(new Tower(100, 320));
-	allGameObjects.push_back(new Tower(100, 100));
+	allGameObjects.push_back(new Tower(TILE_WIDTH*10,  TILE_HEIGHT*6));
+	allGameObjects.push_back(new Tower(TILE_WIDTH*4,  TILE_HEIGHT*3));
+	allGameObjects.push_back(new Tower(TILE_WIDTH*13, TILE_HEIGHT*9));
 
+	map = Map("/assets/map1.tmx");
 	gameLoop(enemies);
 	SDL_DestroyWindow(window);
 	SDL_Quit();

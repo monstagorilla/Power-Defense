@@ -2,8 +2,6 @@
 #include "globals.h"
 #include "TextureCache.h"
 
-extern std::unordered_map<std::string, SDL_Texture*> textureCache;
-
 Sprite::Sprite(const int x, const int y, const int width, const int height, std::string path){
 	this->pos.x = x;
     this->pos.y = y;
@@ -20,8 +18,8 @@ Sprite::~Sprite(){
 
 void Sprite::draw(){
     SDL_Rect destRect;
-    destRect.x = this->pos.x;
-    destRect.y = this->pos.y;
+    destRect.x = this->pos.x - this->width/2;
+    destRect.y = this->pos.y - this->height/2;
     destRect.w = this->width;
     destRect.h = this->height;
 

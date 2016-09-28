@@ -38,7 +38,7 @@ void Tower::update() {
 	}
 	if (shortestDist < range) {
 		rotation = atan2(nearest->pos.y - this->pos.y, nearest->pos.x - this->pos.x) * 360 /
-				   (2.0 * 3.14159265358979323846) + 90;
+				   (2.0 * M_PI) + 90;
 		sprites[1].rotation = rotation;
 	}
 }

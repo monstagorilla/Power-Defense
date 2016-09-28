@@ -10,7 +10,7 @@
 
 class Sprite{
 	public:
-	Sprite();
+	Sprite(){};
 	Sprite(const int x, const int y, const int width, const int height, std::string path);
 	virtual ~Sprite();
 	
