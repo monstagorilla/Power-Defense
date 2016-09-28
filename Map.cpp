@@ -26,6 +26,7 @@ Map::Map(const std::string &filename) {
         }   
         std::cout << std::endl;
     }
+	sprite = Sprite(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, WINDOW_WIDTH, WINDOW_HEIGHT, "/assets/map1.png");
 }
 
 bool Map::isGround(int x, int y) {
@@ -34,4 +35,8 @@ bool Map::isGround(int x, int y) {
     } else {
         return terrain[x][y] == Ground;
     }
+}
+
+void Map::draw(){
+	sprite.draw();
 }

@@ -1,14 +1,15 @@
 #include "Sprite.h"
 #include "globals.h"
+#include "TextureCache.h"
 
-Sprite::Sprite(const int x, const int y, const int width, const int height,  SDL_Texture* texture){
+Sprite::Sprite(const int x, const int y, const int width, const int height, std::string path){
 	this->pos.x = x;
     this->pos.y = y;
     this->width = width;
     this->height = height;
 	rotation = 0;
 	scale = 0;
-    this->texture = texture;
+    this->texture = getTexture(path);
 }
 
 Sprite::~Sprite(){
@@ -17,8 +18,8 @@ Sprite::~Sprite(){
 
 void Sprite::draw(){
     SDL_Rect destRect;
-    destRect.x = this->pos.x;
-    destRect.y = this->pos.y;
+    destRect.x = this->pos.x - this->width/2;
+    destRect.y = this->pos.y - this->height/2;
     destRect.w = this->width;
     destRect.h = this->height;
 

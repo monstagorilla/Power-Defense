@@ -18,7 +18,7 @@
 
 std::vector<SDL_Texture*> Tower::textures;
 
-Map map("/assets/map1.tmx");
+Map map;
 std::vector<GameObject *> allGameObjects; // YOLO
 SDL_Renderer* renderer;
 
@@ -41,12 +41,6 @@ int initWindowAndRenderer(SDL_Window **window) {
 
 void spawnEnemy(std::vector<Enemy> &enemies, Map &map, SDL_Renderer *renderer) {
 	allGameObjects.push_back(new Enemy(map, 100, 5.0));
-}
-
-bool initGameObjectImages(){
-	//Tower
-	std::vector<std::string> towerPaths = {"/assets/TowerBase.png", "/assets/TowerTurret.png"};
-	loadImage(towerPaths, Tower::textures);
 }
 
 void gameLoop(std::vector<Enemy> &enemies) {
@@ -79,6 +73,7 @@ void gameLoop(std::vector<Enemy> &enemies) {
 			}
 		}
 
+		map.draw();
 		for (GameObject *object : allGameObjects) {
 			object->update();
 			for (Sprite sprite : object->sprites) {
@@ -100,13 +95,13 @@ int main(int argc, char *argv[]) {
 	if (initWindowAndRenderer(&window) != 0) {
 		return 1;
 	}
-	initGameObjectImages();
 
 	std::vector<Enemy> enemies;
-	allGameObjects.push_back(new Tower(300, 300));
-	allGameObjects.push_back(new Tower(100, 320));
-	allGameObjects.push_back(new Tower(100,  60));
+	allGameObjects.push_back(new Tower(TILE_WIDTH*10,  TILE_HEIGHT*6));
+	allGameObjects.push_back(new Tower(TILE_WIDTH*4,  TILE_HEIGHT*3));
+	allGameObjects.push_back(new Tower(TILE_WIDTH*13, TILE_HEIGHT*9));
 
+	map = Map("/assets/map1.tmx");
 	gameLoop(enemies);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
