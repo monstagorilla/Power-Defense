@@ -1,26 +1,14 @@
 #include "Sprite.h"
+#include "globals.h"
 
-Sprite::Sprite(){
-	pos.x = 0;
-	pos.y = 0;
-    width = 0;
-    height = 0;
-	rotation = 0;
-	scale = 0;
-	renderer = NULL;
-	texture = NULL;
-}
-
-Sprite::Sprite(const int x, const int y, const int width, const int height,  const std::string path, SDL_Renderer *renderer){
+Sprite::Sprite(const int x, const int y, const int width, const int height,  SDL_Texture* texture){
 	this->pos.x = x;
     this->pos.y = y;
     this->width = width;
     this->height = height;
 	rotation = 0;
 	scale = 0;
-    texture = NULL;
-    this->renderer = renderer;
-    loadImage(path);
+    this->texture = texture;
 }
 
 Sprite::~Sprite(){
@@ -34,22 +22,5 @@ void Sprite::draw(){
     destRect.w = this->width;
     destRect.h = this->height;
 
-	SDL_RenderCopyEx(this->renderer, this->texture, NULL, &destRect, rotation, NULL, SDL_FLIP_NONE);
-}
-
-void Sprite::loadImage(const std::string path){
-    SDL_Surface* surface = NULL;
-    surface = IMG_Load(path.c_str());
-    if ( surface == NULL )
-    {
-        std::cout << "Failed to load surface "  << " error : " << SDL_GetError() << std::endl;
-    }
-
-    SDL_Texture *texture = NULL;
-    texture = SDL_CreateTextureFromSurface(this->renderer, surface);
-    if ( texture == NULL )
-    {
-        std::cout << "Failed to load texture "  << " error : " << SDL_GetError() << std::endl;
-    }
-    this->texture = texture;
+	SDL_RenderCopyEx(renderer, this->texture, NULL, &destRect, rotation, NULL, SDL_FLIP_NONE);
 }

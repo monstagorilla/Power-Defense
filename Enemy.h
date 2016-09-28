@@ -10,12 +10,12 @@
 
 class Enemy : public GameObject {
 public:
-    Enemy(Map& map, int health, float speed, SDL_Renderer* renderer);
+    Enemy(Map& map, int health, float speed);
     virtual ~Enemy();
 
     virtual void update();
     void hit(Tower& source, int damage);
-    SDL_Renderer* renderer;
+    std::vector<SDL_Texture*> textures;
 
 private:
     int maxHealth;

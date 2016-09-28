@@ -11,14 +11,12 @@
 class Sprite{
 	public:
 	Sprite();
-	Sprite(const int x, const int y, const int width, const int height,  const std::string path, SDL_Renderer *renderer);
+	Sprite(const int x, const int y, const int width, const int height,  SDL_Texture* texture);
 	virtual ~Sprite();
 	
 	virtual void draw();
-	virtual void loadImage(std::string path);
-	
+
 	SDL_Texture* texture;
-	SDL_Renderer* renderer; 
 	Point pos;
 	int width;
 	int height;
