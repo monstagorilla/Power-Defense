@@ -14,13 +14,14 @@
 #include "TextOutput.h"
 #include "tmxparser/Tmx.h"
 #include "util.h"
-#include "globals.h"
+#include "textboxes.h"
+#include "Shot.h"
 
-std::vector<SDL_Texture*> Tower::textures;
+std::vector<SDL_Texture *> Tower::textures;
 
 Map map;
 std::vector<GameObject *> allGameObjects; // YOLO
-SDL_Renderer* renderer;
+SDL_Renderer *renderer;
 
 int initWindowAndRenderer(SDL_Window **window) {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -40,7 +41,7 @@ int initWindowAndRenderer(SDL_Window **window) {
 }
 
 void spawnEnemy(std::vector<Enemy> &enemies, Map &map, SDL_Renderer *renderer) {
-	allGameObjects.push_back(new Enemy(map, 100, 5.0));
+	allGameObjects.push_back(new Enemy(map, 100, 2.0));
 }
 
 void gameLoop(std::vector<Enemy> &enemies) {
@@ -57,10 +58,15 @@ void gameLoop(std::vector<Enemy> &enemies) {
 	while (isRunning) {
 		time(&t0);
 
-		temp++;
+		//spawn enemies
 		if (temp % 30 == 0) {
 			spawnEnemy(enemies, map, renderer);
 		}
+		if (temp == 0) {
+			//spawnEnemy(enemies, map, renderer);
+		}
+		temp++;
+
 		//handling events
 		while (SDL_PollEvent(&ev) != 0) {
 			switch (ev.type) {
@@ -74,6 +80,7 @@ void gameLoop(std::vector<Enemy> &enemies) {
 		}
 
 		map.draw();
+		drawStats();
 		for (GameObject *object : allGameObjects) {
 			object->update();
 			for (Sprite sprite : object->sprites) {
@@ -97,12 +104,15 @@ int main(int argc, char *argv[]) {
 	}
 
 	std::vector<Enemy> enemies;
-	allGameObjects.push_back(new Tower(TILE_WIDTH*10,  TILE_HEIGHT*6));
-	allGameObjects.push_back(new Tower(TILE_WIDTH*4,  TILE_HEIGHT*3));
-	allGameObjects.push_back(new Tower(TILE_WIDTH*13, TILE_HEIGHT*9));
+	allGameObjects.push_back(new Tower(TILE_WIDTH * 10, TILE_HEIGHT * 6));
+	allGameObjects.push_back(new Tower(TILE_WIDTH * 4, TILE_HEIGHT * 3));
+	allGameObjects.push_back(new Tower(TILE_WIDTH * 13, TILE_HEIGHT * 9));
+	//allGameObjects.push_back(new Shot(100, 100, 0));
 
 	map = Map("/assets/map1.tmx");
+
 	gameLoop(enemies);
+
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 	return 0;
