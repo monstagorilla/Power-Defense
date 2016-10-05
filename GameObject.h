@@ -1,11 +1,12 @@
 #pragma once
 
-#include "util.h"
+#include<vector>
+
+#include "Point.h"
 #include "Sprite.h"
 
 class GameObject{
 public:
-
     virtual void update() = 0;
 
     Point pos;

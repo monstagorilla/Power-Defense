@@ -16,12 +16,18 @@
 #include "util.h"
 #include "textboxes.h"
 #include "Shot.h"
+#include "mouseManager.h"
+#include "GUIObject.h"
+#include "Button.h"
 
-std::vector<SDL_Texture *> Tower::textures;
+//std::vector<SDL_Texture *> Tower::textures;
 
 Map map;
 std::vector<GameObject *> allGameObjects; // YOLO
+std::vector<GUIObject *> allGUIObjects;
 SDL_Renderer *renderer;
+
+TextOutput *TextOutput::instance = NULL;
 
 int initWindowAndRenderer(SDL_Window **window) {
 	SDL_Init(SDL_INIT_VIDEO);
@@ -41,15 +47,13 @@ int initWindowAndRenderer(SDL_Window **window) {
 }
 
 void spawnEnemy(std::vector<Enemy> &enemies, Map &map, SDL_Renderer *renderer) {
-	allGameObjects.push_back(new Enemy(map, 100, 2.0));
+	allGameObjects.push_back(new Enemy(map, 100, 1.0));
 }
 
 void gameLoop(std::vector<Enemy> &enemies) {
 	bool isRunning = true;
 	SDL_Event ev;
-	Point mousePos;
-	mousePos.x = 0;
-	mousePos.y = 0;
+	Point mousePos = {0, 0};
 
 	time_t t0;
 	time_t t1;
@@ -67,6 +71,20 @@ void gameLoop(std::vector<Enemy> &enemies) {
 		}
 		temp++;
 
+		map.draw();
+		//drawStats();
+		for (GameObject *object : allGameObjects) {
+			object->update();
+			for (Sprite sprite : object->sprites) {
+				sprite.draw();
+			}
+		}
+
+		for (GUIObject* object: allGUIObjects){
+			object->draw();
+		}
+		//TextOutput::getInstance()->drawTextAndRect("TEst", 600, 100, 100, 30, 8, 0, COLOR_RED, COLOR_GREEN);
+
 		//handling events
 		while (SDL_PollEvent(&ev) != 0) {
 			switch (ev.type) {
@@ -76,19 +94,15 @@ void gameLoop(std::vector<Enemy> &enemies) {
 				case SDL_MOUSEMOTION:
 					mousePos.x = ev.motion.x;
 					mousePos.y = ev.motion.y;
+				case SDL_MOUSEBUTTONDOWN:
+					break;
 			}
 		}
+		mouseHandler(mousePos, ev);
 
-		map.draw();
-		drawStats();
-		for (GameObject *object : allGameObjects) {
-			object->update();
-			for (Sprite sprite : object->sprites) {
-				sprite.draw();
-			}
-		}
 		SDL_RenderPresent(renderer);
 		SDL_RenderClear(renderer);
+
 		time(&t1);
 		if (t1 - t0 < 1000000 / FRAMES_PER_SECOND) {
 			usleep(1000000 / FRAMES_PER_SECOND - (t1 - t0));
@@ -104,10 +118,11 @@ int main(int argc, char *argv[]) {
 	}
 
 	std::vector<Enemy> enemies;
-	allGameObjects.push_back(new Tower(TILE_WIDTH * 10, TILE_HEIGHT * 6));
-	allGameObjects.push_back(new Tower(TILE_WIDTH * 4, TILE_HEIGHT * 3));
-	allGameObjects.push_back(new Tower(TILE_WIDTH * 13, TILE_HEIGHT * 9));
-	//allGameObjects.push_back(new Shot(100, 100, 0));
+	allGameObjects.push_back(new Tower(10, 6));
+	allGameObjects.push_back(new Tower(4, 3));
+	allGameObjects.push_back(new Tower(13, 9));
+
+	initTowerMenu();
 
 	map = Map("/assets/map1.tmx");
 
