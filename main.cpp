@@ -24,7 +24,7 @@
 
 Map map;
 std::vector<GameObject *> allGameObjects; // YOLO
-std::vector<GUIObject *> allGUIObjects;
+GUIObject *root;
 SDL_Renderer *renderer;
 
 TextOutput *TextOutput::instance = NULL;
@@ -80,13 +80,12 @@ void gameLoop(std::vector<Enemy> &enemies) {
 			}
 		}
 
-		for (GUIObject* object: allGUIObjects){
-			object->draw();
-		}
-		//TextOutput::getInstance()->drawTextAndRect("TEst", 600, 100, 100, 30, 8, 0, COLOR_RED, COLOR_GREEN);
+		for(int i = 0; i < root->children.size(); i++){
+            root->children[i]->draw();
+        }
 
 		//handling events
-		while (SDL_PollEvent(&ev) != 0) {
+        while (SDL_PollEvent(&ev) != 0) {
 			switch (ev.type) {
 				case SDL_QUIT:
 					isRunning = false;
@@ -99,6 +98,9 @@ void gameLoop(std::vector<Enemy> &enemies) {
 			}
 		}
 		mouseHandler(mousePos, ev);
+
+		//TextOutput::getInstance()->drawTextAndRect("test",MAP_WIDTH * TILE_WIDTH, 10,  100, 30, 10, 0, COLOR_GREEN, COLOR_RED);
+		//TextOutput::getInstance()->drawText("test", MAP_WIDTH * TILE_WIDTH,100, 8, 0, COLOR_GREEN);
 
 		SDL_RenderPresent(renderer);
 		SDL_RenderClear(renderer);

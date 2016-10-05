@@ -4,6 +4,7 @@
 
 #include "Point.h"
 #include <string>
+#include <vector>
 
 class GUIObject{
 public:
@@ -18,4 +19,5 @@ public:
 	bool isActivated;
 	std::string text;
 	SDL_Color color;
+	std::vector<GUIObject *> children;
 };

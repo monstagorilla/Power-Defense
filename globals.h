@@ -8,4 +8,4 @@
 extern Map map;
 extern std::vector<GameObject *> allGameObjects;
 extern SDL_Renderer* renderer;
-extern std::vector<GUIObject *> allGUIObjects;
+extern GUIObject *root;
