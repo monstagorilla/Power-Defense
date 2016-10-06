@@ -24,7 +24,7 @@
 
 Map map;
 std::vector<GameObject *> allGameObjects; // YOLO
-GUIObject *root;
+GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
 
 TextOutput *TextOutput::instance = NULL;
@@ -80,9 +80,7 @@ void gameLoop(std::vector<Enemy> &enemies) {
 			}
 		}
 
-		for(int i = 0; i < root->children.size(); i++){
-            root->children[i]->draw();
-        }
+		root->draw();
 
 		//handling events
         while (SDL_PollEvent(&ev) != 0) {
@@ -123,7 +121,6 @@ int main(int argc, char *argv[]) {
 	allGameObjects.push_back(new Tower(10, 6));
 	allGameObjects.push_back(new Tower(4, 3));
 	allGameObjects.push_back(new Tower(13, 9));
-
 	initTowerMenu();
 
 	map = Map("/assets/map1.tmx");

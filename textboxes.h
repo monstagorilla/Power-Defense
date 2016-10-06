@@ -17,7 +17,6 @@ static void drawShopMenu() {
 
 }
 
-
 static void initTowerMenu() {
 	root->children.push_back(new Button("Upgrade", 1, 1, 5, 1, COLOR_GREEN, COLOR_RED));
 	root->children.push_back(new Button("Sell", 1, 2, 5, 1, COLOR_GREEN, COLOR_RED));

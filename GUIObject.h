@@ -8,10 +8,9 @@
 
 class GUIObject{
 public:
-	virtual void draw() = 0;
-	void setIsActivated(const bool state){
-		isActivated = state;
-	}
+	virtual void draw();
+	GUIObject();
+	virtual ~GUIObject(){};
 
 	Point pos;
 	int width;
