@@ -6,6 +6,12 @@
 #include <string>
 #include <vector>
 
+enum state {
+    unfocused = 0,
+    focused = 1,
+    pressed = 2
+};
+
 class GUIObject{
 public:
 	virtual void draw();
@@ -18,6 +24,7 @@ public:
 	bool isActivated;
 	std::string text;
 	SDL_Color color;
+    int state;
 
 	std::vector<GUIObject *> children;
 };
