@@ -5,6 +5,7 @@
 #include "textboxes.h"
 
 static bool isClicked = false;
+static bool towerMenuActivated = false;
 
 static void mouseHandler(const Point pos, SDL_Event &ev) {
     int xPos = pos.x / TILE_WIDTH;
@@ -28,6 +29,7 @@ static void mouseHandler(const Point pos, SDL_Event &ev) {
 
         //click left
         if (ev.button.button == SDL_BUTTON_LEFT) {
+            //map
             if (xPos <= MAP_WIDTH) {
                 Tower *actualTower = NULL;
                 for (GameObject *object : allGameObjects) {
@@ -36,12 +38,12 @@ static void mouseHandler(const Point pos, SDL_Event &ev) {
                         break;
                     }
                 }
+
                 for (auto child: root->children) {
                     if (actualTower != NULL) {
-
-                        child.isActivated = true;
+                        child->isActivated = true;
                     } else {
-                        child.isActivated = false;
+                        child->isActivated = false;
                     }
                 }
             } else {
@@ -50,8 +52,4 @@ static void mouseHandler(const Point pos, SDL_Event &ev) {
         }
 
     }
-}
-
-
-static void mouseClick(const Point pos) {
 }

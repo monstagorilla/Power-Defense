@@ -79,7 +79,10 @@ void gameLoop(std::vector<Enemy> &enemies) {
 				sprite.draw();
 			}
 		}
-		root->draw();
+
+        for(auto child: root->children){
+            child->draw();
+        }
 
 		//handling events
         while (SDL_PollEvent(&ev) != 0) {
@@ -90,8 +93,6 @@ void gameLoop(std::vector<Enemy> &enemies) {
 				case SDL_MOUSEMOTION:
 					mousePos.x = ev.motion.x;
 					mousePos.y = ev.motion.y;
-				case SDL_MOUSEBUTTONDOWN:
-					break;
 			}
 		}
 		mouseHandler(mousePos, ev);
