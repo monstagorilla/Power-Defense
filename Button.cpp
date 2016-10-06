@@ -12,7 +12,6 @@ Button::Button(std::string text, int x, int y, int w, int h, const SDL_Color col
 	this->colorPressed = colorPressed;
 	state = unfocused;
 	isActivated = false;
-    this->children = std::vector<GUIObject*> () ;
 }
 
 Button::~Button() {

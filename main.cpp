@@ -81,7 +81,7 @@ void gameLoop(std::vector<Enemy> &enemies) {
 		}
 
 		for(int i = 0; i < root->children.size(); i++){
-            root->children[i]->draw();
+            root->children[i].draw();
         }
 
 		//handling events

@@ -19,5 +19,5 @@ public:
 	bool isActivated;
 	std::string text;
 	SDL_Color color;
-	std::vector<GUIObject *> children;
+	std::vector<GUIObject> children;
 };
