@@ -20,8 +20,7 @@ Button::~Button() {
 
 void Button::draw() {
 	if (isActivated) {
-		GUIObject::draw();
-		auto foregroundColor = color;
+        auto foregroundColor = color;
 		auto backgroundColor = color;
 		if (state == focused) {
 			foregroundColor = colorPressed;
@@ -32,5 +31,8 @@ void Button::draw() {
 		TextOutput::getInstance()->drawTextAndRect(text, TILE_WIDTH * (pos.x + MAP_WIDTH),
 												   TILE_HEIGHT * (pos.y), TILE_WIDTH * width,
 												   TILE_HEIGHT * height, 8, 0, foregroundColor, backgroundColor);
+        for(auto child: children){
+            child->draw();
+        }
 	}
 }

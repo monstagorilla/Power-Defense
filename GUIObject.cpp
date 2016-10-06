@@ -5,9 +5,5 @@ GUIObject::GUIObject(){
 }
 
 void GUIObject::draw(){
-	if(isActivated){
-		for (auto child : children){
-			child->draw();
-		}
-	}
+
 }
