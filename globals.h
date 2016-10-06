@@ -9,3 +9,4 @@ extern Map map;
 extern std::vector<GameObject *> allGameObjects;
 extern SDL_Renderer* renderer;
 extern GUIObject *root;
+extern int lives;

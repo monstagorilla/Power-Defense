@@ -1,15 +1,22 @@
 #pragma once
 
+#include "Point.h"
+#include "Enemy.h"
+#include "Tower.h"
 #include "GameObject.h"
+
+class Tower;
+class Enemy;
 
 class Shot: public GameObject{
 public:
-	Shot(const int x, const int y, const int direction);
+	Shot(Point pos, Tower* Parent, Enemy* target);
 	~Shot();
 
 	virtual void update();
-
-	int direction;
-	int speed;
-
+	void explode();
+	Enemy* target;
+	Tower* parent;
+	float speed;
+	int damage;
 };
