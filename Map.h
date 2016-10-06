@@ -11,16 +11,17 @@ enum tiletype {
 };
 
 class Map {
-	private:
-        Tmx::Map tmxmap;
+    private:
+        Tmx::Map* tmxmap;
         std::vector<std::vector<tiletype>> terrain;
-		Sprite sprite;
+        Sprite sprite;
     public:
-		Map(){};
+        Map(){};
         Map(const std::string& filename);
+        ~Map(){}
         std::vector<Point> path;
-        int getHeight(){ return tmxmap.GetHeight(); };
-        int getWidth (){ return tmxmap.GetWidth();  };
+        int getHeight(){ return tmxmap->GetHeight(); };
+        int getWidth (){ return tmxmap->GetWidth();  };
         bool isGround(int x, int y);
-		void draw();
+        void draw();
 };
