@@ -22,6 +22,7 @@ Shot::~Shot() {
 void Shot::update() {
 	pos.moveTowards(target->pos, speed);	
 	sprites[0].pos = this->pos;
+	sprites[0].rotation = atan2(target->pos.y - pos.y, target->pos.x - pos.x)/M_PI * 180;
 	if(distance(pos, target->pos) < speed*2){
 		explode();
 	}
