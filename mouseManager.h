@@ -52,7 +52,7 @@ static void mouseHandler(const Point pos, SDL_Event &ev) {
             if (xPos <= MAP_WIDTH) {
                 Tower *actualTower = NULL;
                 for (auto *object : allGameObjects) {
-                    if ((int) object->pos.x == xPos && (int) object->pos.y == yPos) {
+                    if ((int) object->pos.x/TILE_WIDTH == xPos && (int) object->pos.y/TILE_HEIGHT == yPos) {
                         actualTower = (Tower *) object;
                         break;
                     }
