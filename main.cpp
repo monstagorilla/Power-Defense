@@ -26,6 +26,7 @@ Map map;
 std::vector<GameObject *> allGameObjects; // YOLO
 GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
+int lives = 5;
 
 TextOutput *TextOutput::instance = NULL;
 
@@ -46,10 +47,6 @@ int initWindowAndRenderer(SDL_Window **window) {
 	return 0;
 }
 
-void spawnEnemy(std::vector<Enemy> &enemies, Map &map, SDL_Renderer *renderer) {
-	allGameObjects.push_back(new Enemy(map, 100, 1.0));
-}
-
 void gameLoop(std::vector<Enemy> &enemies) {
 	bool isRunning = true;
 	SDL_Event ev;
@@ -63,11 +60,8 @@ void gameLoop(std::vector<Enemy> &enemies) {
 		time(&t0);
 
 		//spawn enemies
-		if (temp % 30 == 0) {
-			spawnEnemy(enemies, map, renderer);
-		}
-		if (temp == 0) {
-			//spawnEnemy(enemies, map, renderer);
+		if (temp % 50 == 0) {
+			allGameObjects.push_back(new Enemy(map, 100, 5.0));
 		}
 		temp++;
 
@@ -77,6 +71,15 @@ void gameLoop(std::vector<Enemy> &enemies) {
 			object->update();
 			for (Sprite sprite : object->sprites) {
 				sprite.draw();
+			}
+		}
+		//clean up dead oobjects
+		for (auto it = allGameObjects.begin(); it != allGameObjects.end();) {
+			if((*it)->dead){
+				it = allGameObjects.erase(it);
+				break;
+			} else {
+				it++;
 			}
 		}
 

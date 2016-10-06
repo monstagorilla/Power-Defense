@@ -1,6 +1,10 @@
 #pragma once
 #include "GameObject.h"
+#include "Enemy.h"
 #include "config.h"
+
+class Enemy;
+class Shot;
 
 class Tower: public GameObject{
 	public:
@@ -9,11 +13,12 @@ class Tower: public GameObject{
 	~Tower();
 
 	virtual void update();
-	virtual void shoot();
+	virtual void shoot(Enemy* target);
 
 	static std::vector<SDL_Texture*> textures;
 	float rotation;
-	float cooldown;
+	int reload_time;
+	int cooldown;
 	float range;
 	int price;
 };
