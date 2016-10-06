@@ -61,7 +61,7 @@ void gameLoop(std::vector<Enemy> &enemies) {
 
 		//spawn enemies
 		if (temp % 50 == 0) {
-			allGameObjects.push_back(new Enemy(map, 100, 5.0));
+			allGameObjects.push_back(new Enemy(map, 100, 1.0));
 		}
 		temp++;
 
