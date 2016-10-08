@@ -24,7 +24,8 @@ class Tower: public GameObject{
 	virtual void update(){};
 	virtual void shoot(Enemy* target){};
 	stats getStats();
-
+	int getMaxUpgrade();	
+	
 	const static std::vector<stats> stat;
 
 	int currentUpgrade;

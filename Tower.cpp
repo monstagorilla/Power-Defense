@@ -23,3 +23,7 @@ Tower::~Tower() {
 stats Tower::getStats(){	
 	return stat[currentUpgrade];
 }
+
+int Tower::getMaxUpgrade(){
+	return stat.size() - 1;
+}
