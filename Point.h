@@ -17,7 +17,6 @@ struct DisplayPoint{
     int x;
     int y;
 
-<<<<<<< HEAD
     GridPoint snap() const;
     Point point() const;
     DisplayPoint operator+(const DisplayPoint other) {

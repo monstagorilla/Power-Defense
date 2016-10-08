@@ -13,6 +13,7 @@ Tower::Tower(const GridPoint pos) {
 	rotation = 0;
 	currentUpgrade = 0;
 	ID = 2;
+    cooldown = 0;
 }
 
 Tower::~Tower() {

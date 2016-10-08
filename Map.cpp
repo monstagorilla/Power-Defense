@@ -14,8 +14,8 @@ Map::Map(const std::string &filename) {
         path.push_back(Point{tmxpoint.x, tmxpoint.y});
     }
 
-    terrain = std::vector<std::vector < tiletype >> (tmxmap->GetWidth(),
-            std::vector<tiletype>(tmxmap->GetHeight(), Ground));
+    terrain = std::vector<std::vector<tiletype >>(tmxmap->GetWidth(),
+                                                  std::vector<tiletype>(tmxmap->GetHeight(), Ground));
     auto tileLayer = tmxmap->GetTileLayer(0);
     for (int y = 0; y < tmxmap->GetHeight(); y++) {
         for (int x = 0; x < tmxmap->GetWidth(); x++) {
@@ -23,9 +23,11 @@ Map::Map(const std::string &filename) {
             terrain[x][y] = tileId == 14 ? Ground : Wall;
         }
     }
-    sprite = Sprite({MAP_WIDTH * TILE_WIDTH / 2, WINDOW_HEIGHT / 2}, MAP_WIDTH * TILE_WIDTH, WINDOW_HEIGHT, "/assets/map1.png");
-    isFocussed   = false;
-    focussedTile = { 0, 0 };
+    sprite = Sprite({MAP_WIDTH * TILE_WIDTH / 2, WINDOW_HEIGHT / 2}, MAP_WIDTH * TILE_WIDTH, WINDOW_HEIGHT,
+                    "/assets/map1.png");
+    isFocused = false;
+    focusedTile = {0, 0};
+}
 
 bool Map::isGround(GridPoint p) {
     std::cout << p.x << " | " << p.y << std::endl;
@@ -37,10 +39,10 @@ bool Map::isGround(GridPoint p) {
 }
 
 // Returns a pointer to the tower at p or nullptr if no such tower exists
-Tower* Map::getTowerAt(GridPoint p) {
-    for (auto& o : allGameObjects){
-        if(o->ID == 2 && o->pos.snap() == p) {
-            return (Tower *)(o.get());
+Tower *Map::getTowerAt(GridPoint p) {
+    for (auto &o : allGameObjects) {
+        if (o->ID == 2 && o->pos.snap() == p) {
+            return (Tower *) (o.get());
         }
     }
     return nullptr;
@@ -48,7 +50,7 @@ Tower* Map::getTowerAt(GridPoint p) {
 
 void Map::draw() {
     sprite.draw();
-    if(isFocused){
+    if (isFocused) {
         SDL_Rect rect;
         rect.x = focusedTile.x * TILE_WIDTH;
         rect.y = focusedTile.y * TILE_HEIGHT;
