@@ -3,7 +3,9 @@
 #include "tmxparser/Tmx.h"
 #include "Point.h"
 #include "Sprite.h"
+#include "Tower.h"
 #include "config.h"
+#include "globals.h"
 
 enum tiletype {
     Ground = 0,
@@ -20,11 +22,12 @@ class Map {
         Map(){};
         Map(const std::string& filename);
         ~Map(){}
-        bool isFocussed;
-        GridPoint focussedTile;
+        bool isFocused;
+        GridPoint focusedTile;
         std::vector<Point> path;
         int getHeight(){ return tmxmap->GetHeight(); };
         int getWidth (){ return tmxmap->GetWidth();  };
         bool isGround(GridPoint p);
+        Tower* getTowerAt(GridPoint p);
         void draw();
 };

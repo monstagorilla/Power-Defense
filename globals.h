@@ -8,6 +8,7 @@
 #include "GUIObject.h"
 #include "SDL2/SDL.h"
 
+class Map;
 extern Map map;
 extern std::vector< std::unique_ptr< GameObject > > allGameObjects;
 //extern std::vector<GameObject *> allGameObjects;

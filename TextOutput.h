@@ -4,6 +4,7 @@
 
 #include "globals.h"
 #include "colors.h"
+#include "Point.h"
 
 class TextOutput {
 public:
@@ -15,34 +16,39 @@ public:
 		return instance;
 	}
 
-	void drawText(const std::string text, const int x, const int y, const int size, const int font,
+	void drawText(const std::string text, DisplayPoint pos, const int size, const int font,
 				  const SDL_Color color) {
 		if (font >= 0 && font < fonts.size()) {
-			SDL_Surface *surfaceMessage = TTF_RenderText_Solid(fonts[font], text.c_str(), color);
-			SDL_Texture *message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-			SDL_Rect destRect;
-			destRect.x = x;
-			destRect.y = y;
-			destRect.w = text.length() * size;
-			destRect.h = 3 * size;
-			SDL_RenderCopy(renderer, message, NULL, &destRect);
-		} else {
-			std::cout << "Illegal FontIndex" << std::endl;
-		}
-	}
+            // TODO: don't make a new Texture/Surface every time
+            SDL_Surface *surfaceMessage = TTF_RenderText_Solid(fonts[font], text.c_str(), color);
+            SDL_Texture *message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+            SDL_Rect destRect;
+            destRect.x = pos.x;
+            destRect.y = pos.y;
+            destRect.w = text.length() * size;
+            destRect.h = 3 * size;
+            SDL_RenderCopy(renderer, message, NULL, &destRect);
+            SDL_DestroyTexture(message);
+            SDL_FreeSurface(surfaceMessage);
+        } else {
+            std::cout << "Illegal FontIndex" << std::endl;
+        }
+    }
 
-	void drawTextAndRect(const std::string text, const int x, const int y, const int w, const int h, const int size,
+	void drawTextAndRect(const std::string text, GridPoint pos, const int w, const int h, const int size,
 						 const int font, const SDL_Color foregroundColor, const SDL_Color backgroundColor) {
 		SDL_Rect rectBorder;
-		rectBorder.x = x;
-		rectBorder.y = y;
-		rectBorder.w = w;
-		rectBorder.h = h;
+		rectBorder.x = pos.upperLeft().x;
+		rectBorder.y = pos.upperLeft().y;
+		rectBorder.w = w * TILE_WIDTH;
+		rectBorder.h = h * TILE_HEIGHT;
 		SDL_SetRenderDrawColor(renderer, backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
 		SDL_RenderDrawRect(renderer, &rectBorder);
 		SDL_SetRenderDrawColor(renderer, COLOR_BLACK.r, COLOR_BLACK.g, COLOR_BLACK.b, COLOR_BLACK.a);
-		drawText(text, x + (rectBorder.w - text.length() * size) / 2, y + (rectBorder.h - size * 3) / 2, size, font,
-				 foregroundColor);
+		drawText(text, pos.upperLeft() + DisplayPoint
+                { (int)(w*TILE_WIDTH - size*text.length()  )/2,
+                  (int)(h*TILE_HEIGHT- size*3)/2},
+                 size, font, foregroundColor);
 	}
 
 private:
@@ -50,7 +56,7 @@ private:
 	std::vector<TTF_Font *> fonts;
 
 	TextOutput() {
-		addFont(std::string(CMAKE_SOURCE_DIR) + "/fonts/Raleway-Medium.ttf", 30);
+		addFont(std::string(CMAKE_SOURCE_DIR) + "/fonts/Raleway-Medium.ttf", 100);
 	}
 
 	TextOutput(const TextOutput &);
