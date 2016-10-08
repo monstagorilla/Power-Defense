@@ -16,7 +16,19 @@ void Point::moveTowards(const Point other, float length){
 }
 
 GridPoint Point::snap() {
-    return { (unsigned)this->x / TILE_WIDTH, (unsigned)this->y / TILE_HEIGHT };
+    return { (int)this->x / TILE_WIDTH, (int)this->y / TILE_HEIGHT };
+}
+
+GridPoint DisplayPoint::snap() {
+    return { this->x / TILE_WIDTH, this->y / TILE_HEIGHT };
+}
+
+DisplayPoint Point::displayPoint() {
+    return { (int)this->x , (int)this->y };
+}
+
+Point DisplayPoint::point(){
+    return { (float) this->x, (float) this->y };
 }
 
 Point GridPoint::center(){

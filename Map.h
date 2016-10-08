@@ -15,10 +15,13 @@ class Map {
         Tmx::Map* tmxmap;
         std::vector<std::vector<tiletype>> terrain;
         Sprite sprite;
+        
     public:
         Map(){};
         Map(const std::string& filename);
         ~Map(){}
+        bool isFocussed;
+        GridPoint focussedTile;
         std::vector<Point> path;
         int getHeight(){ return tmxmap->GetHeight(); };
         int getWidth (){ return tmxmap->GetWidth();  };
