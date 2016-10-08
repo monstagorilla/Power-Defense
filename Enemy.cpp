@@ -25,6 +25,7 @@ Enemy::~Enemy() {
 }
 
 void Enemy::update() {
+    pos.moveTowards(map.path[pathIndex], speed);
     if (distance(pos, map.path[pathIndex]) < 0.1) {
         pathIndex++;
 		if(pathIndex == map.path.size()){
@@ -33,7 +34,6 @@ void Enemy::update() {
 			die();
 		}
     }
-    pos.moveTowards(map.path[pathIndex], speed);
 
     for(int i = 0; i < sprites.size(); i++){
         sprites[i].pos = this->pos;
