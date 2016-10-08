@@ -34,3 +34,7 @@ Point DisplayPoint::point(){
 Point GridPoint::center(){
     return { (this->x + 0.5f) * TILE_WIDTH, (this->y + 0.5f) * TILE_WIDTH };
 }
+
+DisplayPoint GridPoint::upperLeft(){
+    return { this->x * TILE_WIDTH, this->y * TILE_WIDTH };
+}

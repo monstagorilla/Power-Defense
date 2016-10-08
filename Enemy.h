@@ -11,6 +11,7 @@
 
 class Tower;
 class Shot;
+class Map;
 
 class Enemy : public GameObject {
 public:

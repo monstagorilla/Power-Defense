@@ -28,10 +28,7 @@ static void setTowerMenuIsActivated(const bool state) {
 }
 
 static void displayTowerStats(Tower &tower) {
-	//cooldown
-	TextOutput::getInstance()->drawText(" Cooldown: " + std::to_string(
-		tower.cooldown), (MAP_WIDTH + 1) * TILE_WIDTH,
-		TILE_HEIGHT * 5, 8, 0, COLOR_GREEN);
+
 }
 
 

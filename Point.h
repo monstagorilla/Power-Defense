@@ -19,6 +19,12 @@ struct DisplayPoint{
 
     GridPoint snap();
     Point point();
+    DisplayPoint operator+(const DisplayPoint other) {
+        return { x+other.x, y+other.y };
+    }
+    DisplayPoint operator-(const DisplayPoint other) {
+        return { x-other.x, y-other.y };
+    }
 };
 
 struct GridPoint{
@@ -26,4 +32,14 @@ struct GridPoint{
     int y;
 
     Point center();
+    DisplayPoint upperLeft();
+    GridPoint operator+(const GridPoint other) {
+        return { x+other.x, y+other.y };
+    }
+    GridPoint operator-(const GridPoint other) {
+        return { x-other.x, y-other.y };
+    }
+    friend bool operator==(const GridPoint a, const GridPoint b) {
+        return a.x == b.x && a.y == b.y;
+    }
 };

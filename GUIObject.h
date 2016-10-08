@@ -18,7 +18,7 @@ public:
 	GUIObject();
 	virtual ~GUIObject(){};
 
-	Point pos;
+	GridPoint pos;
 	int width;
 	int height;
 	bool isActivated;
@@ -27,4 +27,6 @@ public:
     int state;
 
 	std::vector<GUIObject *> children;
+
+    bool contains(GridPoint p);
 };

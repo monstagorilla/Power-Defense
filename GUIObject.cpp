@@ -8,3 +8,8 @@ GUIObject::GUIObject(){
 void GUIObject::draw(){
 
 }
+
+bool GUIObject::contains(GridPoint p){
+    return p.x >= this->pos.x && p.x < this->pos.x + this->width &&
+           p.y >= this->pos.y && p.y < this->pos.y + this->height;
+}

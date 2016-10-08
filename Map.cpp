@@ -24,8 +24,8 @@ Map::Map(const std::string &filename) {
         }
     }
     sprite = Sprite(MAP_WIDTH * TILE_WIDTH / 2, WINDOW_HEIGHT / 2, MAP_WIDTH * TILE_WIDTH, WINDOW_HEIGHT, "/assets/map1.png");
-    isFocussed   = false;
-    focussedTile = { 0, 0 };
+    isFocused   = false;
+    focusedTile = { 0, 0 };
 }
 
 bool Map::isGround(GridPoint p) {
@@ -36,12 +36,22 @@ bool Map::isGround(GridPoint p) {
     }
 }
 
+// Returns a pointer to the tower at p or nullptr if no such tower exists
+Tower* Map::getTowerAt(GridPoint p) {
+    for (auto& o : allGameObjects){
+        if(o->ID == 2 && o->pos.snap() == p) {
+            return (Tower *)(o.get());
+        }
+    }
+    return nullptr;
+}
+
 void Map::draw() {
     sprite.draw();
-    if(isFocussed){
+    if(isFocused){
         SDL_Rect rect;
-        rect.x = focussedTile.x * TILE_WIDTH;
-        rect.y = focussedTile.y * TILE_HEIGHT;
+        rect.x = focusedTile.x * TILE_WIDTH;
+        rect.y = focusedTile.y * TILE_HEIGHT;
         rect.w = TILE_WIDTH;
         rect.h = TILE_HEIGHT;
         SDL_RenderDrawRect(renderer, &rect);
