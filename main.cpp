@@ -3,7 +3,7 @@
 #include <string>
 #include <unistd.h>
 #include <time.h>
-
+#include <memory>
 
 #include "GameObject.h"
 #include "Enemy.h"
@@ -19,11 +19,13 @@
 #include "mouseManager.h"
 #include "GUIObject.h"
 #include "Button.h"
+#include "BasicTower.h"
 
 //std::vector<SDL_Texture *> Tower::textures;
 
 Map map;
-std::vector<GameObject *> allGameObjects; // YOLO
+std::vector< std::unique_ptr< GameObject > > allGameObjects;
+//std::vector<GameObject *> allGameObjects; // YOLO
 GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
 int lives = 5;
@@ -61,13 +63,14 @@ void gameLoop(std::vector<Enemy> &enemies) {
 
         //spawn enemies
         if (temp % 50 == 0) {
-            allGameObjects.push_back(new Enemy(map, 100, 1.0));
+            //allGameObjects.push_back(new Enemy(map, 100, 1.0));
+	    allGameObjects.push_back(std::make_unique<Enemy>(map, 100, 1.0));
         }
         temp++;
 
         map.draw();
         //drawStats();
-        for (GameObject *object : allGameObjects) {
+        for (auto& object : allGameObjects) {
             object->update();
             for (Sprite sprite : object->sprites) {
                 sprite.draw();
@@ -99,7 +102,6 @@ void gameLoop(std::vector<Enemy> &enemies) {
             }
         }
         mouseHandler(mousePos, ev);
-
         //TextOutput::getInstance()->drawTextAndRect("test",MAP_WIDTH * TILE_WIDTH, 10,  100, 30, 10, 0, COLOR_GREEN, COLOR_RED);
         //TextOutput::getInstance()->drawText("test", MAP_WIDTH * TILE_WIDTH,100, 8, 0, COLOR_GREEN);
 
@@ -121,9 +123,9 @@ int main(int argc, char *argv[]) {
     }
 
     std::vector<Enemy> enemies;
-    allGameObjects.push_back(new Tower(10, 6));
-    allGameObjects.push_back(new Tower(4, 3));
-    allGameObjects.push_back(new Tower(13, 9));
+    allGameObjects.push_back(std::make_unique<BasicTower>(10, 6));
+    allGameObjects.push_back(std::make_unique<BasicTower>(4, 3));
+    allGameObjects.push_back(std::make_unique<BasicTower>(13, 9));
     initTowerMenu();
 
     map = Map("/assets/map1.tmx");

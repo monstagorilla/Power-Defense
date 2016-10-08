@@ -49,12 +49,12 @@ void Enemy::hit(Tower &source, int damage) {
 
 void Enemy::die(){
 	for(auto it = allGameObjects.begin(); it != allGameObjects.end(); it++){
-		if(*it == this){
+		if((*it).get() == this){
 			(*it)->dead = true;
 		}
-		if((*it)->ID == 3) {
-			if(((Shot*)*it)->target == this){
-				(*it)->dead = true;
+		if(((*it).get())->ID == 3) {
+			if(((Shot*)(*it).get())->target == this){
+				((*it).get())->dead = true;
 			}
 		}
 	}

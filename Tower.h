@@ -1,24 +1,33 @@
 #pragma once
+
 #include "GameObject.h"
 #include "Enemy.h"
 #include "config.h"
 
+
 class Enemy;
 class Shot;
 
+struct stats {
+	int reloadTime;
+	float range;
+	int price;
+	std::vector<std::string> paths;
+};
+
 class Tower: public GameObject{
 	public:
-	Tower();
+	Tower(){};
 	Tower(const int x, const int y);
 	~Tower();
 
-	virtual void update();
-	virtual void shoot(Enemy* target);
+	virtual void update(){};
+	virtual void shoot(Enemy* target){};
+	stats getStats();
 
-	static std::vector<SDL_Texture*> textures;
+	const static std::vector<stats> stat;
+
+	int currentUpgrade;
 	float rotation;
-	int reload_time;
 	int cooldown;
-	float range;
-	int price;
 };

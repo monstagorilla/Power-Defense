@@ -4,7 +4,7 @@
 
 static int getEnemyCount() {
 	int counter = 0;
-	for (GameObject *object : allGameObjects) {
+	for (auto& object : allGameObjects) {
 		if (object->ID == 1){
 			counter++;
 		}
