@@ -17,6 +17,7 @@ static GridPoint lastClicked = {0, 0};
 static void handleEvent(SDL_Event &ev){
     GridPoint p;
     switch (ev.type) {
+
     case SDL_MOUSEMOTION:
         p = DisplayPoint{ ev.motion.x, ev.motion.y }.snap();
         typeFocused = Nothing;
@@ -28,17 +29,17 @@ static void handleEvent(SDL_Event &ev){
             } else {
                 map.isFocused = false;
             }
-        } else {
-            for (auto child: root->children) {
-                if (child->isActivated && child->contains(p)) {
-                    child->state = focused;
-                    typeFocused = Button;
-                } else {
-                    child->state = unfocused;
-                }
+        }
+        for (auto child: root->children) {
+            if (child->isActivated && child->contains(p)) {
+                child->state = focused;
+                typeFocused = Button;
+            } else {
+                child->state = unfocused;
             }
         }
         break;
+
     case SDL_MOUSEBUTTONDOWN:
         p = DisplayPoint { ev.button.x, ev.button.y }.snap();
         switch (typeFocused) {
@@ -48,7 +49,14 @@ static void handleEvent(SDL_Event &ev){
         case Button:
             lastClicked = p;
             typeClicked = typeFocused;
+            for (auto child: root->children) {
+                if (child->isActivated && child->contains(p)) {
+                    child->state = pressed;
+                }
+            }
         }
+        break;
+
     case SDL_MOUSEBUTTONUP:
         p = DisplayPoint { ev.button.x, ev.button.y }.snap();
         switch (typeClicked) {
@@ -72,5 +80,11 @@ static void handleEvent(SDL_Event &ev){
             typeClicked = typeFocused;
         }
         typeClicked = Nothing;
+        for (auto child: root->children) {
+            if (child->state == pressed) {
+                child->state = focused;
+            }
+        }
+        break;
     }
 }
