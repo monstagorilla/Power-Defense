@@ -61,6 +61,10 @@ static void handleEvent(SDL_Event &ev){
                     for (auto child: root->children) {
                         child->isActivated = true;
                     }
+                } else {
+                    for (auto child: root->children) {
+                        child->isActivated = false;
+                    }
                 }
             }
         case Button:
