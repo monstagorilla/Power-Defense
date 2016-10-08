@@ -52,9 +52,9 @@ void Enemy::die(){
 		if((*it).get() == this){
 			(*it)->dead = true;
 		}
-		if(((*it).get())->ID == 3) {
+		if((*it)->ID == 3) {
 			if(((Shot*)(*it).get())->target == this){
-				((*it).get())->dead = true;
+				(*it)->dead = true;
 			}
 		}
 	}

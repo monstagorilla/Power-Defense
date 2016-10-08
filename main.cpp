@@ -25,7 +25,7 @@
 
 Map map;
 std::vector< std::unique_ptr< GameObject > > allGameObjects;
-//std::vector<GameObject *	> allGameObjects; // YOLO
+//std::vector<GameObject *> allGameObjects; // YOLO
 GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
 int lives = 5;
@@ -49,7 +49,7 @@ int initWindowAndRenderer(SDL_Window **window) {
     return 0;
 }
 
-void gameLoop(std::vector<Enemy> &enemies) {
+void gameLoop() {
     bool isRunning = true;
     SDL_Event ev;
     Point mousePos = {0, 0};
@@ -72,7 +72,7 @@ void gameLoop(std::vector<Enemy> &enemies) {
         //drawStats();
         for (auto& object : allGameObjects) {
             object->update();
-            for (Sprite sprite : object->sprites) {
+            for (auto sprite : object->sprites) {
                 sprite.draw();
             }
         }
@@ -80,7 +80,6 @@ void gameLoop(std::vector<Enemy> &enemies) {
         for (auto it = allGameObjects.begin(); it != allGameObjects.end();) {
             if ((*it)->dead) {
                 it = allGameObjects.erase(it);
-                break;
             } else {
                 it++;
             }
@@ -122,7 +121,6 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    std::vector<Enemy> enemies;
     allGameObjects.push_back(std::make_unique<BasicTower>(10, 6));
     allGameObjects.push_back(std::make_unique<BasicTower>(4, 3));
     allGameObjects.push_back(std::make_unique<BasicTower>(13, 9));
@@ -130,7 +128,7 @@ int main(int argc, char *argv[]) {
 
     map = Map("/assets/map1.tmx");
 
-    gameLoop(enemies);
+    gameLoop();
 
     SDL_DestroyWindow(window);
     SDL_Quit();
