@@ -5,12 +5,12 @@
 
 #include <algorithm>
 
-Shot::Shot(Point pos, Tower* parent, Enemy* target) {
+Shot::Shot(Point pos, Tower* parent, Enemy* target, const int damage) {
 	this->pos = pos;
 	this->target = target;
 	this->parent = parent;
 	this->speed  = 3.5;
-	this->damage = 10;
+	this->damage = damage;
 	ID = 3;
 	this->sprites.push_back(Sprite(this->pos.x, this->pos.y, 16, 16, "/assets/Shot.png"));
 	target->shots.push_back(this);

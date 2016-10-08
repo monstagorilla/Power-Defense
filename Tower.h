@@ -12,6 +12,7 @@ struct stats {
 	int reloadTime;
 	float range;
 	int price;
+	int damage;
 	std::vector<std::string> paths;
 };
 

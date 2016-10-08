@@ -10,7 +10,7 @@ class Enemy;
 
 class Shot: public GameObject{
 public:
-	Shot(Point pos, Tower* Parent, Enemy* target);
+	Shot(Point pos, Tower* Parent, Enemy* target, const int damage);
 	virtual ~Shot();
 
 	virtual void update();

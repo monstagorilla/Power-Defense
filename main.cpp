@@ -20,6 +20,7 @@
 #include "GUIObject.h"
 #include "Button.h"
 #include "BasicTower.h"
+#include "GUIFunctions.h"
 
 //std::vector<SDL_Texture *> Tower::textures;
 
@@ -121,12 +122,9 @@ int main(int argc, char *argv[]) {
     if (initWindowAndRenderer(&window) != 0) {
         return 1;
     }
-
-    allGameObjects.reserve(200);
-    allGameObjects.push_back(std::make_unique<BasicTower>(10, 6));
-    allGameObjects.push_back(std::make_unique<BasicTower>(4, 3));
-    allGameObjects.push_back(std::make_unique<BasicTower>(13, 9));
+    addBasicTower({0, 0});
     initTowerMenu();
+	
 
     map = Map("/assets/map1.tmx");
 
