@@ -11,7 +11,7 @@ class Enemy;
 class Shot: public GameObject{
 public:
 	Shot(Point pos, Tower* Parent, Enemy* target);
-	~Shot();
+	virtual ~Shot();
 
 	virtual void update();
 	void explode();

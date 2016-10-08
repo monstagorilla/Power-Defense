@@ -19,7 +19,7 @@ class Tower: public GameObject{
 	public:
 	Tower(){};
 	Tower(const int x, const int y);
-	~Tower();
+	virtual ~Tower();
 
 	virtual void update(){};
 	virtual void shoot(Enemy* target){};

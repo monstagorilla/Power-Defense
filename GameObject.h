@@ -8,7 +8,7 @@
 class GameObject{
 public:
     virtual void update() = 0;
-	~GameObject(){};
+    virtual ~GameObject(){};
     Point pos;
     std::vector<Sprite> sprites;
 	int ID;

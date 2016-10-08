@@ -25,7 +25,7 @@
 
 Map map;
 std::vector< std::unique_ptr< GameObject > > allGameObjects;
-//std::vector<GameObject *> allGameObjects; // YOLO
+//std::vector<GameObject *	> allGameObjects; // YOLO
 GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
 int lives = 5;
