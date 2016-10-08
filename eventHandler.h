@@ -8,7 +8,7 @@ static void handleEvent(SDL_Event &ev){
     switch (ev.type) {
     case SDL_MOUSEMOTION:
         GridPoint p = DisplayPoint{ ev.motion.x, ev.motion.y }.snap();
-        if (p.x <= MAP_WIDTH && !map.isGround(p.x, p.y)) {
+        if (p.x <= MAP_WIDTH && !map.isGround(p)) {
             map.isFocussed = true;
             map.focussedTile = p;
         } else {

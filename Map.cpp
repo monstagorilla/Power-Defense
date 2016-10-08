@@ -28,11 +28,11 @@ Map::Map(const std::string &filename) {
     focussedTile = { 0, 0 };
 }
 
-bool Map::isGround(int x, int y) {
-    if (x < 0 or y < 0 or x >= terrain.size() or y >= terrain[0].size()) {
+bool Map::isGround(GridPoint p) {
+    if (p.x < 0 or p.y < 0 or p.x >= terrain.size() or p.y >= terrain[0].size()) {
         return true;
     } else {
-        return terrain[x][y] == Ground;
+        return terrain[p.x][p.y] == Ground;
     }
 }
 
