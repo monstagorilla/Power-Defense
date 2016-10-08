@@ -7,7 +7,7 @@ const std::vector<stats> Tower::stat=
 		 {20, 100, 75, 30, {"/assets/TowerBase.png", "/assets/TowerTurret2.png"}},
 		 {15, 125, 100, 40, {"/assets/TowerBase.png", "/assets/TowerTurret3.png"}}};
 
-BasicTower::BasicTower(const int x, const int y) : Tower::Tower(x, y){
+BasicTower::BasicTower(const GridPoint pos) : Tower::Tower(pos){
 	for(auto path: stat[0].paths){
 		sprites.push_back(Sprite(pos.x, pos.y, TILE_WIDTH, TILE_HEIGHT, path));
 	}

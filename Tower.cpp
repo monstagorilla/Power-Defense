@@ -8,9 +8,9 @@
 
 extern SDL_Renderer *renderer;
 
-Tower::Tower(const int x, const int y) {
-	pos.x = (x + 0.5f) * TILE_WIDTH;
-	pos.y = (y + 0.5f) * TILE_HEIGHT;
+Tower::Tower(const GridPoint pos) {
+	this->pos.x = (pos.x + 0.5f) * TILE_WIDTH;
+	this->pos.y = (pos.y + 0.5f) * TILE_HEIGHT;
 	rotation = 0;
 	currentUpgrade = 0;
 	ID = 2;

@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include "Enemy.h"
 #include "config.h"
-
+#include "Point.h"
 
 class Enemy;
 class Shot;
@@ -19,7 +19,7 @@ struct stats {
 class Tower: public GameObject{
 	public:
 	Tower(){};
-	Tower(const int x, const int y);
+	Tower(const GridPoint pos);
 	virtual ~Tower();
 
 	virtual void update(){};

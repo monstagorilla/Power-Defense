@@ -4,7 +4,7 @@
 
 class BasicTower: public Tower{
 	public:	
-	BasicTower(const int x, const int y);
+	BasicTower(const GridPoint pos);
 	virtual ~BasicTower();
 	
 	virtual void shoot (Enemy* target);
