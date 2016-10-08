@@ -70,7 +70,8 @@ void gameLoop() {
 
         map.draw();
         //drawStats();
-        for (auto& object : allGameObjects) {
+        for (int i = 0; i < allGameObjects.size(); i++) {
+            auto object = allGameObjects[i].get();
             object->update();
             for (auto sprite : object->sprites) {
                 sprite.draw();
@@ -121,6 +122,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    allGameObjects.reserve(200);
     allGameObjects.push_back(std::make_unique<BasicTower>(10, 6));
     allGameObjects.push_back(std::make_unique<BasicTower>(4, 3));
     allGameObjects.push_back(std::make_unique<BasicTower>(13, 9));
