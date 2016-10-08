@@ -11,7 +11,7 @@
 class Sprite{
 	public:
 	Sprite(){};
-	Sprite(const int x, const int y, const int width, const int height, std::string path);
+	Sprite(const Point pos, const int width, const int height, std::string path);
 	virtual ~Sprite();
 	
 	virtual void draw();

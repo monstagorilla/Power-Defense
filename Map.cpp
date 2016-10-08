@@ -23,12 +23,13 @@ Map::Map(const std::string &filename) {
             terrain[x][y] = tileId == 14 ? Ground : Wall;
         }
     }
-    sprite = Sprite(MAP_WIDTH * TILE_WIDTH / 2, WINDOW_HEIGHT / 2, MAP_WIDTH * TILE_WIDTH, WINDOW_HEIGHT, "/assets/map1.png");
+    sprite = Sprite({MAP_WIDTH * TILE_WIDTH / 2, WINDOW_HEIGHT / 2}, MAP_WIDTH * TILE_WIDTH, WINDOW_HEIGHT, "/assets/map1.png");
     isFocussed   = false;
     focussedTile = { 0, 0 };
 }
 
 bool Map::isGround(GridPoint p) {
+    std::cout << p.x << " | " << p.y << std::endl;
     if (p.x < 0 or p.y < 0 or p.x >= terrain.size() or p.y >= terrain[0].size()) {
         return true;
     } else {

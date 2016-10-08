@@ -9,21 +9,21 @@ struct Point{
 
     // move this Point length units towards the other Point
     void moveTowards(const Point other, float length);
-    GridPoint snap();
-    DisplayPoint displayPoint();
+    GridPoint snap() const;
+    DisplayPoint displayPoint() const;
 };
 
 struct DisplayPoint{
     int x;
     int y;
 
-    GridPoint snap();
-    Point point();
+    GridPoint snap() const;
+    Point point() const;
 };
 
 struct GridPoint{
     int x;
     int y;
 
-    Point center();
+    Point center() const;
 };

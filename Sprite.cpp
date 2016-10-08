@@ -2,9 +2,8 @@
 #include "globals.h"
 #include "TextureCache.h"
 
-Sprite::Sprite(const int x, const int y, const int width, const int height, std::string path){
-	this->pos.x = x;
-    this->pos.y = y;
+Sprite::Sprite(const Point pos, const int width, const int height, std::string path){
+    this->pos = pos;
     this->width = width;
     this->height = height;
 	rotation = 0;
@@ -23,5 +22,5 @@ void Sprite::draw(){
     destRect.w = this->width;
     destRect.h = this->height;
 
-	SDL_RenderCopyEx(renderer, this->texture, NULL, &destRect, rotation, NULL, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(renderer, this->texture, NULL, &destRect, rotation, NULL, SDL_FLIP_NONE);
 }

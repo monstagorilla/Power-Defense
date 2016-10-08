@@ -2,14 +2,14 @@
 #include "globals.h"
 
 const std::vector<stats> Tower::stat=
-		{{20, 100, 100, 10, {"/assets/TowerBase.png", "/assets/TowerTurret.png" }},
+		{{20,  100, 100, 10, {"/assets/TowerBase.png", "/assets/TowerTurret.png" }},
 		 {20, 100, 50, 20, {"/assets/TowerBase.png", "/assets/TowerTurret1.png"}},
 		 {20, 100, 75, 30, {"/assets/TowerBase.png", "/assets/TowerTurret2.png"}},
 		 {15, 125, 100, 40, {"/assets/TowerBase.png", "/assets/TowerTurret3.png"}}};
 
 BasicTower::BasicTower(const GridPoint pos) : Tower::Tower(pos){
 	for(auto path: stat[0].paths){
-		sprites.push_back(Sprite(pos.x, pos.y, TILE_WIDTH, TILE_HEIGHT, path));
+		sprites.push_back(Sprite(pos.center(), TILE_WIDTH, TILE_HEIGHT, path));
 	}
 }
 

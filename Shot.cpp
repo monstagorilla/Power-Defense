@@ -12,7 +12,7 @@ Shot::Shot(Point pos, Tower* parent, Enemy* target, const int damage) {
 	this->speed  = 3.5;
 	this->damage = damage;
 	ID = 3;
-	this->sprites.push_back(Sprite(this->pos.x, this->pos.y, 16, 16, "/assets/Shot.png"));
+	this->sprites.push_back(Sprite(this->pos, 16, 16, "/assets/Shot.png"));
 	target->shots.push_back(this);
 }
 
