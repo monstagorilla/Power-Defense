@@ -24,6 +24,8 @@ Map::Map(const std::string &filename) {
         }
     }
     sprite = Sprite(MAP_WIDTH * TILE_WIDTH / 2, WINDOW_HEIGHT / 2, MAP_WIDTH * TILE_WIDTH, WINDOW_HEIGHT, "/assets/map1.png");
+    isFocussed   = false;
+    focussedTile = { 0, 0 };
 }
 
 bool Map::isGround(int x, int y) {
@@ -36,4 +38,12 @@ bool Map::isGround(int x, int y) {
 
 void Map::draw() {
     sprite.draw();
+    if(isFocussed){
+        SDL_Rect rect;
+        rect.x = focussedTile.x * TILE_WIDTH;
+        rect.y = focussedTile.y * TILE_HEIGHT;
+        rect.w = TILE_WIDTH;
+        rect.h = TILE_HEIGHT;
+        SDL_RenderDrawRect(renderer, &rect);
+    }
 }

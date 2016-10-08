@@ -16,7 +16,7 @@
 #include "util.h"
 #include "textboxes.h"
 #include "Shot.h"
-#include "mouseManager.h"
+#include "eventHandler.h"
 #include "GUIObject.h"
 #include "Button.h"
 #include "BasicTower.h"
@@ -93,16 +93,14 @@ void gameLoop() {
 
         //handling events
         while (SDL_PollEvent(&ev) != 0) {
-            switch (ev.type) {
-                case SDL_QUIT:
-                    isRunning = false;
-                    break;
-                case SDL_MOUSEMOTION:
-                    mousePos.x = ev.motion.x;
-                    mousePos.y = ev.motion.y;
+            if(ev.type == SDL_QUIT){
+                isRunning = false;
+                break;
+            } else {
+                handleEvent(ev);
             }
         }
-        mouseHandler(mousePos, ev);
+        
         //TextOutput::getInstance()->drawTextAndRect("test",MAP_WIDTH * TILE_WIDTH, 10,  100, 30, 10, 0, COLOR_GREEN, COLOR_RED);
         //TextOutput::getInstance()->drawText("test", MAP_WIDTH * TILE_WIDTH,100, 8, 0, COLOR_GREEN);
 
