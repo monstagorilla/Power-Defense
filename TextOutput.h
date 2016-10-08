@@ -19,18 +19,21 @@ public:
 	void drawText(const std::string text, DisplayPoint pos, const int size, const int font,
 				  const SDL_Color color) {
 		if (font >= 0 && font < fonts.size()) {
-			SDL_Surface *surfaceMessage = TTF_RenderText_Solid(fonts[font], text.c_str(), color);
-			SDL_Texture *message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
-			SDL_Rect destRect;
-			destRect.x = pos.x;
-			destRect.y = pos.y;
-			destRect.w = text.length() * size;
-			destRect.h = 3 * size;
-			SDL_RenderCopy(renderer, message, NULL, &destRect);
-		} else {
-			std::cout << "Illegal FontIndex" << std::endl;
-		}
-	}
+            // TODO: don't make a new Texture/Surface every time
+            SDL_Surface *surfaceMessage = TTF_RenderText_Solid(fonts[font], text.c_str(), color);
+            SDL_Texture *message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+            SDL_Rect destRect;
+            destRect.x = pos.x;
+            destRect.y = pos.y;
+            destRect.w = text.length() * size;
+            destRect.h = 3 * size;
+            SDL_RenderCopy(renderer, message, NULL, &destRect);
+            SDL_DestroyTexture(message);
+            SDL_FreeSurface(surfaceMessage);
+        } else {
+            std::cout << "Illegal FontIndex" << std::endl;
+        }
+    }
 
 	void drawTextAndRect(const std::string text, GridPoint pos, const int w, const int h, const int size,
 						 const int font, const SDL_Color foregroundColor, const SDL_Color backgroundColor) {
