@@ -51,8 +51,9 @@ void Map::draw() {
     sprite.draw();
     if (isFocused) {
         SDL_Rect rect;
-        rect.x = focusedTile.x * TILE_WIDTH;
-        rect.y = focusedTile.y * TILE_HEIGHT;
+        DisplayPoint corner = focusedTile.upperLeft();
+        rect.x = corner.x;
+        rect.y = corner.y;
         rect.w = TILE_WIDTH;
         rect.h = TILE_HEIGHT;
         SDL_RenderDrawRect(renderer, &rect);
