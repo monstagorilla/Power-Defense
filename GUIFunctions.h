@@ -15,10 +15,12 @@ void addBasicTower(const GridPoint pos) {
 }
 
 void upgradeTower() {
-    currentTower->update();
-    currentTower->sprites.clear();
-    for (auto path: currentTower->stat[currentTower->currentUpgrade].paths) {
-        currentTower->sprites.push_back(Sprite(currentTower->pos, TILE_WIDTH, TILE_HEIGHT, path));
+    if (currentTower->currentUpgrade < currentTower->getMaxUpgrade()) {
+        currentTower->currentUpgrade++;
+        currentTower->sprites.clear();
+        for (auto path: currentTower->stat[currentTower->currentUpgrade].paths) {
+            currentTower->sprites.push_back(Sprite(currentTower->pos, TILE_WIDTH, TILE_HEIGHT, path));
+        }
+        std::cout << "scuuuurrrr" << std::endl;
     }
-    std::cout << "scuuuurrrr" << std::endl;
 }
