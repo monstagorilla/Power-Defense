@@ -130,9 +130,9 @@ int main(int argc, char *argv[]) {
 
     map = Map("/assets/map1.tmx");
     
-    addBasicTower({0, 0});
-    addBasicTower({6, 7});
-    addBasicTower({5, 11});
+    addBasicTower({3, 5});
+    addBasicTower({8, 7});
+    addBasicTower({11, 9});
     
 
     gameLoop();
