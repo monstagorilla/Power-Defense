@@ -7,10 +7,11 @@
 #include "Point.h"
 
 static Tower *currentTower = nullptr;
+static GridPoint currentPos = {0, 0};
 
-void addBasicTower(const GridPoint pos) {
-    if (pos.x >= 0 && pos.x < MAP_WIDTH && pos.y >= 0 && pos.y < MAP_HEIGHT && !map.isGround(pos)) {
-        allGameObjects.push_back(std::make_unique<BasicTower>(pos));
+void addBasicTower() {
+    if (currentPos.x >= 0 && currentPos.x < MAP_WIDTH && currentPos.y >= 0 && currentPos.y < MAP_HEIGHT && !map.isGround(currentPos)) {
+        allGameObjects.push_back(std::make_unique<BasicTower>(currentPos));
     }
 }
 

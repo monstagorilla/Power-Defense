@@ -2,7 +2,7 @@
 
 #include "Point.h"
 #include "globals.h"
-#include "textboxes.h"
+#include "GUI.h"
 
 enum Clickable {
     Nothing,
@@ -65,14 +65,18 @@ static void handleEvent(SDL_Event &ev){
                 case MapTile:
                     if(p == lastClicked) {
                         Tower* clickedTower = map.getTowerAt(p);
+                        currentPos = p;
+                        for (auto element: root->traverse()) {
+                            element->isActivated = false;
+                        }
                         if(clickedTower){
                             for (auto element: root->traverse()) {
                                 element->isActivated = true;
                             }
                             currentTower = clickedTower;
-                        } else {
-                            for (auto element: root->traverse()) {
-                                element->isActivated = false;
+                        } else if(!map.isGround(p)){
+                            for (auto element: root->getChild(buymenu)->traverse()) {
+                                element->isActivated = true;
                             }
                         }
                     }
