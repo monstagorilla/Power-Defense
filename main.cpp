@@ -28,7 +28,7 @@
 //std::vector<SDL_Texture *> Tower::textures;
 
 Map map;
-std::vector< std::unique_ptr< GameObject > > allGameObjects;
+std::vector<std::unique_ptr<GameObject> > allGameObjects;
 //std::vector<GameObject *> allGameObjects; // YOLO
 GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
@@ -57,18 +57,18 @@ void gameLoop() {
     bool isRunning = true;
     SDL_Event ev;
     Point mousePos = {0, 0};
-    
+
     timeval tv;
     int temp = 0;
     while (isRunning) {
-    gettimeofday (&tv, NULL);
-    double t0 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
-    double t1 = t0;
+        gettimeofday(&tv, NULL);
+        double t0 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
+        double t1 = t0;
 
         //spawn enemies
         if (temp % 50 == 0) {
             //allGameObjects.push_back(new Enemy(map, 100, 1.0));
-	    allGameObjects.push_back(std::make_unique<Enemy>(map, 100, 3.0));
+            allGameObjects.push_back(std::make_unique<Enemy>(map, 100, 3.0));
         }
         temp++;
 
@@ -96,22 +96,19 @@ void gameLoop() {
 
         //handling events
         while (SDL_PollEvent(&ev) != 0) {
-            if(ev.type == SDL_QUIT){
+            if (ev.type == SDL_QUIT) {
                 isRunning = false;
                 break;
             } else {
                 handleEvent(ev);
             }
         }
-        
-        //TextOutput::getInstance()->drawTextAndRect("test",MAP_WIDTH * TILE_WIDTH, 10,  100, 30, 10, 0, COLOR_GREEN, COLOR_RED);
-        //TextOutput::getInstance()->drawText("test", MAP_WIDTH * TILE_WIDTH,100, 8, 0, COLOR_GREEN);
 
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
 
-        gettimeofday (&tv, NULL);
-	t1 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
+        gettimeofday(&tv, NULL);
+        t1 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
         if (t1 - t0 < 1000000.0 / FRAMES_PER_SECOND) {
             usleep(1000000.0 / FRAMES_PER_SECOND - (t1 - t0));
         }
@@ -124,16 +121,14 @@ int main(int argc, char *argv[]) {
     if (initWindowAndRenderer(&window) != 0) {
         return 1;
     }
-    
-    initTowerMenu();
-	
 
+    initGUI();
     map = Map("/assets/map1.tmx");
-    
+
     addBasicTower({0, 0});
     addBasicTower({6, 7});
     addBasicTower({5, 11});
-    
+
 
     gameLoop();
 

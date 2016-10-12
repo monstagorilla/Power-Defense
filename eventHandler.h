@@ -18,73 +18,80 @@ static void handleEvent(SDL_Event &ev){
     GridPoint p;
     switch (ev.type) {
 
-    case SDL_MOUSEMOTION:
-        p = DisplayPoint{ ev.motion.x, ev.motion.y }.snap();
-        typeFocused = Nothing;
-        if (p.x <= MAP_WIDTH){
-            if(!map.isGround(p)) {
-                map.isFocused = true;
-                map.focusedTile = p;
-                typeFocused = MapTile;
-            } else {
-                map.isFocused = false;
-            }
-        }
-        for (auto child: root->children) {
-            if (child->isActivated && child->contains(p)) {
-                child->state = focused;
-                typeFocused = Button;
-            } else {
-                child->state = unfocused;
-            }
-        }
-        break;
-
-    case SDL_MOUSEBUTTONDOWN:
-        p = DisplayPoint { ev.button.x, ev.button.y }.snap();
-        switch (typeFocused) {
-        case Nothing:
-            break;
-        case MapTile:
-        case Button:
-            lastClicked = p;
-            typeClicked = typeFocused;
-            for (auto child: root->children) {
-                if (child->isActivated && child->contains(p)) {
-                    child->state = pressed;
-                }
-            }
-        }
-        break;
-
-    case SDL_MOUSEBUTTONUP:
-        p = DisplayPoint { ev.button.x, ev.button.y }.snap();
-        switch (typeClicked) {
-        case Nothing:
-            break;
-        case MapTile:
-            if(p == lastClicked) {
-                Tower* clickedTower = map.getTowerAt(p);
-                if(clickedTower){
-                    for (auto child: root->children) {
-                        child->isActivated = true;
-                    }
+        case SDL_MOUSEMOTION:
+            p = DisplayPoint{ ev.motion.x, ev.motion.y }.snap();
+            typeFocused = Nothing;
+            if (p.x <= MAP_WIDTH){
+                if(!map.isGround(p)) {
+                    map.isFocused = true;
+                    map.focusedTile = p;
+                    typeFocused = MapTile;
                 } else {
-                    for (auto child: root->children) {
-                        child->isActivated = false;
-                    }
+                    map.isFocused = false;
                 }
             }
-        case Button:
-            lastClicked = p;
-            typeClicked = typeFocused;
-        }
-        typeClicked = Nothing;
-        for (auto child: root->children) {
-            if (child->state == pressed) {
-                child->state = focused;
+            for (auto element: root->traverse()) {
+                if (element->isActivated && element->contains(p)) {
+                    element->state = focused;
+                    typeFocused = Button;
+                } else {
+                    element->state = unfocused;
+                }
             }
-        }
-        break;
+            break;
+
+        case SDL_MOUSEBUTTONDOWN:
+            p = DisplayPoint { ev.button.x, ev.button.y }.snap();
+            switch (typeFocused) {
+                case Nothing:
+                    break;
+                case MapTile:
+                case Button:
+                    lastClicked = p;
+                    typeClicked = typeFocused;
+                    for (auto element: root->traverse()) {
+                        if (element->isActivated && element->contains(p)) {
+                            element->state = pressed;
+                        }
+                    }
+            }
+            break;
+
+        case SDL_MOUSEBUTTONUP:
+            p = DisplayPoint { ev.button.x, ev.button.y }.snap();
+            switch (typeClicked) {
+                case Nothing:
+                    break;
+                case MapTile:
+                    if(p == lastClicked) {
+                        Tower* clickedTower = map.getTowerAt(p);
+                        if(clickedTower){
+                            for (auto element: root->traverse()) {
+                                element->isActivated = true;
+                            }
+                            currentTower = clickedTower;
+                        } else {
+                            for (auto element: root->traverse()) {
+                                element->isActivated = false;
+                            }
+                        }
+                    }
+                case Button:
+                    lastClicked = p;
+                    typeClicked = typeFocused;
+                    for (auto element: root->traverse()) {
+                        if (element->isActivated && element->contains(p)) {
+                            element->onClick();
+                        }
+                    }
+
+            }
+            typeClicked = Nothing;
+            for (auto element: root->traverse()) {
+                if (element->state == pressed) {
+                    element->state = focused;
+                }
+            }
+            break;
     }
 }

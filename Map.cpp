@@ -30,7 +30,6 @@ Map::Map(const std::string &filename) {
 }
 
 bool Map::isGround(GridPoint p) {
-    std::cout << p.x << " | " << p.y << std::endl;
     if (p.x < 0 or p.y < 0 or p.x >= terrain.size() or p.y >= terrain[0].size()) {
         return true;
     } else {

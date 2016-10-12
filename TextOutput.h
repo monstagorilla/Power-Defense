@@ -20,7 +20,7 @@ public:
 				  const SDL_Color color) {
 		if (font >= 0 && font < fonts.size()) {
             // TODO: don't make a new Texture/Surface every time
-            SDL_Surface *surfaceMessage = TTF_RenderText_Solid(fonts[font], text.c_str(), color);
+            SDL_Surface *surfaceMessage = TTF_RenderUTF8_Blended(fonts[font], text.c_str(), color);
             SDL_Texture *message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
             SDL_Rect destRect;
             destRect.x = pos.x;

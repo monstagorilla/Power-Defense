@@ -4,7 +4,7 @@
 
 class Button : public GUIObject {
 public:
-	Button(std::string text, int x, int y, int w, int h, const SDL_Color color, const SDL_Color colorPressed);
+	Button(std::string text, int x, int y, int w, int h, const SDL_Color color, const SDL_Color colorPressed, void (*onClick)());
 
 	~Button();
 
