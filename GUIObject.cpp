@@ -4,6 +4,10 @@
 GUIObject::GUIObject() {
     this->children = std::vector<GUIObject *>();
     state = unfocused;
+    isActivated = false;
+    pos = GridPoint{0, 0};
+    width = 0;
+    height = 0;
 }
 
 void GUIObject::draw() {
