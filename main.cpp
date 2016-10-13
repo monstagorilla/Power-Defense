@@ -17,7 +17,7 @@
 #include "TextOutput.h"
 #include "tmxparser/Tmx.h"
 #include "util.h"
-#include "textboxes.h"
+#include "GUI.h"
 #include "Shot.h"
 #include "eventHandler.h"
 #include "GUIObject.h"
@@ -124,10 +124,6 @@ int main(int argc, char *argv[]) {
 
     initGUI();
     map = Map("/assets/map1.tmx");
-    
-    addBasicTower({3, 5});
-    addBasicTower({8, 7});
-    addBasicTower({11, 9});
     
     gameLoop();
 

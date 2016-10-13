@@ -2,7 +2,7 @@
 
 #include "Point.h"
 #include "globals.h"
-#include "textboxes.h"
+#include "GUI.h"
 
 static bool isClicked = false;
 
