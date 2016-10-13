@@ -110,7 +110,7 @@ void Enemy::drawHealthbar(int width, int height, int border){
     for(int i = 1; i < maxHealth/pow(10, healthscale); i++){
         rect.x = inner.x + i*width/(maxHealth/pow(10, healthscale));
         rect.y = inner.y;
-        rect.w = 2;
+        rect.w = border;
         rect.h = height;
         SDL_RenderFillRect(renderer, &rect);
     }
