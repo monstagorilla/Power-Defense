@@ -22,6 +22,5 @@ void upgradeTower() {
         for (auto path: currentTower->stat[currentTower->currentUpgrade].paths) {
             currentTower->sprites.push_back(Sprite(currentTower->pos, TILE_WIDTH, TILE_HEIGHT, path));
         }
-        std::cout << "scuuuurrrr" << std::endl;
     }
 }

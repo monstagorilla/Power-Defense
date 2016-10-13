@@ -19,7 +19,6 @@ BasicTower::~BasicTower(){
 
 void BasicTower::shoot(Enemy* target) {
 	allGameObjects.push_back(std::make_unique<Shot> (pos, this, target, getStats().damage));
-	//std::cout << "shot" << this->pos.x << " | " << this->pos.y << std::endl;
 }
 
 void BasicTower::update() {
