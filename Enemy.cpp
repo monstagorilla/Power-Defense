@@ -106,7 +106,7 @@ void Enemy::drawHealthbar(int width, int height, int border){
     SDL_RenderFillRect(renderer, &rect);
     
     // Draw black separating bars
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);
     for(int i = 1; i < maxHealth/pow(10, healthscale); i++){
         rect.x = inner.x + i*width/(maxHealth/pow(10, healthscale));
         rect.y = inner.y;
@@ -114,6 +114,7 @@ void Enemy::drawHealthbar(int width, int height, int border){
         rect.h = height;
         SDL_RenderFillRect(renderer, &rect);
     }
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 }
 
 void Enemy::hit(Tower &source, int damage) {
