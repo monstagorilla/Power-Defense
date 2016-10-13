@@ -44,7 +44,7 @@ void Enemy::update() {
     }
 }
 
-void Enemy::drawHealthbar(){
+void Enemy::drawHealthbar(int width, int height, int border){
     struct rgbcolor {
         uint8_t r;
         uint8_t g;
@@ -59,11 +59,7 @@ void Enemy::drawHealthbar(){
         { 255,   0,   0},
         { 100,   0, 100},
     };
-    
-    
-    int width = 60;
-    int height = 10;
-    int border = 2;
+
     auto corner = DisplayPoint{pos.x - width/2 - border, pos.y - 30 - border};
     auto inner  = DisplayPoint{pos.x - width/2, pos.y - 30}; 
     int healthscale = log10(std::max(1, maxHealth/2));

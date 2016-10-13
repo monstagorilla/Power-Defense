@@ -19,7 +19,7 @@ public:
     virtual ~Enemy();
 
     virtual void update();
-    void drawHealthbar();
+    void drawHealthbar(int width = 40, int height = 8, int border = 2);
     void hit(Tower& source, int damage);
     std::vector<SDL_Texture*> textures;
 	std::vector<Shot*> shots;
