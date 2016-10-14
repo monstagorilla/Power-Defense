@@ -18,8 +18,6 @@ public:
 	virtual ~GUIObject(){};
 
     virtual void draw();
-    virtual void activate();
-    virtual void inactivate();
     GUIObject *getChild(const std::string path);
     void setState(const int state, const GridPoint p);
     std::vector<GUIObject*> traverse();

@@ -23,6 +23,8 @@ public:
     std::vector<SDL_Texture*> textures;
 	std::vector<Shot*> shots;
 
+	int loot;
+
 private:
     int maxHealth;
     int health;

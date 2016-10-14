@@ -24,6 +24,7 @@
 #include "Button.h"
 #include "BasicTower.h"
 #include "GUIFunctions.h"
+#include "gamestats.h"
 
 //std::vector<SDL_Texture *> Tower::textures;
 
@@ -33,6 +34,7 @@ std::vector<std::unique_ptr<GameObject> > allGameObjects;
 GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
 int lives = 5;
+Gamestats gamestats;
 
 TextOutput *TextOutput::instance = NULL;
 
@@ -90,8 +92,8 @@ void gameLoop() {
             }
         }
 
-        for (auto child : root->children) {
-            child->draw();
+        for(auto element: root->traverse()){
+            element->draw();
         }
 
         //handling events

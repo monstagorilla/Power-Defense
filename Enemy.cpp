@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "config.h"
 #include "globals.h"
+#include "gamestats.h"
 
 
 Enemy::Enemy(Map &map, int health, float speed) : map(map) {
@@ -16,6 +17,7 @@ Enemy::Enemy(Map &map, int health, float speed) : map(map) {
 	this->health = health;
 	this->maxHealth = health;
 	this->speed = speed;
+	this->loot = 100;
 	ID = 1;
 	this->sprites.push_back(Sprite(pos, TILE_WIDTH, TILE_WIDTH, "/assets/Enemy.png"));
 }
@@ -42,7 +44,7 @@ void Enemy::update() {
 
 void Enemy::hit(Tower &source, int damage) {
 	health -= damage;
-	if(health <= 0) {
+	if(health <= 0 && !dead) {
 		die();
 	}
 }
@@ -51,6 +53,7 @@ void Enemy::die(){
 	for(auto it = allGameObjects.begin(); it != allGameObjects.end(); it++){
 		if((*it).get() == this){
 			(*it)->dead = true;
+			gamestats.money+=this->loot;
 		}
 		if((*it)->ID == 3) {
 			if(((Shot*)(*it).get())->target == this){

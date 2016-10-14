@@ -20,7 +20,6 @@ Button::~Button() {
 
 void Button::draw() {
     if (isActivated) {
-        GUIObject::draw();
         auto foregroundColor = color;
         auto backgroundColor = color;
         if (state == focused) {

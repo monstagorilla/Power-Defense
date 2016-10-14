@@ -7,9 +7,7 @@ GUIObject::GUIObject() {
 }
 
 void GUIObject::draw() {
-    for (auto child: children) {
-        child->draw();
-    }
+
 }
 
 bool GUIObject::contains(GridPoint p) {
@@ -17,35 +15,11 @@ bool GUIObject::contains(GridPoint p) {
            p.y >= this->pos.y && p.y < this->pos.y + this->height;
 }
 
-void GUIObject::activate() {
-    this->isActivated = true;
-    for (auto child: children) {
-        child->activate();
-    }
-}
-
-void GUIObject::inactivate() {
-    this->isActivated = true;
-    for (auto child: children) {
-        child->activate();
-    }
-}
-
 GUIObject *GUIObject::getChild(const std::string path) {
     if (path.length() > 0 && this->children.size() > (int) path.at(0) - 48) { //48 is the value of '0' in ASCII //
         return children[(int) path.at(0) - 48]->getChild(path.substr(1, path.length() - 1));
     } else {
         return this;
-    }
-}
-
-void GUIObject::setState(const int state, const GridPoint p) {
-    if (isActivated && contains(p)) {
-        this->state = state;
-    } else {
-        for (auto child: children) {
-            child->setState(state, p);
-        }
     }
 }
 

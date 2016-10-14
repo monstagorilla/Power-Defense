@@ -7,6 +7,8 @@
 #include "GameObject.h"
 #include "GUIObject.h"
 #include "SDL2/SDL.h"
+#include "gamestats.h"
+
 
 class Map;
 extern Map map;
@@ -15,3 +17,4 @@ extern std::vector< std::unique_ptr< GameObject > > allGameObjects;
 extern SDL_Renderer* renderer;
 extern GUIObject *root;
 extern int lives;
+extern Gamestats gamestats;

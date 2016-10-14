@@ -66,16 +66,16 @@ static void handleEvent(SDL_Event &ev){
                     if(p == lastClicked) {
                         Tower* clickedTower = map.getTowerAt(p);
                         currentPos = p;
-                        for (auto element: root->traverse()) {
+                        for (auto element: root->getChild(path_menus)->traverse()) {
                             element->isActivated = false;
                         }
                         if(clickedTower){
-                            for (auto element: root->traverse()) {
+                            for (auto element: root->getChild(path_menus)->traverse()) {
                                 element->isActivated = true;
                             }
                             currentTower = clickedTower;
                         } else if(!map.isGround(p)){
-                            for (auto element: root->getChild(buymenu)->traverse()) {
+                            for (auto element: root->getChild(path_buymenu)->traverse()) {
                                 element->isActivated = true;
                             }
                         }
