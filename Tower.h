@@ -24,12 +24,12 @@ class Tower: public GameObject{
 
 	virtual void update(){};
 	virtual void shoot(Enemy* target){};
-	stats getStats();
-	int getMaxUpgrade();	
+	virtual stats getStats();
+	virtual int getMaxUpgrade();
 
-	const static std::vector<stats> stat; //TODO manage OOP
-
+	const static std::vector<stats> stat;
 	int currentUpgrade;
 	float rotation;
 	int cooldown;
+
 };

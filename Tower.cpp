@@ -8,6 +8,8 @@
 
 extern SDL_Renderer *renderer;
 
+const std::vector<stats> Tower::stat={};
+
 Tower::Tower(const GridPoint pos) {
 	this->pos = pos.center();
 	rotation = 0;
@@ -20,10 +22,10 @@ Tower::~Tower() {
 
 }
 
-stats Tower::getStats(){	
-	return stat[currentUpgrade];
+stats Tower::getStats(){
+
 }
 
 int Tower::getMaxUpgrade(){
-	return stat.size() - 1;
+
 }

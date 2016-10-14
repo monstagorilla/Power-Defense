@@ -1,7 +1,7 @@
 #include "BasicTower.h"
 #include "globals.h"
 
-const std::vector<stats> Tower::stat=
+const std::vector<stats> BasicTower::stat=
 		{{20,  100, 100, 10, {"/assets/TowerBase.png", "/assets/TowerTurret.png" }},
 		 {20, 100, 50, 20, {"/assets/TowerBase.png", "/assets/TowerTurret1.png"}},
 		 {20, 100, 75, 30, {"/assets/TowerBase.png", "/assets/TowerTurret2.png"}},
@@ -43,4 +43,12 @@ void BasicTower::update() {
 		}
 	}
 	cooldown--;
+}
+
+stats BasicTower::getStats(){
+	return stat[currentUpgrade];
+}
+
+int BasicTower::getMaxUpgrade(){
+	return stat.size() - 1;
 }

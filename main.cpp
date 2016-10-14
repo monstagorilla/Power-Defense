@@ -26,15 +26,13 @@
 #include "GUIFunctions.h"
 #include "gamestats.h"
 
-//std::vector<SDL_Texture *> Tower::textures;
-
 Map map;
 std::vector<std::unique_ptr<GameObject> > allGameObjects;
 //std::vector<GameObject *> allGameObjects; // YOLO
 GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
 int lives = 5;
-Gamestats gamestats;
+Gamestats gamestats = {0, 1000};
 
 TextOutput *TextOutput::instance = NULL;
 
@@ -95,7 +93,6 @@ void gameLoop() {
         for(auto element: root->traverse()){
             element->draw();
         }
-
         //handling events
         while (SDL_PollEvent(&ev) != 0) {
             if (ev.type == SDL_QUIT) {
@@ -126,7 +123,7 @@ int main(int argc, char *argv[]) {
 
     initGUI();
     map = Map("/assets/map1.tmx");
-    
+
     gameLoop();
 
     SDL_DestroyWindow(window);

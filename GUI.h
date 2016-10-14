@@ -36,6 +36,7 @@ void initGUI() {
 
     root->children.push_back(new GUIObject()); //stats
     root->getChild(path_stats)->children.push_back(new GUIObject()); //globalstats
+
     root->getChild(path_globalstats)->children.push_back(new Label("", 7, WINDOW_HEIGHT/TILE_HEIGHT - 2, 5, 1, COLOR_WHITE, setLabelPoint));//points
     root->getChild(path_globalstats)->children.push_back(new Label("Points:", 1, WINDOW_HEIGHT / TILE_HEIGHT - 2, 5, 1, COLOR_WHITE,
                                                                    nullptr));

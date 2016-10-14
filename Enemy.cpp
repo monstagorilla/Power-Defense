@@ -62,9 +62,9 @@ void Enemy::drawHealthbar(int width, int height, int border){
         { 100,   0, 100},
     };
 
-    auto corner = DisplayPoint{pos.x - width/2 - border, pos.y - 30 - border};
-    auto inner  = DisplayPoint{pos.x - width/2, pos.y - 30}; 
-    int healthscale = log10(std::max(1, maxHealth/2));
+    auto corner = DisplayPoint{(int)pos.x - width/2 - border, (int)pos.y - 30 - border};
+    auto inner  = DisplayPoint{(int)pos.x - width/2, (int)pos.y - 30};
+    int healthscale = (int) log10(std::max(1,  maxHealth/2));
     SDL_Rect rect;
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     // Draw transparent background
