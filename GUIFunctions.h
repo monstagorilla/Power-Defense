@@ -12,6 +12,12 @@ static Tower *currentTower = nullptr;
 static GridPoint currentPos = {0, 0};
 
 void addBasicTower() {
+    for (int i = 0; i < allGameObjects.size(); i++){
+        if (allGameObjects[i].get()->ID == 2 && allGameObjects[i].get()->pos.snap() == currentPos){
+            return;
+        }
+    }
+
     if (gamestats.money >= BasicTower::stat[0].price && currentPos.x >= 0 && currentPos.x < MAP_WIDTH && currentPos.y >= 0 && currentPos.y < MAP_HEIGHT && !map.isGround(currentPos)) {
         allGameObjects.push_back(std::make_unique<BasicTower>(currentPos));
         gamestats.money -= BasicTower::stat[0].price ;

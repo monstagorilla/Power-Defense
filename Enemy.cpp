@@ -117,6 +117,8 @@ void Enemy::drawHealthbar(int width, int height, int border){
         SDL_RenderFillRect(renderer, &rect);
     }
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
+
 }
 
 void Enemy::hit(Tower &source, int damage) {
