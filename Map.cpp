@@ -49,13 +49,4 @@ Tower *Map::getTowerAt(GridPoint p) {
 
 void Map::draw() {
     sprite.draw();
-    if (isFocused) {
-        SDL_Rect rect;
-        DisplayPoint corner = focusedTile.upperLeft();
-        rect.x = corner.x;
-        rect.y = corner.y;
-        rect.w = TILE_WIDTH;
-        rect.h = TILE_HEIGHT;
-        SDL_RenderDrawRect(renderer, &rect);
-    }
 }

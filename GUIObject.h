@@ -1,8 +1,8 @@
 #pragma once
 
 #include <SDL2/SDL.h>
-
 #include "Point.h"
+
 #include <string>
 #include <vector>
 
@@ -17,12 +17,12 @@ public:
 	GUIObject();
 	virtual ~GUIObject(){};
 
+    virtual void update();
     virtual void draw();
     GUIObject *getChild(const std::string path);
-    void setState(const int state, const GridPoint p);
     std::vector<GUIObject*> traverse();
 
-	GridPoint pos;
+	Point pos;
 	int width;
 	int height;
 

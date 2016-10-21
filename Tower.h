@@ -18,7 +18,6 @@ struct stats {
 
 class Tower: public GameObject{
 	public:
-	Tower(){};
 	Tower(const GridPoint pos);
 	virtual ~Tower();
 

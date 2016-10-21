@@ -19,20 +19,26 @@
 #include "util.h"
 #include "GUI.h"
 #include "Shot.h"
-#include "eventHandler.h"
 #include "GUIObject.h"
 #include "Button.h"
 #include "BasicTower.h"
 #include "GUIFunctions.h"
 #include "gamestats.h"
+#include "eventHandler.h"
 
 Map map;
 std::vector<std::unique_ptr<GameObject> > allGameObjects;
-//std::vector<GameObject *> allGameObjects; // YOLO
 GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
 int lives = 5;
 Gamestats gamestats = {0, 1000};
+bool gameIsRunning = false;
+
+//YOLO = YOLO_MAX;
+Point mousePos = {0, 0};
+Point clickedPos = {0, 0};
+bool isCLicked = false;
+bool mouseRelease = false;
 
 TextOutput *TextOutput::instance = NULL;
 
@@ -66,7 +72,7 @@ void gameLoop() {
         double t1 = t0;
 
         //spawn enemies
-        if (temp % 50 == 0) {
+        if (gameIsRunning && temp % 50 == 0) {
             //allGameObjects.push_back(new Enemy(map, 100, 1.0));
             allGameObjects.push_back(std::make_unique<Enemy>(map, 100, 3.0));
         }
@@ -93,6 +99,7 @@ void gameLoop() {
         for(auto element: root->traverse()){
             element->draw();
         }
+
         //handling events
         while (SDL_PollEvent(&ev) != 0) {
             if (ev.type == SDL_QUIT) {
@@ -109,7 +116,7 @@ void gameLoop() {
         gettimeofday(&tv, NULL);
         t1 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
         if (t1 - t0 < 1000000.0 / FRAMES_PER_SECOND) {
-            usleep(1000000.0 / FRAMES_PER_SECOND - (t1 - t0));
+            usleep((__useconds_t)(1000000.0 / FRAMES_PER_SECOND - (t1 - t0)));
         }
     }
 }

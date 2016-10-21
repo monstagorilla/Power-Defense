@@ -2,9 +2,9 @@
 #include "colors.h"
 #include "TextOutput.h"
 
-Button::Button(std::string text, int x, int y, int w, int h, const SDL_Color color, const SDL_Color colorPressed, void (*onCLick)()): GUIObject::GUIObject() {
-    pos.x = (x + MAP_WIDTH);
-    pos.y = y;
+Button::Button(std::string text, const GridPoint pos, int w, int h, const SDL_Color color, const SDL_Color colorPressed,
+               void (*onCLick)()) : GUIObject::GUIObject() {
+    this->pos = GridPoint{pos.x + MAP_WIDTH, pos.y}.center();
     width = w;
     height = h;
     this->text = text;
@@ -28,7 +28,26 @@ void Button::draw() {
             foregroundColor = colorPressed;
             backgroundColor = colorPressed;
         }
-        TextOutput::getInstance()->drawTextAndRect(text, pos, width, height, 8, 0, foregroundColor,
+        TextOutput::getInstance()->drawTextAndRect(text, pos.snap(), width, height, 8, 0, foregroundColor,
                                                    backgroundColor);
+    }
+}
+
+void Button::update() {
+    if (isActivated) {
+        state = unfocused;
+        if (mousePos.snap().x >= pos.snap().x && mousePos.snap().x < pos.snap().x + width &&
+            mousePos.snap().y >= pos.snap().y && mousePos.snap().y < pos.snap().y + height) {
+            if (mouseRelease) {
+                if(onClick){
+                    onClick();
+                }
+                state = focused;
+            } else if (isCLicked) {
+                state = pressed;
+            } else {
+                state = focused;
+            }
+        }
     }
 }

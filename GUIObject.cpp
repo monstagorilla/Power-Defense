@@ -2,12 +2,19 @@
 #include "GUIObject.h"
 
 GUIObject::GUIObject() {
-    this->children = std::vector<GUIObject *>();
+    children = std::vector<GUIObject *>();
     state = unfocused;
     isActivated = false;
-    pos = GridPoint{0, 0};
+    pos = Point{0, 0};
     width = 0;
     height = 0;
+    text = "";
+    color = {0, 0, 0, 0};
+    onClick = nullptr;
+}
+
+void GUIObject::update() {
+
 }
 
 void GUIObject::draw() {
@@ -15,8 +22,8 @@ void GUIObject::draw() {
 }
 
 bool GUIObject::contains(GridPoint p) {
-    return p.x >= this->pos.x && p.x < this->pos.x + this->width &&
-           p.y >= this->pos.y && p.y < this->pos.y + this->height;
+    return p.x >= this->pos.snap().x && p.x < this->pos.snap().x + this->width &&
+           p.y >= this->pos.snap().y && p.y < this->pos.snap().y + this->height;
 }
 
 GUIObject *GUIObject::getChild(const std::string path) {
@@ -27,9 +34,9 @@ GUIObject *GUIObject::getChild(const std::string path) {
     }
 }
 
-std::vector <GUIObject*> GUIObject::traverse() {
-    std::vector<GUIObject*> ret = {this};
-    for(auto child : children){
+std::vector<GUIObject *> GUIObject::traverse() {
+    std::vector<GUIObject *> ret = {this};
+    for (auto child : children) {
         auto temp = child->traverse();
         ret.insert(ret.end(), temp.begin(), temp.end());
     }

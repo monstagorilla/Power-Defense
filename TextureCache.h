@@ -20,3 +20,5 @@ SDL_Texture* getTexture(std::string path) {
 	}
 	return texture;
 }
+
+//textcache
