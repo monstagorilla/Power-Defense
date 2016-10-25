@@ -35,8 +35,8 @@ Gamestats gamestats = {0, 1000};
 bool gameIsRunning = false;
 
 //YOLO = YOLO_MAX;
-Point mousePos = {0, 0};
-Point clickedPos = {0, 0};
+DisplayPoint mousePos   = {0, 0};
+DisplayPoint clickedPos = {0, 0};
 bool isCLicked = false;
 bool mouseRelease = false;
 

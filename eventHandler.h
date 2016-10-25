@@ -12,11 +12,11 @@ static void handleEvent(SDL_Event &ev) {
     mouseRelease = false;
     switch (ev.type) {
         case SDL_MOUSEMOTION:
-            mousePos = {(float) ev.motion.x, (float) ev.motion.y};
+            mousePos = {ev.motion.x, ev.motion.y};
             break;
         case SDL_MOUSEBUTTONDOWN:
             isCLicked = true;
-            clickedPos = {(float) ev.motion.x, (float) ev.motion.y};
+            clickedPos = {ev.motion.x, ev.motion.y};
             break;
         case SDL_MOUSEBUTTONUP:
             if (isCLicked) {

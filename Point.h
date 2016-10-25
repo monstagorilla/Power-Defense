@@ -33,7 +33,6 @@ struct GridPoint{
 
     Point center() const;
     DisplayPoint upperLeft();
-    DisplayPoint left();
     GridPoint operator+(const GridPoint other) {
         return { x+other.x, y+other.y };
     }

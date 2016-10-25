@@ -11,7 +11,7 @@ Map::Map(const std::string &filename) {
     path = std::vector<Point>();
     for (int i = 0; i < polyLine->GetNumPoints(); i++) {
         Tmx::Point tmxpoint = polyLine->GetPoint(i);
-        path.push_back(Point{tmxpoint.x, tmxpoint.y});
+        path.push_back(Point{tmxpoint.x + MAP_OFFSET_X, tmxpoint.y + MAP_OFFSET_Y});
     }
 
     terrain = std::vector<std::vector<tiletype >>(tmxmap->GetWidth(),
@@ -20,10 +20,21 @@ Map::Map(const std::string &filename) {
     for (int y = 0; y < tmxmap->GetHeight(); y++) {
         for (int x = 0; x < tmxmap->GetWidth(); x++) {
             unsigned tileId = tileLayer->GetTileId(x, y);
-            terrain[x][y] = tileId == 14 ? Ground : Wall;
+            switch(tileId){
+                case 12:
+                case 11:
+                case 10:
+                case  7:
+                case  3:
+                case  2:
+                    terrain[x][y] = Ground;
+                    break;
+                default:
+                    terrain[x][y] = Wall;
+            }
         }
     }
-    sprite = Sprite({MAP_WIDTH * TILE_WIDTH / 2, WINDOW_HEIGHT / 2}, MAP_WIDTH * TILE_WIDTH, WINDOW_HEIGHT,
+    sprite = Sprite({MAP_WIDTH * TILE_WIDTH / 2, WINDOW_HEIGHT / 2}, TILE_WIDTH * (MAP_WIDTH+1), TILE_HEIGHT * (MAP_HEIGHT+1),
                     "/assets/map1.png");
     isFocused = false;
     focusedTile = {0, 0};

@@ -20,7 +20,7 @@ extern int lives;
 extern Gamestats gamestats;
 extern bool gameIsRunning;
 
-extern Point mousePos;
-extern Point clickedPos;
+extern DisplayPoint mousePos;
+extern DisplayPoint clickedPos;
 extern bool isCLicked;
 extern bool mouseRelease;

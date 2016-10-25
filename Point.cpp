@@ -20,7 +20,7 @@ GridPoint Point::snap() const{
 }
 
 GridPoint DisplayPoint::snap() const{
-    return { (this->x + TILE_WIDTH/2) / TILE_WIDTH, (this->y + TILE_HEIGHT/2) / TILE_HEIGHT };
+    return { this->x / TILE_WIDTH, this->y/ TILE_HEIGHT };
 }
 
 DisplayPoint Point::displayPoint() const{
@@ -32,13 +32,9 @@ Point DisplayPoint::point() const{
 }
 
 Point GridPoint::center() const{
-    return { (float)this->x * TILE_WIDTH, (float)this->y * TILE_HEIGHT };
+    return { ((float)this->x + 0.5f) * TILE_WIDTH, ((float)this->y + 0.5f) * TILE_HEIGHT };
 }
 
 DisplayPoint GridPoint::upperLeft(){
-    return { this->x * TILE_WIDTH - TILE_WIDTH/2, this->y * TILE_HEIGHT - TILE_HEIGHT/2};
-}
-
-DisplayPoint GridPoint::left(){
-    return { this->x * TILE_WIDTH - TILE_WIDTH/2, this->y * TILE_HEIGHT};
+    return { this->x * TILE_WIDTH, this->y * TILE_HEIGHT};
 }
