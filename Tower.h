@@ -1,34 +1,40 @@
 #pragma once
 
-#include "GameObject.h"
-#include "Enemy.h"
-#include "config.h"
-#include "Point.h"
-
 class Enemy;
-class Shot;
+class GridPoint;
 
-struct stats {
-	int reloadTime;
-	float range;
-	int price;
-	int damage;
-	std::vector<std::string> paths;
+#include <string>
+#include <vector>
+
+#include "GameObject.h"
+#include "config.h"
+
+struct Stats {
+    int reloadTime = 0;
+    float range = 0;
+    int price =0;
+    int damage =0;
+    std::vector<std::string> paths;
 };
 
-class Tower: public GameObject{
-	public:
-	Tower(const GridPoint pos);
-	virtual ~Tower();
+class Tower : public GameObject {
+public:
+    Tower();
 
-	virtual void update(){};
-	virtual void shoot(Enemy* target){};
-	virtual stats getStats();
-	virtual int getMaxUpgrade();
+    Tower(const GridPoint pos);
 
-	const static std::vector<stats> stat;
-	int currentUpgrade;
-	float rotation;
-	int cooldown;
+    virtual ~Tower();
 
+    virtual void update();
+
+    virtual void shoot(Enemy *target);
+
+    virtual Stats getStats();
+
+    virtual int getMaxUpgrade();
+
+    const static std::vector<Stats> stat;
+    int currentUpgrade;
+    float rotation;
+    int cooldown;
 };

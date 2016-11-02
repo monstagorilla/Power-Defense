@@ -1,6 +1,7 @@
 #pragma once
-
 #include "GUIObject.h"
+
+class GridPoint;
 
 class Button : public GUIObject {
 public:

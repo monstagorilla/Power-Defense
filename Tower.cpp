@@ -1,31 +1,44 @@
-#include "GameObject.h"
+#include <vector>
+
+#include "Point.h"
 #include "Tower.h"
-#include "Shot.h"
-#include "util.h"
-#include "globals.h"
+#include "Sprite.h"
+#include "Enemy.h"
 
-#include <math.h>
+const std::vector<Stats> Tower::stat = {};
 
-extern SDL_Renderer *renderer;
-
-const std::vector<stats> Tower::stat={};
-
-Tower::Tower(const GridPoint pos) {
-	this->pos = pos.center();
-	rotation = 0;
-	currentUpgrade = 0;
-	ID = 2;
+Tower::Tower(): GameObject::GameObject() {
+    rotation = 0;
+    currentUpgrade = 0;
+    ID = 2 ;
     cooldown = 0;
+    sprites = std::vector<Sprite>();
+}
+
+Tower::Tower(const GridPoint pos) : GameObject::GameObject(pos.center()){
+    rotation = 0;
+    currentUpgrade = 0;
+    ID = 2;
+    cooldown = 0;
+    sprites = std::vector<Sprite>();
 }
 
 Tower::~Tower() {
 
 }
 
-stats Tower::getStats(){
+Stats Tower::getStats() {
 
 }
 
-int Tower::getMaxUpgrade(){
+int Tower::getMaxUpgrade() {
+
+}
+
+void Tower::update() {
+
+}
+
+void Tower::shoot(Enemy *target) {
 
 }

@@ -1,15 +1,13 @@
 #include <algorithm>
 #include <string>
 
+#include "Point.h"
 #include "Enemy.h"
 #include "Sprite.h"
-#include "util.h"
-#include "Point.h"
 #include "Map.h"
-#include "config.h"
-#include "globals.h"
+#include "Shot.h"
+#include "util.h"
 #include "gamestats.h"
-
 
 Enemy::Enemy(Map &map, int health, float speed) : map(map) {
 	this->pos = map.path[0];
@@ -40,7 +38,7 @@ void Enemy::update() {
     for(int i = 0; i < sprites.size(); i++){
         sprites[i].pos = this->pos;
     }
-    
+
     if(health < maxHealth){
         drawHealthbar();
     }
@@ -62,8 +60,8 @@ void Enemy::drawHealthbar(int width, int height, int border){
         { 100,   0, 100},
     };
 
-    auto corner = DisplayPoint{(int)pos.x - width/2 - border, (int)pos.y - 30 - border};
-    auto inner  = DisplayPoint{(int)pos.x - width/2, (int)pos.y - 30};
+    auto corner = DisplayPoint((int)pos.x - width/2 - border, (int)pos.y - 30 - border);
+    auto inner  = DisplayPoint((int)pos.x - width/2, (int)pos.y - 30);
     int healthscale = (int) log10(std::max(1,  maxHealth/2));
     SDL_Rect rect;
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
@@ -74,7 +72,7 @@ void Enemy::drawHealthbar(int width, int height, int border){
     rect.w = width;
     rect.h = height;
     SDL_RenderFillRect(renderer, &rect);
-    
+
     // Draw thick black border
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     rect.x = inner.x-border;
@@ -97,7 +95,7 @@ void Enemy::drawHealthbar(int width, int height, int border){
     rect.w = width + border*2;
     rect.h = border;
     SDL_RenderFillRect(renderer, &rect);
-    
+
     // Draw colored healthbar
     rgbcolor c = healthbarColors[healthscale % healthbarColors.size()];
     SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, 255);
@@ -106,7 +104,7 @@ void Enemy::drawHealthbar(int width, int height, int border){
     rect.w = width * health/maxHealth;
     rect.h = height;
     SDL_RenderFillRect(renderer, &rect);
-    
+
     // Draw black separating bars
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 100);
     for(int i = 1; i < maxHealth/pow(10, healthscale); i++){
@@ -140,4 +138,4 @@ void Enemy::die(){
 			}
 		}
 	}
-}	
+}

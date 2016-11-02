@@ -1,7 +1,8 @@
 #pragma once
 
 #include "GUIObject.h"
-#include "Point.h"
+
+class Point;
 
 class MapOverlay : public GUIObject{
 public:

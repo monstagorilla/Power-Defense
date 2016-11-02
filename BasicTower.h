@@ -1,16 +1,20 @@
 #pragma once
 
+class GridPoint;
+class Enemy;
+struct Stats;
+
 #include "Tower.h"
 
-class BasicTower: public Tower{
-	public:	
-	BasicTower(const GridPoint pos);
-	virtual ~BasicTower();
+class BasicTower : public Tower {
+public:
+    BasicTower(const GridPoint pos);
+    virtual ~BasicTower();
 
-	virtual void shoot (Enemy* target);
-	virtual void update();
-	virtual stats getStats();
-	virtual int getMaxUpgrade();
+    virtual void shoot(Enemy *target);
+    virtual void update();
+    virtual Stats getStats();
+    virtual int getMaxUpgrade();
 
-	const static std::vector<stats> stat;
+    const static std::vector<Stats> stat;
 };

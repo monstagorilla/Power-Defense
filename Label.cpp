@@ -1,3 +1,4 @@
+#include "Point.h"
 #include "Label.h"
 #include "globals.h"
 #include "TextOutput.h"

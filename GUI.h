@@ -2,16 +2,17 @@
 
 #include <vector>
 
+#include "Tower.h"
 #include "globals.h"
 #include "stats.h"
 #include "colors.h"
-#include "Tower.h"
 #include "Button.h"
 #include "GUIObject.h"
-#include "GUIFunctions.h"
 #include "Label.h"
 #include "MapOverlay.h"
 #include "config.h"
+#include "GUIFunctions.h"
+
 
 std::string path_menus = "0"; //yolo or do it better??
 std::string path_towermenu = "00";

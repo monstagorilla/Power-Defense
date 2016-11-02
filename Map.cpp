@@ -1,6 +1,20 @@
 #include <iostream>
+#include <vector>
 
+#include "Point.h"
+#include "Sprite.h"
+#include "Tower.h"
 #include "Map.h"
+
+Map::Map() {
+    tmxmap = nullptr;
+    terrain = std::vector <std::vector<tiletype >> ();
+    sprite = Sprite();
+    isFocused = false;
+    focusedTile = GridPoint();
+    path = std::vector<Point>();
+
+}
 
 Map::Map(const std::string &filename) {
     tmxmap = new Tmx::Map();
@@ -20,13 +34,13 @@ Map::Map(const std::string &filename) {
     for (int y = 0; y < tmxmap->GetHeight(); y++) {
         for (int x = 0; x < tmxmap->GetWidth(); x++) {
             unsigned tileId = tileLayer->GetTileId(x, y);
-            switch(tileId){
+            switch (tileId) {
                 case 12:
                 case 11:
                 case 10:
-                case  7:
-                case  3:
-                case  2:
+                case 7:
+                case 3:
+                case 2:
                     terrain[x][y] = Ground;
                     break;
                 default:
@@ -34,10 +48,15 @@ Map::Map(const std::string &filename) {
             }
         }
     }
-    sprite = Sprite({MAP_WIDTH * TILE_WIDTH / 2, WINDOW_HEIGHT / 2}, TILE_WIDTH * (MAP_WIDTH+1), TILE_HEIGHT * (MAP_HEIGHT+1),
+    sprite = Sprite({MAP_WIDTH * TILE_WIDTH / 2, WINDOW_HEIGHT / 2}, TILE_WIDTH * (MAP_WIDTH + 1),
+                    TILE_HEIGHT * (MAP_HEIGHT + 1),
                     "/assets/map1.png");
     isFocused = false;
     focusedTile = {0, 0};
+}
+
+Map::~Map() {
+
 }
 
 bool Map::isGround(GridPoint p) {
@@ -60,4 +79,12 @@ Tower *Map::getTowerAt(GridPoint p) {
 
 void Map::draw() {
     sprite.draw();
+}
+
+int Map::getHeight() {
+    return tmxmap->GetHeight();
+}
+
+int Map::getWidth() {
+    return tmxmap->GetWidth();
 }

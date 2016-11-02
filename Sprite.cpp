@@ -1,24 +1,37 @@
-#include "Sprite.h"
+#include "Point.h"
 #include "globals.h"
 #include "TextureCache.h"
+#include "Sprite.h"
+#include "util.h"
 
-Sprite::Sprite(const Point pos, const int width, const int height, std::string path){
-    this->pos = pos;
+Sprite::Sprite() {
+    pos = Point();
+    texture = nullptr;
+    width = 0;
+    height = 0;
+
+    rotation = 0;
+    scale = 0;
+}
+
+
+Sprite::Sprite(const Point pos, const int width, const int height, std::string path) {
+    this->pos = Point(pos.x, pos.y);
     this->width = width;
     this->height = height;
-	rotation = 0;
-	scale = 0;
+    rotation = 0;
+    scale = 0;
     this->texture = getTexture(path);
 }
 
-Sprite::~Sprite(){
-	
+Sprite::~Sprite() {
+
 }
 
-void Sprite::draw(){
+void Sprite::draw() {
     SDL_Rect destRect;
-    destRect.x = this->pos.x - this->width/2;
-    destRect.y = this->pos.y - this->height/2;
+    destRect.x = this->pos.x - this->width / 2;
+    destRect.y = this->pos.y - this->height / 2;
     destRect.w = this->width;
     destRect.h = this->height;
 

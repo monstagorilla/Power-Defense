@@ -1,16 +1,22 @@
 #include <iostream>
+
+#include "Point.h"
 #include "GUIObject.h"
 
 GUIObject::GUIObject() {
     children = std::vector<GUIObject *>();
     state = unfocused;
     isActivated = false;
-    pos = Point{0, 0};
+    pos = Point(0,0);
     width = 0;
     height = 0;
     text = "";
     color = {0, 0, 0, 0};
     onClick = nullptr;
+}
+
+GUIObject::~GUIObject() {
+
 }
 
 void GUIObject::update() {

@@ -1,12 +1,13 @@
 #pragma once
 
 #include <memory>
-#include "globals.h"
 #include "Tower.h"
-#include "Sprite.h"
 #include "Point.h"
+#include "globals.h"
+#include "Sprite.h"
 #include "gamestats.h"
 #include "GUI.h"
+#include "GUIObject.h"
 #include "BasicTower.h"
 
 Tower *currentTower = nullptr;
@@ -64,7 +65,7 @@ void onClickTower(){
 
     for (int i = 0; i < allGameObjects.size(); i++){
         if (allGameObjects[i]->ID == 2 && allGameObjects[i]->pos.snap() == currentPos){
-            currentTower= (BasicTower *)allGameObjects[i].get(); // NASTY HACK !!!!!!!! ATTENTION: TODO: FIX this fucking OOP problem
+            currentTower = (Tower *) allGameObjects[i].get(); // NASTY HACK !!!!!!!! ATTENTION: TODO: FIX this fucking OOP problem
             return;
         }
     }

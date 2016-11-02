@@ -1,10 +1,13 @@
+#include <SDL2/SDL.h>
+
+#include "Point.h"
 #include "Button.h"
-#include "colors.h"
 #include "TextOutput.h"
+#include "config.h"
 
 Button::Button(std::string text, const GridPoint pos, int w, int h, const SDL_Color color, const SDL_Color colorPressed,
                void (*onCLick)()) : GUIObject::GUIObject() {
-    this->pos = GridPoint{pos.x + MAP_WIDTH, pos.y}.center();
+    this->pos = GridPoint(pos.x + MAP_WIDTH, pos.y).center();
     width = w;
     height = h;
     this->text = text;

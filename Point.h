@@ -1,9 +1,15 @@
 #pragma once
 
-struct GridPoint;
-struct DisplayPoint;
+class GridPoint;
+class DisplayPoint;
+class Point;
 
-struct Point{
+class Point{
+public:
+    Point();
+    Point(const float x, const float y);
+    ~Point();
+
     float x;
     float y;
 
@@ -13,33 +19,33 @@ struct Point{
     DisplayPoint displayPoint() const;
 };
 
-struct DisplayPoint{
+class DisplayPoint{
+public:
+    DisplayPoint();
+    DisplayPoint(const int x, const int y);
+    ~DisplayPoint();
+
     int x;
     int y;
 
     GridPoint snap() const;
     Point point() const;
-    DisplayPoint operator+(const DisplayPoint other) {
-        return { x+other.x, y+other.y };
-    }
-    DisplayPoint operator-(const DisplayPoint other) {
-        return { x-other.x, y-other.y };
-    }
+    DisplayPoint operator+(const DisplayPoint other);
+    DisplayPoint operator-(const DisplayPoint other);
 };
 
-struct GridPoint{
+class GridPoint{
+public:
+    GridPoint();
+    GridPoint(const int x , const int y);
+    ~GridPoint();
+
     int x;
     int y;
 
     Point center() const;
     DisplayPoint upperLeft();
-    GridPoint operator+(const GridPoint other) {
-        return { x+other.x, y+other.y };
-    }
-    GridPoint operator-(const GridPoint other) {
-        return { x-other.x, y-other.y };
-    }
-    friend bool operator==(const GridPoint a, const GridPoint b) {
-        return a.x == b.x && a.y == b.y;
-    }
+    GridPoint operator+(const GridPoint other);
+    GridPoint operator-(const GridPoint other);
+    friend bool operator==(const GridPoint a, const GridPoint b);
 };

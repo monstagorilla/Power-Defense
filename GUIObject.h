@@ -1,10 +1,10 @@
 #pragma once
 
 #include <SDL2/SDL.h>
-#include "Point.h"
-
 #include <string>
 #include <vector>
+
+#include "Point.h"
 
 enum state {
     unfocused = 0,
@@ -15,7 +15,7 @@ enum state {
 class GUIObject{
 public:
 	GUIObject();
-	virtual ~GUIObject(){};
+	virtual ~GUIObject();
 
     virtual void update();
     virtual void draw();

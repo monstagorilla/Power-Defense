@@ -1,6 +1,9 @@
+#include "Point.h"
 #include "MapOverlay.h"
 #include "config.h"
 #include "globals.h"
+
+#include <iostream>
 
 MapOverlay::MapOverlay(const Point pos, const int width, const int height, void(*onClick) ()) : GUIObject::GUIObject() {
     this->pos = pos;

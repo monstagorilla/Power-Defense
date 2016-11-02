@@ -2,28 +2,19 @@
 #include <SDL2/SDL_ttf.h>
 #include <string>
 #include <unistd.h>
-#include <time.h>
 #include <memory>
 #include <chrono>
 #include <sys/time.h>
 
-
+#include "Point.h"
+#include "Tower.h"
+#include "Sprite.h"
+#include "Shot.h"
 #include "GameObject.h"
 #include "Enemy.h"
 #include "Map.h"
-#include "Tower.h"
-#include "config.h"
-#include "colors.h"
 #include "TextOutput.h"
-#include "tmxparser/Tmx.h"
-#include "util.h"
 #include "GUI.h"
-#include "Shot.h"
-#include "GUIObject.h"
-#include "Button.h"
-#include "BasicTower.h"
-#include "GUIFunctions.h"
-#include "gamestats.h"
 #include "eventHandler.h"
 
 Map map;
@@ -72,9 +63,9 @@ void gameLoop() {
         double t1 = t0;
 
         //spawn enemies
-        if (gameIsRunning && temp % 50 == 0) {
+        if (gameIsRunning && temp % 10 == 0) {
             //allGameObjects.push_back(new Enemy(map, 100, 1.0));
-            allGameObjects.push_back(std::make_unique<Enemy>(map, 100, 3.0));
+            allGameObjects.push_back(std::make_unique<Enemy>(map, 100, 10.0));
         }
         temp++;
 

@@ -1,9 +1,10 @@
 #pragma once
 
 #include "GUIObject.h"
-#include "Point.h"
 
 #include <string>
+
+class Point;
 
 class Label: public GUIObject{
 public:

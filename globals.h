@@ -3,14 +3,14 @@
 
 #include <memory>
 #include <SDL2/SDL.h>
+#include <vector>
 
-#include "Map.h"
-#include "GameObject.h"
-#include "GUIObject.h"
-#include "gamestats.h"
-
-
+//#include "gamestats.h"
+struct Gamestats;
+class GameObject;
 class Map;
+class GUIObject;
+class DisplayPoint;
 
 extern Map map;
 extern std::vector< std::unique_ptr< GameObject > > allGameObjects;

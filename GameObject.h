@@ -1,17 +1,20 @@
 #pragma once
 
-#include<vector>
-
 #include "Point.h"
 #include "Sprite.h"
 
+#include <vector>
+
 class GameObject {
 public:
-    virtual void update() = 0;
-    virtual ~GameObject() {};
+    GameObject();
+    GameObject(const Point pos);
+    virtual ~GameObject();
+
+    virtual void update();
 
     Point pos;
     std::vector<Sprite> sprites;
     int ID;
-    bool dead = false;
+    bool dead;
 };

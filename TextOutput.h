@@ -1,10 +1,12 @@
 #pragma once
 
 #include <SDL2/SDL_ttf.h>
+#include <iostream>
 
 #include "globals.h"
 #include "colors.h"
 #include "Point.h"
+#include "config.h"
 
 class TextOutput {
 public:
