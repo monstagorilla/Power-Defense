@@ -16,6 +16,7 @@
 #include "TextOutput.h"
 #include "GUI.h"
 #include "eventHandler.h"
+#include "gamestats.h"
 
 Map map;
 std::vector<std::unique_ptr<GameObject> > allGameObjects;
@@ -63,9 +64,9 @@ void gameLoop() {
         double t1 = t0;
 
         //spawn enemies
-        if (gameIsRunning && temp % 10 == 0) {
+        if (gameIsRunning && temp % 50 == 0) {
             //allGameObjects.push_back(new Enemy(map, 100, 1.0));
-            allGameObjects.push_back(std::make_unique<Enemy>(map, 100, 10.0));
+            allGameObjects.push_back(std::make_unique<Enemy>(map, 100,3.0));
         }
         temp++;
 
@@ -119,7 +120,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    initGUI();
+    GUI::initGUI();
     map = Map("/assets/map1.tmx");
 
     gameLoop();
