@@ -2,12 +2,12 @@
 
 #include "Point.h"
 #include "GameObject.h"
-#include "Sprite.h"
 #include "Shot.h"
 #include "BasicTower.h"
 #include "Enemy.h"
 #include "globals.h"
 #include "util.h"
+#include "config.h"
 
 const std::vector<Stats> BasicTower::stat =
         {{20, 100, 100, 10, {"/assets/TowerBase.png", "/assets/TowerTurret.png"}},

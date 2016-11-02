@@ -5,6 +5,8 @@
 #include "Sprite.h"
 #include "Tower.h"
 #include "Map.h"
+#include "globals.h"
+#include "config.h"
 
 Map::Map() {
     tmxmap = nullptr;

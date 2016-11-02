@@ -6,6 +6,7 @@
 #include "GUIObject.h"
 #include "BasicTower.h"
 #include "Map.h"
+#include "config.h"
 
 Tower* GUIFunctions::currentTower = nullptr;
 GridPoint GUIFunctions::currentPos = GridPoint();

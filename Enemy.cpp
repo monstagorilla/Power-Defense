@@ -3,10 +3,11 @@
 
 #include "Point.h"
 #include "Enemy.h"
-#include "Sprite.h"
 #include "Map.h"
 #include "Shot.h"
 #include "util.h"
+#include "config.h"
+#include "globals.h"
 #include "gamestats.h"
 
 Enemy::Enemy(Map &map, int health, float speed) : map(map) {

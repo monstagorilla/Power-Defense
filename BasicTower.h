@@ -2,7 +2,6 @@
 
 class GridPoint;
 class Enemy;
-struct Stats;
 
 #include "Tower.h"
 

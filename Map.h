@@ -1,9 +1,6 @@
 #pragma once
 
-//#include <tmxparser/Tmx.h>
 #include "tmxparser/Tmx.h"
-#include "config.h"
-#include "globals.h"
 
 enum tiletype {
     Ground = 0,

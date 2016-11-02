@@ -7,7 +7,6 @@ class GridPoint;
 #include <vector>
 
 #include "GameObject.h"
-#include "config.h"
 
 struct Stats {
     int reloadTime = 0;

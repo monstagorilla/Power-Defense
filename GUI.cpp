@@ -6,6 +6,7 @@
 #include "Label.h"
 #include "MapOverlay.h"
 #include "GUIFunctions.h"
+#include "config.h"
 
 std::vector<std::string> GUI::paths = {"0", "00", "01", "02", "1", "10", "100", "102", "2"};
 

@@ -5,8 +5,8 @@
 #include "TextOutput.h"
 #include "config.h"
 
-Button::Button(std::string text, const GridPoint pos, int w, int h, const SDL_Color color, const SDL_Color colorPressed,
-               void (*onCLick)()) : GUIObject::GUIObject() {
+Button::Button(const std::string text, const GridPoint pos, const int w, const int h, const SDL_Color color,
+               const SDL_Color colorPressed, void (*onCLick)()) : GUIObject::GUIObject() {
     this->pos = GridPoint(pos.x + MAP_WIDTH, pos.y).center();
     width = w;
     height = h;
@@ -42,7 +42,7 @@ void Button::update() {
         if (mousePos.snap().x >= pos.snap().x && mousePos.snap().x < pos.snap().x + width &&
             mousePos.snap().y >= pos.snap().y && mousePos.snap().y < pos.snap().y + height) {
             if (mouseRelease) {
-                if(onClick){
+                if (onClick) {
                     onClick();
                 }
                 state = focused;

@@ -4,9 +4,8 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 
-//#include "util.h"
-
 #include "Point.h"
+
 class Sprite {
 public:
     Sprite();

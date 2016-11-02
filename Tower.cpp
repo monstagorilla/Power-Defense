@@ -2,7 +2,6 @@
 
 #include "Point.h"
 #include "Tower.h"
-#include "Sprite.h"
 #include "Enemy.h"
 
 const std::vector<Stats> Tower::stat = {};

@@ -1,7 +1,3 @@
-#include <vector>
-
-#include "Point.h"
-#include "Sprite.h"
 #include "GameObject.h"
 
 GameObject::GameObject() {

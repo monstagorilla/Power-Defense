@@ -5,7 +5,6 @@
 #include <SDL2/SDL.h>
 #include <vector>
 
-//#include "gamestats.h"
 struct Gamestats;
 class GameObject;
 class Map;

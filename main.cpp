@@ -16,6 +16,7 @@
 #include "TextOutput.h"
 #include "GUI.h"
 #include "eventHandler.h"
+#include "GUIObject.h"
 #include "gamestats.h"
 
 Map map;
@@ -98,7 +99,7 @@ void gameLoop() {
                 isRunning = false;
                 break;
             } else {
-                handleEvent(ev);
+                eventHandler::handleEvent(ev);
             }
         }
 
