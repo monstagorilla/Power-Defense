@@ -24,8 +24,8 @@ void GUI::initGUI() {
     //main menu
     root->getChild(paths[path_menus])->children.push_back(new GUIObject());
     root->getChild(paths[path_mainmenu])->children.push_back(
-            new Button("Start", {1, 1}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::startGame));
-    root->getChild(paths[path_mainmenu])->children.push_back(new Button("End", {1, 2}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::endGame));
+            new Button("Start", {1, 7}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::startGame));
+    root->getChild(paths[path_mainmenu])->children.push_back(new Button("End", {1, 8}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::endGame));
 
 
     root->children.push_back(new GUIObject()); //stats

@@ -35,13 +35,17 @@ void GUIFunctions::setLabelMoney(){
 }
 
 void GUIFunctions::inactivateMenus(){
-    for(auto element: root->getChild(GUI::paths[path_menus])->traverse()){
+    for(auto element: root->getChild(GUI::paths[path_buymenu])->traverse()){
+        element->isActivated = false;
+    }
+    for(auto element: root->getChild(GUI::paths[path_towermenu])->traverse()){
         element->isActivated = false;
     }
 }
 
 void GUIFunctions::onClickTower(){
     inactivateMenus();
+    currentPos = mousePos.snap();
     for(auto element: root->getChild(GUI::paths[path_towermenu])->children){
         element->isActivated = true;
     }

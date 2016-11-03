@@ -2,6 +2,7 @@
 #include "MapOverlay.h"
 #include "config.h"
 #include "globals.h"
+#include "Map.h"
 
 #include <iostream>
 
@@ -34,9 +35,8 @@ void MapOverlay::update() {
     } else {
         state = unfocused;
     }
-    if(mousePos.snap() == pos.snap() && mouseRelease){
+    if(mousePos.snap() == pos.snap() && mouseRelease ){
         if(this->onClick){
-            std::cout << "scurrr"<< std::endl;
             this->onClick();
         }
     }
