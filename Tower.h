@@ -8,7 +8,7 @@ class GridPoint;
 
 #include "GameObject.h"
 
-struct Stats {
+struct TowerStats {
     int reloadTime = 0;
     float range = 0;
     int price =0;
@@ -28,11 +28,11 @@ public:
 
     virtual void shoot(Enemy *target);
 
-    virtual Stats getStats();
+    virtual TowerStats getStats();
 
     virtual int getMaxUpgrade();
 
-    const static std::vector<Stats> stat;
+    const static std::vector<TowerStats> stat;
     int currentUpgrade;
     float rotation;
     int cooldown;

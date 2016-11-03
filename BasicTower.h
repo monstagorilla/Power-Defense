@@ -12,8 +12,8 @@ public:
 
     virtual void shoot(Enemy *target);
     virtual void update();
-    virtual Stats getStats();
+    virtual TowerStats getStats();
     virtual int getMaxUpgrade();
 
-    const static std::vector<Stats> stat;
+    const static std::vector<TowerStats> stat;
 };

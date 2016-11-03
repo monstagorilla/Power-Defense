@@ -12,6 +12,7 @@
 #include "Shot.h"
 #include "GameObject.h"
 #include "Enemy.h"
+#include "BasicEnemy.h"
 #include "Map.h"
 #include "TextOutput.h"
 #include "GUI.h"
@@ -58,18 +59,22 @@ void gameLoop() {
     Point mousePos = {0, 0};
 
     timeval tv;
-    int temp = 0;
+    int enemyCount = 0;
+    int levelCount = 1;
     while (isRunning) {
         gettimeofday(&tv, NULL);
         double t0 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
         double t1 = t0;
 
         //spawn enemies
-        if (gameIsRunning && temp % 50 == 0) {
+        if (gameIsRunning && enemyCount % 50 == 0) {
+            if(enemyCount % 300 == 0){
+                levelCount++;
+            }
             //allGameObjects.push_back(new Enemy(map, 100, 1.0));
-            allGameObjects.push_back(std::make_unique<Enemy>(map, 100,3.0));
+            allGameObjects.push_back(std::make_unique<BasicEnemy>(map, levelCount));
         }
-        temp++;
+        enemyCount++;
 
         map.draw();
         //drawStats();

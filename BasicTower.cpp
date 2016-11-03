@@ -9,7 +9,7 @@
 #include "util.h"
 #include "config.h"
 
-const std::vector<Stats> BasicTower::stat =
+const std::vector<TowerStats> BasicTower::stat =
         {{20, 100, 100, 10, {"/assets/TowerBase.png", "/assets/TowerTurret.png"}},
          {20, 100, 50,  20, {"/assets/TowerBase.png", "/assets/TowerTurret1.png"}},
          {20, 100, 75,  30, {"/assets/TowerBase.png", "/assets/TowerTurret2.png"}},
@@ -53,7 +53,7 @@ void BasicTower::update() {
     cooldown--;
 }
 
-Stats BasicTower::getStats() {
+TowerStats BasicTower::getStats() {
     return stat[currentUpgrade];
 }
 

@@ -4,7 +4,7 @@
 #include "Tower.h"
 #include "Enemy.h"
 
-const std::vector<Stats> Tower::stat = {};
+const std::vector<TowerStats> Tower::stat = {};
 
 Tower::Tower(): GameObject::GameObject() {
     rotation = 0;
@@ -26,7 +26,7 @@ Tower::~Tower() {
 
 }
 
-Stats Tower::getStats() {
+TowerStats Tower::getStats() {
 
 }
 
