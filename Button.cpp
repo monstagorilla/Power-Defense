@@ -23,16 +23,16 @@ Button::~Button() {
 
 void Button::draw() {
     if (isActivated) {
+        //TODO: find more elegant solution
         auto foregroundColor = color;
-        auto backgroundColor = color;
+        auto fontType = font1_green;
         if (state == focused) {
             foregroundColor = colorPressed;
         } else if (state == pressed) {
             foregroundColor = colorPressed;
-            backgroundColor = colorPressed;
+            fontType = font1_red;
         }
-        TextOutput::getInstance()->drawTextAndRect(text, pos.snap(), width, height, 8, 0, foregroundColor,
-                                                   backgroundColor);
+        TextOutput::drawTextAndRect(text, pos.snap(), width, height, 8, fontType, foregroundColor);
     }
 }
 

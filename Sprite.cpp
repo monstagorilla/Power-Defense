@@ -1,6 +1,6 @@
 #include "Point.h"
 #include "globals.h"
-#include "TextureCache.h"
+#include "Cache.h"
 #include "Sprite.h"
 #include "util.h"
 
@@ -21,7 +21,7 @@ Sprite::Sprite(const Point pos, const int width, const int height, std::string p
     this->height = height;
     rotation = 0;
     scale = 0;
-    this->texture = getTexture(path);
+    this->texture = Cache::getTexture(path);
 }
 
 Sprite::~Sprite() {
@@ -30,8 +30,8 @@ Sprite::~Sprite() {
 
 void Sprite::draw() {
     SDL_Rect destRect;
-    destRect.x = this->pos.x - this->width / 2;
-    destRect.y = this->pos.y - this->height / 2;
+    destRect.x = (int) this->pos.x - this->width / 2;
+    destRect.y = (int) this->pos.y - this->height / 2;
     destRect.w = this->width;
     destRect.h = this->height;
 

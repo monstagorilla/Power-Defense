@@ -2,8 +2,10 @@
 #include "Label.h"
 #include "globals.h"
 #include "TextOutput.h"
+#include "config.h"
 
-Label::Label(const std::string text, const GridPoint pos, int w, int h, const SDL_Color color,  void (*functptr)()): GUIObject::GUIObject() {
+Label::Label(const std::string text, const GridPoint pos, int w, int h, const SDL_Color color, void (*functptr)())
+        : GUIObject::GUIObject() {
     this->pos = GridPoint{pos.x + MAP_WIDTH, pos.y}.center();
     width = w;
     height = h;
@@ -13,16 +15,16 @@ Label::Label(const std::string text, const GridPoint pos, int w, int h, const SD
     onClick = functptr;
 }
 
-Label::~Label(){
+Label::~Label() {
 
 }
 
 
 void Label::draw() {
     if (isActivated) {
-        if(onClick){
+        if (onClick) {
             onClick();
         }
-        TextOutput::getInstance()->drawTextAndRect(text, pos.snap() ,width, height, 8, 0, color, COLOR_BLACK);
+        TextOutput::drawText(text, pos.snap(), 8, font1_white);
     }
 }

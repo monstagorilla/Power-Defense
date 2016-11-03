@@ -19,6 +19,7 @@
 #include "eventHandler.h"
 #include "GUIObject.h"
 #include "gamestats.h"
+#include "config.h"
 
 Map map;
 std::vector<std::unique_ptr<GameObject> > allGameObjects;
@@ -33,8 +34,6 @@ DisplayPoint mousePos   = {0, 0};
 DisplayPoint clickedPos = {0, 0};
 bool isCLicked = false;
 bool mouseRelease = false;
-
-TextOutput *TextOutput::instance = NULL;
 
 int initWindowAndRenderer(SDL_Window **window) {
     SDL_Init(SDL_INIT_VIDEO);
@@ -121,16 +120,14 @@ void gameLoop() {
 
 int main(int argc, char *argv[]) {
     SDL_Window *window = nullptr;
-    SDL_Renderer *renderer = nullptr;
+    renderer = nullptr;
     if (initWindowAndRenderer(&window) != 0) {
         return 1;
     }
-
     GUI::initGUI();
     map = Map("/assets/map1.tmx");
-
+    
     gameLoop();
-
     SDL_DestroyWindow(window);
     SDL_Quit();
     return 0;
