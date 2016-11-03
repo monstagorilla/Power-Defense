@@ -120,8 +120,8 @@ void gameLoop() {
 }
 
 int main(int argc, char *argv[]) {
-    SDL_Window *window = NULL;
-    SDL_Renderer *renderer = NULL;
+    SDL_Window *window = nullptr;
+    SDL_Renderer *renderer = nullptr;
     if (initWindowAndRenderer(&window) != 0) {
         return 1;
     }
