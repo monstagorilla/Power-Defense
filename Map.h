@@ -13,8 +13,7 @@ class Point;
 
 class Tower;
 
-class Sprite;
-
+#include "Sprite.h"
 class Map {
 private:
     Tmx::Map *tmxmap;
