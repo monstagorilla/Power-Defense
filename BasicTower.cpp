@@ -30,7 +30,7 @@ void BasicTower::shoot(Enemy *target) {
 }
 
 void BasicTower::update() {
-    Enemy *nearest = NULL;
+    Enemy *nearest = nullptr;
     auto shortestDist = getStats().range;
     for (int i = 0; i < allGameObjects.size(); i++) {
         if (allGameObjects[i]->ID == 1 &&

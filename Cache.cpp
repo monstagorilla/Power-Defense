@@ -64,9 +64,8 @@ TTF_Font *Cache::getFont(const std::string path) {
     try {
         font = fontCache.at(path);
     } catch (std::out_of_range) {
-        std::cout << "fail" << std::endl;
         font = TTF_OpenFont((std::string(CMAKE_SOURCE_DIR) + path).c_str(), 100);
-        if (font == NULL) {
+        if (font == nullptr) {
             std::cout << "Failed to load font " << SDL_GetError();
         } else {
             fontCache[path] = font;

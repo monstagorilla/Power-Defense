@@ -142,5 +142,5 @@ void Enemy::die() {
 }
 
 EnemyStats Enemy::getStat() {
-    return {(int)(stat.maxHealth * pow(2, level)), (float)(stat.speed * pow(1.005, level)), (int) (stat.loot * (1 + 0.2 * level))};
+    return {(int)(stat.maxHealth * pow(1.1, level)), (float)(stat.speed * pow(1.005, level)), (int) (stat.loot * (1 + 0.2 * level))};
 }

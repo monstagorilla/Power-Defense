@@ -1,8 +1,8 @@
 #pragma once
 
-#include "GUIObject.h"
-
 #include <string>
+
+#include "GUIObject.h"
 
 class Point;
 

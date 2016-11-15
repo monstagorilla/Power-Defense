@@ -1,3 +1,6 @@
+#include <vector>
+#include <string>
+
 #include "GUI.h"
 #include "Tower.h"
 #include "globals.h"
@@ -6,6 +9,7 @@
 #include "Label.h"
 #include "MapOverlay.h"
 #include "GUIFunctions.h"
+#include "Symbol.h"
 #include "config.h"
 
 std::vector<std::string> GUI::paths = {"0", "00", "01", "02", "1", "10", "100", "102", "2"};
@@ -21,6 +25,7 @@ void GUI::initGUI() {
     root->getChild(paths[path_menus])->children.push_back(new GUIObject());//buyMenu
     root->getChild(paths[path_buymenu])->children.push_back(
             new Button("Buy", {1, 1}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::addBasicTower));
+    root->getChild(paths[path_buymenu])->children.push_back(new Symbol(std::vector<std::string>{"/assets/TowerBase.png","/assets/TowerTurret.png"}, GridPoint(8,1)));
     //main menu
     root->getChild(paths[path_menus])->children.push_back(new GUIObject());
     root->getChild(paths[path_mainmenu])->children.push_back(

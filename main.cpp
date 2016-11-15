@@ -84,7 +84,7 @@ void gameLoop() {
                 sprite.draw();
             }
         }
-        //clean up dead oobjects
+        //clean up dead objects
         for (auto it = allGameObjects.begin(); it != allGameObjects.end();) {
             if ((*it)->dead) {
                 it = allGameObjects.erase(it);
