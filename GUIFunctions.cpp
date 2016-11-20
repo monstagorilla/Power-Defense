@@ -7,6 +7,8 @@
 #include "BasicTower.h"
 #include "Map.h"
 #include "config.h"
+#include "LaserTower.h"
+#include "NailGun.h"
 
 Tower* GUIFunctions::currentTower = nullptr;
 GridPoint GUIFunctions::currentPos = GridPoint();
@@ -76,6 +78,24 @@ void GUIFunctions::addBasicTower() {
     if (gamestats.money >= BasicTower::stat[0].price && currentPos.x >= 0 && currentPos.x < MAP_WIDTH && currentPos.y >= 0 && currentPos.y < MAP_HEIGHT && !map.isGround(currentPos)) {
         allGameObjects.push_back(std::make_unique<BasicTower>(currentPos));
         gamestats.money -= BasicTower::stat[0].price ;
+        for(auto element: root->getChild(GUI::paths[path_mapOverlays])->children){
+            if(element->pos.snap() == currentPos){
+                element->onClick = onClickTower;
+            }
+        }
+    }
+}
+ //TODO: avoid redundant code
+void GUIFunctions::addNailGun(){
+    for (int i = 0; i < allGameObjects.size(); i++){
+        if (allGameObjects[i].get()->ID == 2 && allGameObjects[i].get()->pos.snap() == currentPos){
+            return;
+        }
+    }
+
+    if (gamestats.money >= NailGun::stat[0].price && currentPos.x >= 0 && currentPos.x < MAP_WIDTH && currentPos.y >= 0 && currentPos.y < MAP_HEIGHT && !map.isGround(currentPos)) {
+        allGameObjects.push_back(std::make_unique<NailGun>(currentPos));
+        gamestats.money -= NailGun::stat[0].price ;
         for(auto element: root->getChild(GUI::paths[path_mapOverlays])->children){
             if(element->pos.snap() == currentPos){
                 element->onClick = onClickTower;

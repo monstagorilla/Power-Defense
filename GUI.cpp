@@ -24,7 +24,9 @@ void GUI::initGUI() {
 
     root->getChild(paths[path_menus])->children.push_back(new GUIObject());//buyMenu
     root->getChild(paths[path_buymenu])->children.push_back(
-            new Button("Buy", {1, 1}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::addBasicTower));
+            new Button("Buy BasicTower", {1, 1}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::addBasicTower));
+    root->getChild(paths[path_buymenu])->children.push_back(
+            new Button("Buy NailGun", {7, 1}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::addNailGun));
     root->getChild(paths[path_buymenu])->children.push_back(new Symbol(std::vector<std::string>{"/assets/TowerBase.png","/assets/TowerTurret.png"}, GridPoint(8,1)));
     //main menu
     root->getChild(paths[path_menus])->children.push_back(new GUIObject());

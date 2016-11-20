@@ -18,6 +18,7 @@ public:
     static void onClickTower();
     static void sellTower();
     static void addBasicTower();
+    static void addNailGun();
     static void startGame();
     static void onClickGround();
     static void endGame();

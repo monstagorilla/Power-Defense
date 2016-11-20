@@ -2,7 +2,7 @@
 
 #include "Point.h"
 #include "GameObject.h"
-#include "Shot.h"
+#include "BasicShot.h"
 #include "BasicTower.h"
 #include "Enemy.h"
 #include "globals.h"
@@ -10,23 +10,22 @@
 #include "config.h"
 
 const std::vector<TowerStats> BasicTower::stat =
+        //reloadTime, range, price, damage path
         {{20, 100, 100, 10, {"/assets/TowerBase.png", "/assets/TowerTurret.png"}},
-         {20, 100, 50,  20, {"/assets/TowerBase.png", "/assets/TowerTurret1.png"}},
-         {20, 100, 75,  30, {"/assets/TowerBase.png", "/assets/TowerTurret2.png"}},
-         {15, 125, 100, 40, {"/assets/TowerBase.png", "/assets/TowerTurret3.png"}}};
+         {20, 120, 50,  20, {"/assets/TowerBase.png", "/assets/TowerTurret1.png"}},
+         {20, 150, 75,  30, {"/assets/TowerBase.png", "/assets/TowerTurret2.png"}},
+         {15, 200, 100, 40, {"/assets/TowerBase.png", "/assets/TowerTurret3.png"}}};
 
-BasicTower::BasicTower(const GridPoint pos) : Tower::Tower(pos) {
-    for (auto path: stat[0].paths) {
-        sprites.push_back(Sprite(pos.center(), TILE_WIDTH, TILE_HEIGHT, path));
-    }
+BasicTower::BasicTower(const GridPoint pos) : Tower::Tower(pos, this->stat[0].paths) {
+
 }
 
 BasicTower::~BasicTower() {
 
 }
 
-void BasicTower::shoot(Enemy *target) {
-    allGameObjects.push_back(std::make_unique<Shot>(pos, this, target, getStats().damage));
+void BasicTower::shoot(Enemy *target, const float angle) {
+    allGameObjects.push_back(std::make_unique<BasicShot>(pos, this, target, getStats().damage, angle, 3.0));
 }
 
 void BasicTower::update() {
@@ -46,7 +45,7 @@ void BasicTower::update() {
                    M_PI + 90;
         sprites[1].rotation = rotation;
         if (cooldown <= 0) {
-            shoot(nearest);
+            shoot(nearest, rotation);
             cooldown = getStats().reloadTime;
         }
     }
