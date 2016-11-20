@@ -10,7 +10,7 @@ class GridPoint;
 
 class Symbol: public GUIObject{
 public:
-    Symbol(std::vector<std::string> paths, GridPoint pos);
+    Symbol(const std::vector<std::string> paths, const GridPoint pos, void (*onCLick)());
     virtual ~Symbol();
 
     virtual void update();

@@ -43,20 +43,8 @@ void Enemy::update() {
         }
     }
 
-    for (
-            int i = 0;
-            i < sprites.
-
-                    size();
-
-            i++) {
-        sprites[i].
-                pos = this->pos;
-    }
-
-    if (health < getStat().maxHealth) {
-        drawHealthbar();
-
+    for (int i = 0; i < sprites.size(); i++) {
+        sprites[i].pos = this->pos;
     }
 }
 
@@ -132,7 +120,6 @@ void Enemy::drawHealthbar(int width, int height, int border) {
     }
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
-
 }
 
 void Enemy::hit(Tower &source, int damage) {
@@ -159,4 +146,10 @@ void Enemy::die() {
 EnemyStats Enemy::getStat() {
     return {(int) (stat.maxHealth * pow(1.3, level)), (float) (stat.speed * pow(1.005, level)),
             (int) (stat.loot * (1 + 0.2 * level))};
+}
+
+void Enemy::draw() {
+    if (health < getStat().maxHealth) {
+        drawHealthbar();
+    }
 }

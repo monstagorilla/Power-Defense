@@ -22,7 +22,7 @@ Label::~Label() {
 
 void Label::draw() {
     if (isActivated) {
-        if (onClick) {
+        if (onClick != nullptr) {
             onClick();
         }
         TextOutput::drawText(text, pos.snap(), 8, font1_white);

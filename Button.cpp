@@ -37,20 +37,5 @@ void Button::draw() {
 }
 
 void Button::update() {
-    if (isActivated) {
-        state = unfocused;
-        if (mousePos.snap().x >= pos.snap().x && mousePos.snap().x < pos.snap().x + width &&
-            mousePos.snap().y >= pos.snap().y && mousePos.snap().y < pos.snap().y + height) {
-            if (mouseRelease) {
-                if (onClick) {
-                    onClick();
-                }
-                state = focused;
-            } else if (isCLicked) {
-                state = pressed;
-            } else {
-                state = focused;
-            }
-        }
-    }
+    GUIObject::update();
 }

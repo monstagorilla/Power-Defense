@@ -24,3 +24,7 @@ void GameObject::update() {
 
 }
 
+void GameObject::draw() {
+
+}
+

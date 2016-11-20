@@ -2,14 +2,15 @@
 
 #include "Point.h"
 #include "GUIObject.h"
+#include "globals.h"
 
 GUIObject::GUIObject() {
     children = std::vector<GUIObject *>();
     state = unfocused;
     isActivated = false;
     pos = Point(0,0);
-    width = 0;
-    height = 0;
+    width = 1;
+    height = 1;
     text = "";
     color = {0, 0, 0, 0};
     onClick = nullptr;
@@ -20,7 +21,22 @@ GUIObject::~GUIObject() {
 }
 
 void GUIObject::update() {
-
+    if (isActivated) {
+        state = unfocused;
+        if (mousePos.snap().x >= pos.snap().x && mousePos.snap().x < pos.snap().x + width &&
+            mousePos.snap().y >= pos.snap().y && mousePos.snap().y < pos.snap().y + height) {
+            if (mouseRelease) {
+                if (onClick != nullptr) {
+                    onClick();
+                }
+                state = focused;
+            } else if (isCLicked) {
+                state = pressed;
+            } else {
+                state = focused;
+            }
+        }
+    }
 }
 
 void GUIObject::draw() {
