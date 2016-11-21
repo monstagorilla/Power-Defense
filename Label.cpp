@@ -25,6 +25,6 @@ void Label::draw() {
         if (onClick != nullptr) {
             onClick();
         }
-        TextOutput::drawText(text, pos.snap(), 8, font1_white);
+        TextOutput::drawText(text, pos.snap(), 8, font1_white); //TODO: using class member color
     }
 }

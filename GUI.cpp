@@ -11,8 +11,8 @@
 #include "GUIFunctions.h"
 #include "Symbol.h"
 #include "config.h"
-
-std::vector<std::string> GUI::paths = {"0", "00", "000", "01", "02", "1", "2"};
+#include "Container.h"
+std::vector<std::string> GUI::paths = {"0", "00", "000", "01","010", "02", "1", "2"};
 
 void GUI::initGUI() {
     root->children.push_back(new GUIObject()); //menus
@@ -22,6 +22,7 @@ void GUI::initGUI() {
     addGUIElement(path_menus, new GUIObject());//menus_main
     addGUIElement(path_menus, new GUIObject());//menus_buy
     addGUIElement(path_menus, new GUIObject());//menus_tower
+    addGUIElement(path_menus_buy, new Container()); //menus_tower_container
 
     //MAINMENU
     addGUIElement(path_menus_main, new Button("Pause", {10, 0}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::pause));
@@ -32,11 +33,18 @@ void GUI::initGUI() {
                   new Symbol(std::vector<std::string>{"/assets/TowerBase.png", "/assets/TowerTurret.png"}, {1, 1},
                              GUIFunctions::onClickSymbol_BasicTower));
     addGUIElement(path_menus_buy,
-                  new Symbol(std::vector<std::string>{"/assets/TowerBase.png", "/assets/TowerTurret.png"}, {1, 2},
+                  new Symbol(std::vector<std::string>{"/assets/TowerBase.png", "/assets/TowerTurret.png"}, {2, 1},
                              GUIFunctions::onClickSymbol_NailGun));
+
+    //ContainerTowerStats
+    addGUIElement(path_menus_buy_container, new Label("Type: ", {1,3}, 3,1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("SCUR: ", {3,6}, 3,1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Button("BAOBAOBAO", {1, 4}, 6, 1, COLOR_GREEN, COLOR_RED, nullptr));
+
     addGUIElement(path_menus_buy,
                   new Button("Apply", {1, 8}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickBuyMenu_Apply));
-
+    addGUIElement(path_menus_buy,
+                  new Button("Cancel", {7, 8}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickBuyMenu_Cancel));
 
 /*
     root->getChild(paths[path_towermenu])->children.push_back(

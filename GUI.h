@@ -10,9 +10,10 @@ enum pathIndex {
     path_menus_main         = 1,
     path_menus_main_pause   = 2,
     path_menus_buy          = 3,
-    path_menus_tower        = 4,
-    path_gamestats          = 5,
-    path_mapOverlays        = 6,
+    path_menus_buy_container = 4,
+    path_menus_tower        = 5,
+    path_gamestats          = 6,
+    path_mapOverlays        = 7,
 };
 
 class GUI {

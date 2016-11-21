@@ -9,7 +9,6 @@
 #include "BasicTower.h"
 #include "Map.h"
 #include "config.h"
-#include "LaserTower.h"
 #include "NailGun.h"
 #include "GameObject.h"
 
@@ -44,7 +43,7 @@ void GUIFunctions::inactivateMenus() {
     for (auto element: root->getChild(GUI::paths[path_menus_buy])->traverse()) {
         element->isActivated = false;
     }
-    for (auto element: root->getChild(GUI::paths[path_menus_buy])->traverse()) {
+    for (auto element: root->getChild(GUI::paths[path_menus_tower])->traverse()) {
         element->isActivated = false;
     }
 }
@@ -66,7 +65,7 @@ void GUIFunctions::onClickTower() {
 
 void GUIFunctions::onClickGround() {
     inactivateMenus();
-    for (auto element: root->getChild(GUI::paths[path_menus_buy])->children) {
+    for (auto element: root->getChild(GUI::paths[path_menus_buy])->traverse()) {
         element->isActivated = true;
     }
     currentTowerType = basicTower;
@@ -139,4 +138,9 @@ void GUIFunctions::onClickBuyMenu_Apply() {
             }
         }
     }
+}
+
+void GUIFunctions::onClickBuyMenu_Cancel() {
+    currentTowerType = basicTower;
+    inactivateMenus();
 }

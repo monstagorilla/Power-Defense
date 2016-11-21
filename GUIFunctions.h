@@ -30,4 +30,5 @@ public:
     static void onClickSymbol_BasicTower();
     static void onClickSymbol_NailGun();
     static void onClickBuyMenu_Apply();
+    static void onClickBuyMenu_Cancel();
 };
