@@ -2,7 +2,6 @@
 #include "config.h"
 
 void TextOutput::drawText(const std::string text, GridPoint pos, const int size, FontType fontType) {
-    // TODO: don't make a new Texture/Surface every time
     SDL_Rect destRect;
     destRect.x = pos.upperLeft().x;
     destRect.y = pos.upperLeft().y;

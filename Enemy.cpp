@@ -10,8 +10,10 @@
 #include "config.h"
 #include "globals.h"
 #include "gamestats.h"
+#include "GUIFunctions.h"
 
-Enemy::Enemy(Map &map,const int level, const int maxHealth,const float speed, const int loot, const std::string spritePath) : map(map) {
+Enemy::Enemy(Map &map, const int level, const int maxHealth, const float speed, const int loot,
+             const std::string spritePath) : map(map) {
     pos = map.path[0];
     pathIndex = 1;
     stat = {maxHealth, speed, loot};
@@ -30,18 +32,19 @@ void Enemy::update() {
     if (distance(pos, map.path[pathIndex]) < 0.1) {
         pathIndex++;
         if (pathIndex == map.path.size()) {
-            lives -= 1;
-            std::cout << "Lives left: " << lives << std::endl;
+            if (lives == 0) {
+                GUIFunctions::endGame();
+                std::cout<< "GAME OVER" << std::endl;
+            } else {
+                lives--;
+                std::cout << "Lives left: " << lives << std::endl;
+            }
             die();
         }
     }
 
     for (int i = 0; i < sprites.size(); i++) {
         sprites[i].pos = this->pos;
-    }
-
-    if (health < getStat().maxHealth) {
-        drawHealthbar();
     }
 }
 
@@ -117,7 +120,6 @@ void Enemy::drawHealthbar(int width, int height, int border) {
     }
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
-
 }
 
 void Enemy::hit(Tower &source, int damage) {
@@ -142,5 +144,12 @@ void Enemy::die() {
 }
 
 EnemyStats Enemy::getStat() {
-    return {(int)(stat.maxHealth * pow(2, level)), (float)(stat.speed * pow(1.005, level)), (int) (stat.loot * (1 + 0.2 * level))};
+    return {(int) (stat.maxHealth * pow(1.3, level)), (float) (stat.speed * pow(1.005, level)),
+            (int) (stat.loot * (1 + 0.2 * level))};
+}
+
+void Enemy::draw() {
+    if (health < getStat().maxHealth) {
+        drawHealthbar();
+    }
 }

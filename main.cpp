@@ -30,7 +30,7 @@ Gamestats gamestats = {0, 1000};
 bool gameIsRunning = false;
 
 //YOLO = YOLO_MAX;
-DisplayPoint mousePos   = {0, 0};
+DisplayPoint mousePos = {0, 0};
 DisplayPoint clickedPos = {0, 0};
 bool isCLicked = false;
 bool mouseRelease = false;
@@ -67,24 +67,29 @@ void gameLoop() {
 
         //spawn enemies
         if (gameIsRunning && enemyCount % 50 == 0) {
-            if(enemyCount % 300 == 0){
+            if (enemyCount % 300 == 0) {
                 levelCount++;
             }
             //allGameObjects.push_back(new Enemy(map, 100, 1.0));
             allGameObjects.push_back(std::make_unique<BasicEnemy>(map, levelCount));
         }
-        enemyCount++;
-
+        if (gameIsRunning) {
+            enemyCount++;
+        }
+        
         map.draw();
         //drawStats();
         for (int i = 0; i < allGameObjects.size(); i++) {
             auto object = allGameObjects[i].get();
-            object->update();
+            if (gameIsRunning) {
+                object->update();
+            }
             for (auto sprite : object->sprites) {
                 sprite.draw();
             }
+            object->draw();
         }
-        //clean up dead oobjects
+        //clean up dead objects
         for (auto it = allGameObjects.begin(); it != allGameObjects.end();) {
             if ((*it)->dead) {
                 it = allGameObjects.erase(it);
@@ -93,7 +98,7 @@ void gameLoop() {
             }
         }
 
-        for(auto element: root->traverse()){
+        for (auto element: root->traverse()) {
             element->draw();
         }
 
@@ -113,7 +118,7 @@ void gameLoop() {
         gettimeofday(&tv, NULL);
         t1 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
         if (t1 - t0 < 1000000.0 / FRAMES_PER_SECOND) {
-            usleep((__useconds_t)(1000000.0 / FRAMES_PER_SECOND - (t1 - t0)));
+            usleep((__useconds_t) (1000000.0 / FRAMES_PER_SECOND - (t1 - t0)));
         }
     }
 }
@@ -126,7 +131,7 @@ int main(int argc, char *argv[]) {
     }
     GUI::initGUI();
     map = Map("/assets/map1.tmx");
-    
+
     gameLoop();
     SDL_DestroyWindow(window);
     SDL_Quit();

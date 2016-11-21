@@ -20,7 +20,7 @@ class Tower : public GameObject {
 public:
     Tower();
 
-    Tower(const GridPoint pos);
+    Tower(const GridPoint pos, const std::vector<std::string> paths);
 
     virtual ~Tower();
 

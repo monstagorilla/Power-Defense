@@ -12,6 +12,7 @@ public:
     virtual ~GameObject();
 
     virtual void update();
+    virtual void draw();
 
     Point pos;
     std::vector<Sprite> sprites;

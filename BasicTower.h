@@ -10,7 +10,7 @@ public:
     BasicTower(const GridPoint pos);
     virtual ~BasicTower();
 
-    virtual void shoot(Enemy *target);
+    virtual void shoot(Enemy *target, const float angle);
     virtual void update();
     virtual TowerStats getStats();
     virtual int getMaxUpgrade();

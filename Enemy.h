@@ -21,8 +21,9 @@ public:
     virtual ~Enemy();
 
     virtual void update();
-    EnemyStats getStat();
+    virtual void draw();
 
+    EnemyStats getStat();
     void drawHealthbar(int width = 40, int height = 8, int border = 2);
     void hit(Tower &source, int damage);
 
