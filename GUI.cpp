@@ -12,7 +12,8 @@
 #include "Symbol.h"
 #include "config.h"
 #include "Container.h"
-std::vector<std::string> GUI::paths = {"0", "00", "000", "01","010", "02", "1", "2"};
+
+std::vector<std::string> GUI::paths = {"0", "00", "000", "01", "010", "0100", "0102", "0104", "0106", "0108","014", "02", "1", "2"};
 
 void GUI::initGUI() {
     root->children.push_back(new GUIObject()); //menus
@@ -25,7 +26,7 @@ void GUI::initGUI() {
     addGUIElement(path_menus_buy, new Container()); //menus_tower_container
 
     //MAINMENU
-    addGUIElement(path_menus_main, new Button("Pause", {10, 0}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::pause));
+    addGUIElement(path_menus_main, new Button("Start", {10, 0}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::pause));
 
     //BUYMENU
     addGUIElement(path_menus_buy, new Label("SHOP", {1, 0}, 5, 1, COLOR_GREEN, nullptr));
@@ -37,14 +38,20 @@ void GUI::initGUI() {
                              GUIFunctions::onClickSymbol_NailGun));
 
     //ContainerTowerStats
-    addGUIElement(path_menus_buy_container, new Label("Type: ", {1,3}, 3,1, COLOR_WHITE, nullptr));
-    addGUIElement(path_menus_buy_container, new Label("SCUR: ", {3,6}, 3,1, COLOR_WHITE, nullptr));
-    addGUIElement(path_menus_buy_container, new Button("BAOBAOBAO", {1, 4}, 6, 1, COLOR_GREEN, COLOR_RED, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("", {1, 3}, 2, 1, COLOR_WHITE, nullptr)); //title
+    addGUIElement(path_menus_buy_container, new Label("Health: ", {1, 4}, 5, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("", {6, 4}, 2, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("Damage: ", {1, 5}, 5, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("", {6, 5}, 2, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("Speed: ", {1, 6}, 5, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("", {6, 6}, 2, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("Cost: ", {1, 7}, 5, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("", {6, 7}, 2, 1, COLOR_WHITE, nullptr));
 
     addGUIElement(path_menus_buy,
-                  new Button("Apply", {1, 8}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickBuyMenu_Apply));
+                  new Button("Apply", {5, 9}, 3, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickBuyMenu_Apply));
     addGUIElement(path_menus_buy,
-                  new Button("Cancel", {7, 8}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickBuyMenu_Cancel));
+                  new Button("Cancel", {1, 9}, 3, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickBuyMenu_Cancel));
 
 /*
     root->getChild(paths[path_towermenu])->children.push_back(

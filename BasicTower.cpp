@@ -25,7 +25,7 @@ BasicTower::~BasicTower() {
 }
 
 void BasicTower::shoot(Enemy *target, const float angle) {
-    allGameObjects.push_back(std::make_unique<BasicShot>(pos, this, target, getStats().damage, angle, 3.0));
+    allGameObjects.push_back(std::make_unique<BasicShot>(pos, this, target, getStats().damage, angle, 6.0));
 }
 
 void BasicTower::update() {

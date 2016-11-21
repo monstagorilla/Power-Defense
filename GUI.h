@@ -11,9 +11,15 @@ enum pathIndex {
     path_menus_main_pause   = 2,
     path_menus_buy          = 3,
     path_menus_buy_container = 4,
-    path_menus_tower        = 5,
-    path_gamestats          = 6,
-    path_mapOverlays        = 7,
+    path_menus_buy_container_type = 5,
+    path_menus_buy_container_damage = 6,
+    path_menus_buy_container_reloadTime = 7,
+    path_menus_buy_container_range = 8,
+    path_menus_buy_container_cost = 9,
+    path_menus_buy_apply = 10,
+    path_menus_tower        = 11,
+    path_gamestats          = 12,
+    path_mapOverlays        = 13,
 };
 
 class GUI {

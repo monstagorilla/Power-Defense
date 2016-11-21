@@ -65,12 +65,27 @@ void GUIFunctions::onClickTower() {
 
 void GUIFunctions::onClickGround() {
     inactivateMenus();
+    if(map.isGround(mousePos.snap())){
+        return;
+    }
     for (auto element: root->getChild(GUI::paths[path_menus_buy])->traverse()) {
         element->isActivated = true;
     }
-    currentTowerType = basicTower;
+    root->getChild(GUI::paths[path_menus_buy_apply])->isActivated = false;
     currentPos = mousePos.snap();
+    currentTowerType = basicTower;
     currentTower = nullptr;
+    /*
+    root->getChild(GUI::paths[path_menus_buy_container_type])->text = "";
+    root->getChild(GUI::paths[path_menus_buy_container_damage])->text = "";
+    root->getChild(GUI::paths[path_menus_buy_container_reloadTime])->text = "";
+    root->getChild(GUI::paths[path_menus_buy_container_range])->text = "";
+    root->getChild(GUI::paths[path_menus_buy_container_cost])->text = "";
+     */
+    for(auto object: root->getChild(GUI::paths[path_menus_buy_container])->children){
+        object->isActivated = false;
+    }
+
 }
 
 void GUIFunctions::sellTower() {
@@ -98,10 +113,45 @@ void GUIFunctions::pause() {
 
 void GUIFunctions::onClickSymbol_BasicTower() {
     currentTowerType = basicTower;
+    onClickTowerSymbol();
 }
 
 void GUIFunctions::onClickSymbol_NailGun() {
     currentTowerType = nailGun;
+    onClickTowerSymbol();
+}
+
+void GUIFunctions::onClickTowerSymbol() {
+    for(auto object: root->getChild(GUI::paths[path_menus_buy_container])->children){
+        object->isActivated = true;
+    }
+    std::string type = "";
+    int damage = 0;
+    int reloadTime = 0;
+    int range = 0;
+    int cost = 0;
+    switch (currentTowerType) {
+        case basicTower:
+            type = "BASIC TOWER";
+            damage = BasicTower::stat[0].damage;
+            reloadTime = BasicTower::stat[0].reloadTime;
+            range = (int) BasicTower::stat[0].range;
+            cost = BasicTower::stat[0].price;
+            break;
+        case nailGun:
+            type = "NAIL GUN";
+            damage = BasicTower::stat[0].damage;
+            reloadTime = BasicTower::stat[0].reloadTime;
+            range = (int) BasicTower::stat[0].range;
+            cost = BasicTower::stat[0].price;
+            break;
+    }
+    root->getChild(GUI::paths[path_menus_buy_container_type])->text = type;
+    root->getChild(GUI::paths[path_menus_buy_container_damage])->text = std::to_string(damage);
+    root->getChild(GUI::paths[path_menus_buy_container_reloadTime])->text = std::to_string(reloadTime);
+    root->getChild(GUI::paths[path_menus_buy_container_range])->text = std::to_string(range);
+    root->getChild(GUI::paths[path_menus_buy_container_cost])->text = std::to_string(cost);
+    root->getChild(GUI::paths[path_menus_buy_apply])->isActivated = true;
 }
 
 void GUIFunctions::onClickBuyMenu_Apply() {

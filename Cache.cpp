@@ -28,12 +28,15 @@ SDL_Texture *Cache::getTexture(const std::string path) {
     return texture;
 }
 
-SDL_Texture *Cache::getText(const std::string text, const FontType type) {
+SDL_Texture *Cache::getText(std::string text, const FontType type) {
     SDL_Texture *texture = nullptr;
     try {
         texture = textCache[type].at(text);
     } catch (std::out_of_range) {
         SDL_Surface *surface = nullptr;
+        if(text == ""){
+            text = "-";
+        }
         switch (type) {
             case font1_green:
                 surface = TTF_RenderUTF8_Blended(getFont("/fonts/Raleway-Medium.ttf"), text.c_str(), COLOR_GREEN);

@@ -3,6 +3,7 @@
 #include "Point.h"
 #include "globals.h"
 #include "GUIObject.h"
+#include "Map.h"
 
 void eventHandler::handleEvent(SDL_Event &ev) {
     mouseRelease = false;
@@ -12,7 +13,9 @@ void eventHandler::handleEvent(SDL_Event &ev) {
             break;
         case SDL_MOUSEBUTTONDOWN:
             isCLicked = true;
-            clickedPos = {ev.motion.x, ev.motion.y};
+            if(!map.isGround(mousePos.snap())) {
+                clickedPos = {ev.motion.x, ev.motion.y};
+            }
             break;
         case SDL_MOUSEBUTTONUP:
             if (isCLicked) {

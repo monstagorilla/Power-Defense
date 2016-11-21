@@ -8,8 +8,10 @@ class Point;
 
 class Label: public GUIObject{
 public:
-    Label(const std::string text, const GridPoint pos, int w, int h, const SDL_Color color,  void (*functptr)());
+    Label(const std::string text, const GridPoint pos, const int w, const int h, const SDL_Color color,  void (*functptr)(),const bool leftAligned = true );
     virtual ~Label();
 
     virtual void draw();
+private:
+    bool leftAligned;
 };

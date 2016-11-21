@@ -10,7 +10,7 @@
 class Cache {
 public:
     static SDL_Texture *getTexture(const std::string path);
-    static SDL_Texture *getText(const std::string text, const FontType type);
+    static SDL_Texture *getText( std::string text, const FontType type);
     static TTF_Font* getFont(const std::string path);
 
 private:

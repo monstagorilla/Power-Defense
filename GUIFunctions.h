@@ -20,7 +20,6 @@ public:
     static void upgradeTower();
     static void setLabelPoint();
     static void setLabelMoney();
-    static void inactivateMenus();
     static void onClickTower();
     static void sellTower();
     static void startGame();
@@ -31,4 +30,7 @@ public:
     static void onClickSymbol_NailGun();
     static void onClickBuyMenu_Apply();
     static void onClickBuyMenu_Cancel();
+private:
+    static void onClickTowerSymbol();
+    static void inactivateMenus();
 };
