@@ -140,10 +140,10 @@ void GUIFunctions::onClickTowerSymbol() {
             break;
         case nailGun:
             type = "NAIL GUN";
-            damage = BasicTower::stat[0].damage;
-            reloadTime = BasicTower::stat[0].reloadTime;
-            range = (int) BasicTower::stat[0].range;
-            cost = BasicTower::stat[0].price;
+            damage = NailGun::stat[0].damage;
+            reloadTime = NailGun::stat[0].reloadTime;
+            range = (int) NailGun::stat[0].range;
+            cost = NailGun::stat[0].price;
             break;
     }
     root->getChild(GUI::paths[path_menus_buy_container_type])->text = type;
