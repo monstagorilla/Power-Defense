@@ -8,7 +8,7 @@
 
 const std::vector<TowerStats> NailGun::stat =
         //reloadTime, range, price, damage, path
-        {{10, 100, 100, 1, {"/assets/TowerBase.png", "/assets/TowerTurret.png"}},
+        {{10, 120, 100, 1, {"/assets/TowerBase.png", "/assets/TowerTurret.png"}},
          {10, 120, 50,  2, {"/assets/TowerBase.png", "/assets/TowerTurret1.png"}},
          {5,  150, 75,  3, {"/assets/TowerBase.png", "/assets/TowerTurret2.png"}},
          {5,  200, 100, 4, {"/assets/TowerBase.png", "/assets/TowerTurret3.png"}}};

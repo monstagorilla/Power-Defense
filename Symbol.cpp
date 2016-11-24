@@ -8,15 +8,18 @@
 #include "Tower.h"
 #include "BasicTower.h"
 #include "NailGun.h"
+#include "Cache.h"
 
-Symbol::Symbol() : GUIObject::GUIObject() {
 
+Symbol::Symbol(const bool isTranparent) : GUIObject::GUIObject() {
+    this->isTransparent = isTranparent;
 }
 
 Symbol::Symbol(std::vector<std::string> paths, const GridPoint pos, void (*onCLick)()) : GUIObject::GUIObject() {
     this->onClick = onCLick;
     isActivated = false;
     this->pos = GridPoint(pos.x + MAP_WIDTH, pos.y).center();
+    isTransparent = false;
     for (auto element: paths) {
         sprites.push_back(Sprite(GridPoint(MAP_WIDTH + pos.x, pos.y).center(), TILE_WIDTH, TILE_HEIGHT, element));
     }
@@ -32,22 +35,28 @@ void Symbol::update() {
 
 void Symbol::draw() {
     if (isActivated) {
-        for (auto element: sprites) {
-            element.draw();
+        if (isTransparent) {
+            for (auto element: sprites) {
+                SDL_SetTextureAlphaMod(element.texture, 200);
+                SDL_SetTextureBlendMode(element.texture, SDL_BLENDMODE_BLEND);
+                element.draw();//TODO: fix TowerBase is shining through
+                //SDL_SetTextureBlendMode(element.texture, SDL_BLENDMODE_NONE);
+                SDL_SetTextureAlphaMod(element.texture, 255);
+            }
+        } else {
+            for (auto element: sprites) {
+                element.draw();
+            }
         }
-        int range = 0;
-        int x1 = GUIFunctions::currentPos.x;
-        int y1 = GUIFunctions::currentPos.y;
-        int x2 =pos.snap().x;
-        int y2 =pos.snap().y;
 
+        int range = 0;
         if (GUIFunctions::currentPos == pos.snap()) {
-            switch(GUIFunctions::currentTowerType){
+            switch (GUIFunctions::currentTowerType) {
                 case basicTower:
-                    range = (int)BasicTower::stat[0].range;
+                    range = (int) BasicTower::stat[0].range;
                     break;
                 case nailGun:
-                    range = (int)NailGun::stat[0].range;
+                    range = (int) NailGun::stat[0].range;
                     break;
             }
             Graphics::drawTransparentCircle(pos.displayPoint(), range);

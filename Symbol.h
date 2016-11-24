@@ -10,7 +10,7 @@ class GridPoint;
 
 class Symbol: public GUIObject{
 public:
-    Symbol();
+    Symbol(const bool isTransparent);
     Symbol(const std::vector<std::string> paths, const GridPoint pos, void (*onCLick)());
     virtual ~Symbol();
 
@@ -18,4 +18,6 @@ public:
     virtual void draw();
 
     std::vector<Sprite> sprites;
+private:
+    bool isTransparent;
 };

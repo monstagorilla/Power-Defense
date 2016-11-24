@@ -56,7 +56,7 @@ void GUI::initGUI() {
                   new Button("Cancel", {1, 9}, 3, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickBuyMenu_Cancel));
 
     //TEMP
-    addGUIElement(path_temp, new Symbol());
+    addGUIElement(path_temp, new Symbol(true));
 /*
     root->getChild(paths[path_towermenu])->children.push_back(
             new Button("Upgrade", {1, 1}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::upgradeTower));
