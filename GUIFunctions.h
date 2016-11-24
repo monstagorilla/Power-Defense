@@ -30,6 +30,7 @@ public:
     static void onClickSymbol_NailGun();
     static void onClickBuyMenu_Apply();
     static void onClickBuyMenu_Cancel();
+
 private:
     static void onClickTowerSymbol();
     static void inactivateMenus();

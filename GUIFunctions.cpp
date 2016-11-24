@@ -11,6 +11,8 @@
 #include "config.h"
 #include "NailGun.h"
 #include "GameObject.h"
+#include "Symbol.h"
+#include "Cache.h"
 
 Tower *GUIFunctions::currentTower = nullptr;
 GridPoint GUIFunctions::currentPos = GridPoint();
@@ -61,11 +63,12 @@ void GUIFunctions::onClickTower() {
             return;
         }
     }
+
 }
 
 void GUIFunctions::onClickGround() {
     inactivateMenus();
-    if(map.isGround(mousePos.snap())){
+    if (map.isGround(mousePos.snap())) {
         return;
     }
     for (auto element: root->getChild(GUI::paths[path_menus_buy])->traverse()) {
@@ -82,9 +85,10 @@ void GUIFunctions::onClickGround() {
     root->getChild(GUI::paths[path_menus_buy_container_range])->text = "";
     root->getChild(GUI::paths[path_menus_buy_container_cost])->text = "";
      */
-    for(auto object: root->getChild(GUI::paths[path_menus_buy_container])->children){
+    for (auto object: root->getChild(GUI::paths[path_menus_buy_container])->children) {
         object->isActivated = false;
     }
+    root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = false;
 
 }
 
@@ -108,7 +112,6 @@ void GUIFunctions::pause() {
         gameIsRunning = true;
         root->getChild(GUI::paths[path_menus_main_pause])->text = "Pause";
     }
-
 }
 
 void GUIFunctions::onClickSymbol_BasicTower() {
@@ -122,7 +125,7 @@ void GUIFunctions::onClickSymbol_NailGun() {
 }
 
 void GUIFunctions::onClickTowerSymbol() {
-    for(auto object: root->getChild(GUI::paths[path_menus_buy_container])->children){
+    for (auto object: root->getChild(GUI::paths[path_menus_buy_container])->children) {
         object->isActivated = true;
     }
     std::string type = "";
@@ -130,6 +133,10 @@ void GUIFunctions::onClickTowerSymbol() {
     int reloadTime = 0;
     int range = 0;
     int cost = 0;
+    Symbol *towerPreview = (Symbol *) root->getChild(GUI::paths[path_temp_towerpreview]);
+    towerPreview->sprites.clear();
+    std::vector<std::string> towerSprites;
+
     switch (currentTowerType) {
         case basicTower:
             type = "BASIC TOWER";
@@ -137,6 +144,9 @@ void GUIFunctions::onClickTowerSymbol() {
             reloadTime = BasicTower::stat[0].reloadTime;
             range = (int) BasicTower::stat[0].range;
             cost = BasicTower::stat[0].price;
+            for(auto element: BasicTower::stat[0].paths){
+                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element));
+            }
             break;
         case nailGun:
             type = "NAIL GUN";
@@ -144,6 +154,9 @@ void GUIFunctions::onClickTowerSymbol() {
             reloadTime = NailGun::stat[0].reloadTime;
             range = (int) NailGun::stat[0].range;
             cost = NailGun::stat[0].price;
+            for(auto element: NailGun::stat[0].paths){
+                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element));
+            }
             break;
     }
     root->getChild(GUI::paths[path_menus_buy_container_type])->text = type;
@@ -152,7 +165,10 @@ void GUIFunctions::onClickTowerSymbol() {
     root->getChild(GUI::paths[path_menus_buy_container_range])->text = std::to_string(range);
     root->getChild(GUI::paths[path_menus_buy_container_cost])->text = std::to_string(cost);
     root->getChild(GUI::paths[path_menus_buy_apply])->isActivated = true;
+    root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = true;
+
 }
+
 
 void GUIFunctions::onClickBuyMenu_Apply() {
     for (int i = 0; i < allGameObjects.size(); i++) {
@@ -187,10 +203,12 @@ void GUIFunctions::onClickBuyMenu_Apply() {
                 element->onClick = onClickTower;
             }
         }
+        root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = false;
     }
 }
 
 void GUIFunctions::onClickBuyMenu_Cancel() {
     currentTowerType = basicTower;
     inactivateMenus();
+    root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = false;
 }

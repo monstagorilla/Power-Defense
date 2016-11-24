@@ -13,12 +13,14 @@
 #include "config.h"
 #include "Container.h"
 
-std::vector<std::string> GUI::paths = {"0", "00", "000", "01", "010", "0100", "0102", "0104", "0106", "0108","014", "02", "1", "2"};
+std::vector<std::string> GUI::paths = {"0", "00", "000", "01", "010", "0100", "0102", "0104", "0106", "0108", "014",
+                                       "02", "1", "2", "3", "30"};
 
 void GUI::initGUI() {
     root->children.push_back(new GUIObject()); //menus
     root->children.push_back(new GUIObject()); //gamestats
     root->children.push_back(new GUIObject()); //mapOverlays
+    root->children.push_back(new GUIObject()); //temp
 
     addGUIElement(path_menus, new GUIObject());//menus_main
     addGUIElement(path_menus, new GUIObject());//menus_buy
@@ -49,10 +51,12 @@ void GUI::initGUI() {
     addGUIElement(path_menus_buy_container, new Label("", {6, 7}, 2, 1, COLOR_WHITE, nullptr));
 
     addGUIElement(path_menus_buy,
-                  new Button("Apply", {5, 9}, 3, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickBuyMenu_Apply));
+                  new Button("OK", {5, 9}, 3, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickBuyMenu_Apply));
     addGUIElement(path_menus_buy,
                   new Button("Cancel", {1, 9}, 3, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickBuyMenu_Cancel));
 
+    //TEMP
+    addGUIElement(path_temp, new Symbol());
 /*
     root->getChild(paths[path_towermenu])->children.push_back(
             new Button("Upgrade", {1, 1}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::upgradeTower));

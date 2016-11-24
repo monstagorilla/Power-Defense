@@ -2,6 +2,11 @@
 #include "Sprite.h"
 #include "Point.h"
 #include "config.h"
+#include "globals.h"
+
+Symbol::Symbol() : GUIObject::GUIObject() {
+
+}
 
 Symbol::Symbol(std::vector<std::string> paths, const GridPoint pos, void (*onCLick)()) : GUIObject::GUIObject() {
     this->onClick = onCLick;
