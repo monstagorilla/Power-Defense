@@ -42,8 +42,8 @@ void MapOverlay::update() {
         state = unfocused;
     }
     if (mousePos.snap() == pos.snap() && mouseRelease) {
-        if (this->onClick) {
-            this->onClick();
+        if (onClick != nullptr) {
+            onClick();
         }
     }
 }

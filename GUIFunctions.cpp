@@ -63,7 +63,6 @@ void GUIFunctions::onClickTower() {
             return;
         }
     }
-    std::cout <<"scurrrrss"<<std::endl;
 }
 
 void GUIFunctions::onClickGround() {
@@ -76,7 +75,7 @@ void GUIFunctions::onClickGround() {
     }
     root->getChild(GUI::paths[path_menus_buy_apply])->isActivated = false;
     currentPos = mousePos.snap();
-    currentTowerType = basicTower;
+    //currentTowerType = basicTower;
     currentTower = nullptr;
     /*
     root->getChild(GUI::paths[path_menus_buy_container_type])->text = "";
@@ -144,7 +143,7 @@ void GUIFunctions::onClickTowerSymbol() {
             reloadTime = BasicTower::stat[0].reloadTime;
             range = (int) BasicTower::stat[0].range;
             cost = BasicTower::stat[0].price;
-            for(auto element: BasicTower::stat[0].paths){
+            for (auto element: BasicTower::stat[0].paths) {
                 towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element));
             }
             break;
@@ -154,7 +153,7 @@ void GUIFunctions::onClickTowerSymbol() {
             reloadTime = NailGun::stat[0].reloadTime;
             range = (int) NailGun::stat[0].range;
             cost = NailGun::stat[0].price;
-            for(auto element: NailGun::stat[0].paths){
+            for (auto element: NailGun::stat[0].paths) {
                 towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element));
             }
             break;
@@ -200,11 +199,6 @@ void GUIFunctions::onClickBuyMenu_Apply() {
                 break;
         }
         gamestats.money -= price;
-        for (auto element: root->getChild(GUI::paths[path_mapOverlays])->children) {
-            if (element->pos.snap() == currentPos) {
-                element->onClick = onClickTower;
-            }
-        }
         root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = false;
         for (int i = 0; i < allGameObjects.size(); i++) {
             if (allGameObjects[i]->ID == 2 && allGameObjects[i]->pos.snap() == currentPos) {
@@ -212,14 +206,19 @@ void GUIFunctions::onClickBuyMenu_Apply() {
                 break;
             }
         }
-        for(auto element: root->getChild(GUI::paths[path_mapOverlays])->children){
-            if(element->pos.snap() == currentPos){
-                element->onClick();
+        for (auto element: root->getChild(GUI::paths[path_mapOverlays])->children) {
+            if (element->pos.snap() == currentPos) {
+                element->onClick = onClickTower;
+                inactivateMenus();
+                for (auto object: root->getChild(GUI::paths[path_menus_tower])->children) {
+                    object->isActivated = true;
+                }
                 break;
             }
         }
     }
 }
+
 
 void GUIFunctions::onClickBuyMenu_Cancel() {
     currentTowerType = basicTower;
