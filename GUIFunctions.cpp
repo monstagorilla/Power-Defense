@@ -66,10 +66,10 @@ void GUIFunctions::onClickTower() {
 }
 
 void GUIFunctions::onClickGround() {
-    inactivateMenus();
-    if (map.isGround(mousePos.snap())) {
+    if (map.isGround(mousePos.snap()) || currentPos == mousePos.snap()) {
         return;
     }
+    inactivateMenus();
     for (auto element: root->getChild(GUI::paths[path_menus_buy])->traverse()) {
         element->isActivated = true;
     }
