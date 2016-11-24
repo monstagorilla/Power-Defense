@@ -3,6 +3,11 @@
 #include "Point.h"
 #include "config.h"
 #include "globals.h"
+#include "GUIFunctions.h"
+#include "Graphics.h"
+#include "Tower.h"
+#include "BasicTower.h"
+#include "NailGun.h"
 
 Symbol::Symbol() : GUIObject::GUIObject() {
 
@@ -29,6 +34,23 @@ void Symbol::draw() {
     if (isActivated) {
         for (auto element: sprites) {
             element.draw();
+        }
+        int range = 0;
+        int x1 = GUIFunctions::currentPos.x;
+        int y1 = GUIFunctions::currentPos.y;
+        int x2 =pos.snap().x;
+        int y2 =pos.snap().y;
+
+        if (GUIFunctions::currentPos == pos.snap()) {
+            switch(GUIFunctions::currentTowerType){
+                case basicTower:
+                    range = (int)BasicTower::stat[0].range;
+                    break;
+                case nailGun:
+                    range = (int)NailGun::stat[0].range;
+                    break;
+            }
+            Graphics::drawTransparentCircle(pos.displayPoint(), range);
         }
     }
 }

@@ -49,6 +49,5 @@ void Container::draw() {
 
         SDL_SetRenderDrawColor(renderer, 255,255,255,255);
         SDL_RenderDrawRect(renderer, &rect);
-        SDL_SetRenderDrawColor(renderer, 0,0,0,255);
     }
 }

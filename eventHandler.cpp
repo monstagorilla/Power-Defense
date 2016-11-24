@@ -27,7 +27,4 @@ void eventHandler::handleEvent(SDL_Event &ev) {
     for (auto element: root->traverse()) {
         element->update();
     }
-    for (auto element: root->traverse()) {
-        element->draw();
-    }
 }

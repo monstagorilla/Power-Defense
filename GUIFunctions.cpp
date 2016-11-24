@@ -63,7 +63,7 @@ void GUIFunctions::onClickTower() {
             return;
         }
     }
-
+    std::cout <<"scurrrrss"<<std::endl;
 }
 
 void GUIFunctions::onClickGround() {
@@ -159,6 +159,9 @@ void GUIFunctions::onClickTowerSymbol() {
             }
             break;
     }
+    towerPreview->pos.x = currentPos.center().x;
+    towerPreview->pos.y = currentPos.center().y;
+
     root->getChild(GUI::paths[path_menus_buy_container_type])->text = type;
     root->getChild(GUI::paths[path_menus_buy_container_damage])->text = std::to_string(damage);
     root->getChild(GUI::paths[path_menus_buy_container_reloadTime])->text = std::to_string(reloadTime);
@@ -166,7 +169,6 @@ void GUIFunctions::onClickTowerSymbol() {
     root->getChild(GUI::paths[path_menus_buy_container_cost])->text = std::to_string(cost);
     root->getChild(GUI::paths[path_menus_buy_apply])->isActivated = true;
     root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = true;
-
 }
 
 
@@ -204,6 +206,18 @@ void GUIFunctions::onClickBuyMenu_Apply() {
             }
         }
         root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = false;
+        for (int i = 0; i < allGameObjects.size(); i++) {
+            if (allGameObjects[i]->ID == 2 && allGameObjects[i]->pos.snap() == currentPos) {
+                currentTower = (Tower *) allGameObjects[i].get();
+                break;
+            }
+        }
+        for(auto element: root->getChild(GUI::paths[path_mapOverlays])->children){
+            if(element->pos.snap() == currentPos){
+                element->onClick();
+                break;
+            }
+        }
     }
 }
 
@@ -212,3 +226,4 @@ void GUIFunctions::onClickBuyMenu_Cancel() {
     inactivateMenus();
     root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = false;
 }
+

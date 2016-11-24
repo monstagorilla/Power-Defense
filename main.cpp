@@ -98,6 +98,7 @@ void gameLoop() {
             }
         }
 
+
         for (auto element: root->traverse()) {
             element->draw();
         }
