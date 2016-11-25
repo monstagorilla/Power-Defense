@@ -19,9 +19,11 @@ enum pathIndex {
     path_menus_buy_apply = 10,
     path_menus_tower        = 11,
     path_gamestats          = 12,
-    path_mapOverlays        = 13,
-    path_temp = 14,
-    path_temp_towerpreview = 15
+    path_gamestats_money = 13,
+    path_gamestats_points = 14,
+    path_mapOverlays        = 15,
+    path_temp = 16,
+    path_temp_towerpreview = 17
 };
 
 class GUI {

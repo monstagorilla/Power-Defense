@@ -35,11 +35,11 @@ void GUIFunctions::upgradeTower() {
 }
 
 void GUIFunctions::setLabelPoint() {
-    // root->getChild(GUI::paths[path_globalstats_point])->text = std::to_string(gamestats.points);
+    root->getChild(GUI::paths[path_gamestats_points])->text = std::to_string(gamestats.points);
 }
 
 void GUIFunctions::setLabelMoney() {
-    //root->getChild(GUI::paths[path_globalstats_money])->text = std::to_string(gamestats.money);
+    root->getChild(GUI::paths[path_gamestats_money])->text = std::to_string(gamestats.money);
 }
 
 void GUIFunctions::inactivateMenus() {

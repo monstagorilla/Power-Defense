@@ -26,7 +26,7 @@ std::vector<std::unique_ptr<GameObject> > allGameObjects;
 GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
 int lives = 5;
-Gamestats gamestats = {0, 1000};
+Gamestats gamestats = {100, 1000};
 bool gameIsRunning = false;
 
 //YOLO = YOLO_MAX;

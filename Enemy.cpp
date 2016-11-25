@@ -34,7 +34,7 @@ void Enemy::update() {
         if (pathIndex == map.path.size()) {
             if (lives == 0) {
                 GUIFunctions::endGame();
-                std::cout<< "GAME OVER" << std::endl;
+                std::cout << "GAME OVER" << std::endl;
             } else {
                 lives--;
                 std::cout << "Lives left: " << lives << std::endl;
@@ -134,6 +134,7 @@ void Enemy::die() {
         if ((*it).get() == this) {
             (*it)->dead = true;
             gamestats.money += getStat().loot;
+            gamestats.points += getStat().loot;
         }
         if ((*it)->ID == 3) {
             if (((Shot *) (*it).get())->target == this) {
