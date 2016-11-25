@@ -1,7 +1,6 @@
 TODOS:
 -centered text Buttons
 -print single tiles
--nail gun just 3 shots
 
 
 monstagorilla:
@@ -11,5 +10,4 @@ monstagorilla:
 
 
 whentze:
--implement angle for shots
--
+-Print gameplay (map+objects) to a separate texture and render this into the window
