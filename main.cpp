@@ -26,7 +26,7 @@ std::vector<std::unique_ptr<GameObject> > allGameObjects;
 GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
 int lives = 5;
-Gamestats gamestats = {100, 1000};
+Gamestats gamestats = {0, 1000};
 bool gameIsRunning = false;
 
 //YOLO = YOLO_MAX;
@@ -114,7 +114,7 @@ void gameLoop() {
         }
 
         SDL_RenderPresent(renderer);
-        //SDL_SetRenderDrawColor(renderer, 0,0,0,0);
+        SDL_SetRenderDrawColor(renderer, 0,0,0,0);
         SDL_RenderClear(renderer);
         gettimeofday(&tv, NULL);
         t1 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
