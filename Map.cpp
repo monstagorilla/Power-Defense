@@ -50,7 +50,7 @@ Map::Map(const std::string &filename) {
             }
         }
     }
-    sprite = Sprite({MAP_WIDTH * TILE_WIDTH / 2, WINDOW_HEIGHT / 2}, TILE_WIDTH * (MAP_WIDTH + 1),
+    sprite = Sprite({MAP_WIDTH * TILE_WIDTH / 2, MAP_HEIGHT*TILE_HEIGHT / 2}, TILE_WIDTH * (MAP_WIDTH + 1),
                     TILE_HEIGHT * (MAP_HEIGHT + 1),
                     "/assets/map1.png");
     isFocused = false;

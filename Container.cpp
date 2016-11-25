@@ -17,7 +17,7 @@ void Container::update() {
 void Container::draw() {
     //TODO: make static behaviour / only one time init
     if(isActivated) {
-        int left = STATS_WIDTH;
+        int left = MENU_WIDTH;
         int right = 0;
         int top = WINDOW_HEIGHT / TILE_HEIGHT;
         int bottom = 0;

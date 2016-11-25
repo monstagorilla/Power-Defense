@@ -57,6 +57,13 @@ void GUI::initGUI() {
 
     //TEMP
     addGUIElement(path_temp, new Symbol(true));
+
+    //TOWERMENU
+    addGUIElement(path_menus_tower, new Button("Upgrade", {1, 9}, 5, 1, COLOR_GREEN, COLOR_RED,
+                  GUIFunctions::upgradeTower));
+
+    //GAMESTATS
+    //addGUIElement(GUI::paths[path_gamestats], new Label(""))
 /*
     root->getChild(paths[path_towermenu])->children.push_back(
             new Button("Upgrade", {1, 1}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::upgradeTower));

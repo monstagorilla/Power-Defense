@@ -31,6 +31,7 @@ void GUIFunctions::upgradeTower() {
             currentTower->sprites.push_back(Sprite(currentTower->pos, TILE_WIDTH, TILE_HEIGHT, path));
         }
     }
+    updateContainerTowerstats();
 }
 
 void GUIFunctions::setLabelPoint() {
@@ -57,11 +58,40 @@ void GUIFunctions::onClickTower() {
         element->isActivated = true;
     }
 
+    for (auto element : root->getChild(GUI::paths[path_menus_buy_container])->children) {
+        element->isActivated = true;
+    }
+    root->getChild(GUI::paths[path_menus_buy_container])->isActivated = true;
+
     for (int i = 0; i < allGameObjects.size(); i++) {
         if (allGameObjects[i]->ID == 2 && allGameObjects[i]->pos.snap() == currentPos) {
             currentTower = (Tower *) allGameObjects[i].get();
-            return;
+            break;
         }
+    }
+    updateContainerTowerstats();
+}
+
+void GUIFunctions::updateContainerTowerstats() {
+    std::string type;
+    switch (currentTowerType) {
+        case basicTower:
+            type = "BASIC TOWER";
+            break;
+        case nailGun:
+            type = "NAIL GUN";
+            break;
+    }
+    root->getChild(GUI::paths[path_menus_buy_container_type])->text = type;
+    if (currentTower != nullptr) {
+        root->getChild(GUI::paths[path_menus_buy_container_damage])->text = std::to_string(
+                currentTower->getStats().damage);
+        root->getChild(GUI::paths[path_menus_buy_container_reloadTime])->text = std::to_string(
+                currentTower->getStats().reloadTime);
+        root->getChild(GUI::paths[path_menus_buy_container_range])->text = std::to_string(
+                (int)currentTower->getStats().range);
+        root->getChild(GUI::paths[path_menus_buy_container_cost])->text = std::to_string(
+                currentTower->getStats().price);
     }
 }
 
@@ -210,12 +240,16 @@ void GUIFunctions::onClickBuyMenu_Apply() {
             if (element->pos.snap() == currentPos) {
                 element->onClick = onClickTower;
                 inactivateMenus();
-                for (auto object: root->getChild(GUI::paths[path_menus_tower])->children) {
-                    object->isActivated = true;
-                }
                 break;
             }
         }
+        for (auto object: root->getChild(GUI::paths[path_menus_tower])->children) {
+            object->isActivated = true;
+        }
+        for(auto element: root->getChild(GUI::paths[path_menus_buy_container])->children){
+            element->isActivated = true;
+        }
+        root->getChild(GUI::paths[path_menus_buy_container])->isActivated = true;
     }
 }
 
