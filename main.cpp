@@ -114,8 +114,8 @@ void gameLoop() {
         }
 
         SDL_RenderPresent(renderer);
+        //SDL_SetRenderDrawColor(renderer, 0,0,0,0);
         SDL_RenderClear(renderer);
-
         gettimeofday(&tv, NULL);
         t1 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
         if (t1 - t0 < 1000000.0 / FRAMES_PER_SECOND) {

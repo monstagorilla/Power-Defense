@@ -34,4 +34,5 @@ public:
 private:
     static void onClickTowerSymbol();
     static void inactivateMenus();
+    static void updateContainerTowerstats();
 };
