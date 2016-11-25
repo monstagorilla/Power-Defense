@@ -10,4 +10,4 @@ monstagorilla:
 
 
 whentze:
--
+-Print gameplay (map+objects) to a separate texture and render this into the window
