@@ -49,8 +49,8 @@ bool GUIObject::contains(GridPoint p) {
 }
 
 GUIObject *GUIObject::getChild(const std::string path) {
-    if (path.length() > 0 && this->children.size() > (int) path.at(0) - 48) { //48 is the value of '0' in ASCII //
-        return children[(int) path.at(0) - 48]->getChild(path.substr(1, path.length() - 1));
+    if (path.length() > 0 && this->children.size() > (int) path.at(0) - 97) { //48 is the value of '0' in ASCII //
+        return children[(int) path.at(0) - 97]->getChild(path.substr(1, path.length() - 1));
     } else {
         return this;
     }

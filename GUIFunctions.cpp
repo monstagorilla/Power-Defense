@@ -13,6 +13,7 @@
 #include "GameObject.h"
 #include "Symbol.h"
 #include "Cache.h"
+#include "SplashTower.h"
 
 Tower *GUIFunctions::currentTower = nullptr;
 GridPoint GUIFunctions::currentPos = GridPoint();
@@ -81,6 +82,9 @@ void GUIFunctions::updateContainerTowerstats() {
         case nailGun:
             type = "NAIL GUN";
             break;
+        case splashTower:
+            type = "SPLASH TOWER";
+            break;
     }
     root->getChild(GUI::paths[path_menus_buy_container_type])->text = type;
     if (currentTower != nullptr) {
@@ -100,7 +104,7 @@ void GUIFunctions::onClickGround() {
         return;
     }
     inactivateMenus();
-    for (auto element: root->getChild(GUI::paths[path_menus_buy])->traverse()) {
+    for (auto element: root->getChild(GUI::paths[path_menus_buy])->children) {
         element->isActivated = true;
     }
     root->getChild(GUI::paths[path_menus_buy_apply])->isActivated = false;
@@ -118,7 +122,6 @@ void GUIFunctions::onClickGround() {
         object->isActivated = false;
     }
     root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = false;
-
 }
 
 void GUIFunctions::sellTower() {
@@ -152,6 +155,12 @@ void GUIFunctions::onClickSymbol_NailGun() {
     currentTowerType = nailGun;
     onClickTowerSymbol();
 }
+
+void GUIFunctions::onClickSymbol_SplashTower() {
+    currentTowerType = splashTower;
+    onClickTowerSymbol();
+}
+
 
 void GUIFunctions::onClickTowerSymbol() {
     for (auto object: root->getChild(GUI::paths[path_menus_buy_container])->children) {
@@ -187,6 +196,16 @@ void GUIFunctions::onClickTowerSymbol() {
                 towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element));
             }
             break;
+        case splashTower:
+            type = "SPLASH TOWER";
+            damage = SplashTower::stat[0].damage;
+            reloadTime = SplashTower::stat[0].reloadTime;
+            range = (int) SplashTower::stat[0].range;
+            cost = SplashTower::stat[0].price;
+            for (auto element: SplashTower::stat[0].paths) {
+                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element));
+            }
+            break;
     }
     towerPreview->pos.x = currentPos.center().x;
     towerPreview->pos.y = currentPos.center().y;
@@ -215,6 +234,9 @@ void GUIFunctions::onClickBuyMenu_Apply() {
         case nailGun:
             price = NailGun::stat[0].price;
             break;
+        case splashTower:
+            price = SplashTower::stat[0].price;
+            break;
         default:
             return;
     }
@@ -226,6 +248,9 @@ void GUIFunctions::onClickBuyMenu_Apply() {
                 break;
             case nailGun:
                 allGameObjects.push_back(std::make_unique<NailGun>(currentPos));
+                break;
+            case splashTower:
+                allGameObjects.push_back(std::make_unique<SplashTower>(currentPos));
                 break;
         }
         gamestats.money -= price;
@@ -252,7 +277,6 @@ void GUIFunctions::onClickBuyMenu_Apply() {
         root->getChild(GUI::paths[path_menus_buy_container])->isActivated = true;
     }
 }
-
 
 void GUIFunctions::onClickBuyMenu_Cancel() {
     currentTowerType = basicTower;

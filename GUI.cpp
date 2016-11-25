@@ -13,8 +13,8 @@
 #include "config.h"
 #include "Container.h"
 
-std::vector<std::string> GUI::paths = {"0", "00", "000", "01", "010", "0100", "0102", "0104", "0106", "0108", "014",
-                                       "02", "1","11", "12", "2", "3", "30"};
+std::vector<std::string> GUI::paths = {"a", "aa", "aaa", "ab", "aba", "abaa", "abac", "abae", "abag", "abai", "ace",
+                                       "ac", "b","bb", "bc", "c", "d", "da"};
 
 void GUI::initGUI() {
     root->children.push_back(new GUIObject()); //menus
@@ -38,6 +38,10 @@ void GUI::initGUI() {
     addGUIElement(path_menus_buy,
                   new Symbol(std::vector<std::string>{"/assets/TowerBase.png", "/assets/NailgunTurret.png"}, {2, 1},
                              GUIFunctions::onClickSymbol_NailGun)); // TODO: don't hardcode this
+
+    addGUIElement(path_menus_buy,
+                  new Symbol(std::vector<std::string>{"/assets/TowerBase.png", "/assets/GrenadeTurret.png"}, {3, 1},
+                             GUIFunctions::onClickSymbol_SplashTower));
 
     //ContainerTowerStats
     addGUIElement(path_menus_buy_container, new Label("", {1, 3}, 2, 1, COLOR_WHITE, nullptr)); //title

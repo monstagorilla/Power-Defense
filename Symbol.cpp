@@ -9,6 +9,7 @@
 #include "BasicTower.h"
 #include "NailGun.h"
 #include "Cache.h"
+#include "SplashTower.h"
 
 
 Symbol::Symbol(const bool isTranparent) : GUIObject::GUIObject() {
@@ -57,6 +58,9 @@ void Symbol::draw() {
                     break;
                 case nailGun:
                     range = (int) NailGun::stat[0].range;
+                    break;
+                case splashTower:
+                    range = (int) SplashTower::stat[0].range;
                     break;
             }
             Graphics::drawTransparentCircle(pos.displayPoint(), range);

@@ -8,7 +8,8 @@ class Tower;
 
 enum TowerType{
     basicTower = 0,
-    nailGun = 1
+    nailGun = 1,
+    splashTower = 2
 };
 
 class GUIFunctions{
@@ -28,6 +29,7 @@ public:
     static void pause();
     static void onClickSymbol_BasicTower();
     static void onClickSymbol_NailGun();
+    static void onClickSymbol_SplashTower();
     static void onClickBuyMenu_Apply();
     static void onClickBuyMenu_Cancel();
 

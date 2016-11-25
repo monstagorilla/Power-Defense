@@ -7,10 +7,10 @@
 
 const std::vector<TowerStats> SplashTower::stat =
         //reloadTime, range, price, damage path
-        {{20, 100, 100, 10, {"/assets/TowerBase.png", "/assets/TowerTurret.png"}},
-         {20, 120, 50,  20, {"/assets/TowerBase.png", "/assets/TowerTurret1.png"}},
-         {20, 150, 75,  30, {"/assets/TowerBase.png", "/assets/TowerTurret2.png"}},
-         {15, 200, 100, 40, {"/assets/TowerBase.png", "/assets/TowerTurret3.png"}}};
+        {{20, 100, 100, 10, {"/assets/TowerBase.png", "/assets/GrenadeTurret.png"}},
+         {20, 120, 50,  20, {"/assets/TowerBase.png", "/assets/GrenadeTurret1.png"}},
+         {20, 150, 75,  30, {"/assets/TowerBase.png", "/assets/GrenadeTurret2.png"}},
+         {15, 200, 100, 40, {"/assets/TowerBase.png", "/assets/GrenadeTurret3.png"}}};
 
 SplashTower::SplashTower(const GridPoint pos) : Tower::Tower(pos, stat[0].paths) {
 
