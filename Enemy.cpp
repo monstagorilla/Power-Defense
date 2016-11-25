@@ -19,7 +19,7 @@ Enemy::Enemy(Map &map, const int level, const int maxHealth, const float speed, 
     stat = {maxHealth, speed, loot};
     this->level = level;
     ID = 1;
-    sprites.push_back(Sprite(pos, TILE_WIDTH, TILE_WIDTH, spritePath));
+    sprites.push_back(Sprite(pos, TILE_WIDTH-6, TILE_WIDTH-6, spritePath));
     health = getStat().maxHealth;
 }
 
@@ -28,8 +28,9 @@ Enemy::~Enemy() {
 }
 
 void Enemy::update() {
-    pos.moveTowards(map.path[pathIndex], getStat().speed);
-    if (distance(pos, map.path[pathIndex]) < 0.1) {
+    const auto targetPos = map.path[pathIndex];
+    pos.moveTowards(targetPos, getStat().speed);
+    if (distance(pos, targetPos) < 0.1) {
         pathIndex++;
         if (pathIndex == map.path.size()) {
             if (lives == 0) {
@@ -44,7 +45,8 @@ void Enemy::update() {
     }
 
     for (int i = 0; i < sprites.size(); i++) {
-        sprites[i].pos = this->pos;
+        sprites[i].pos      = this->pos;
+        sprites[i].rotation = atan2(targetPos.y - this->pos.y, targetPos.x - this->pos.x)*180/M_PI;
     }
 }
 
