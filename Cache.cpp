@@ -30,6 +30,9 @@ SDL_Texture *Cache::getTexture(const std::string path) {
 
 SDL_Texture *Cache::getText(std::string text, const FontType type) {
     SDL_Texture *texture = nullptr;
+    if(text == ""){
+        text = " ";
+    }
     try {
         texture = textCache[type].at(text);
     } catch (std::out_of_range) {

@@ -14,7 +14,7 @@
 #include "Container.h"
 
 std::vector<std::string> GUI::paths = {"0", "00", "000", "01", "010", "0100", "0102", "0104", "0106", "0108", "014",
-                                       "02", "1", "2", "3", "30"};
+                                       "02", "1","11", "12", "2", "3", "30"};
 
 void GUI::initGUI() {
     root->children.push_back(new GUIObject()); //menus
@@ -60,10 +60,15 @@ void GUI::initGUI() {
 
     //TOWERMENU
     addGUIElement(path_menus_tower, new Button("Upgrade", {1, 9}, 5, 1, COLOR_GREEN, COLOR_RED,
-                  GUIFunctions::upgradeTower));
+                                               GUIFunctions::upgradeTower));
 
     //GAMESTATS
-    //addGUIElement(GUI::paths[path_gamestats], new Label(""))
+    addGUIElement(path_gamestats,
+                  new Symbol(std::vector<std::string>{"/assets/Gold.png"}, {1 - MAP_WIDTH, MAP_HEIGHT + 1}, nullptr));
+    addGUIElement(path_gamestats, new Label("", {2 - MAP_WIDTH, MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelMoney));
+    addGUIElement(path_gamestats, new Label("", {8 - MAP_WIDTH, MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelPoint));
+
+    //addGUIElement(GUI::paths[path_gamestats], new Label("");
 /*
     root->getChild(paths[path_towermenu])->children.push_back(
             new Button("Upgrade", {1, 1}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::upgradeTower));
@@ -110,6 +115,10 @@ void GUI::initGUI() {
 
     //activate MainMenu
     for (auto element: root->getChild(paths[path_menus_main])->traverse()) {
+        element->isActivated = true;
+    }
+    //activate Stats
+    for (auto element: root->getChild(paths[path_gamestats])->traverse()) {
         element->isActivated = true;
     }
 }
