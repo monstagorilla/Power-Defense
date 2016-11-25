@@ -10,7 +10,7 @@ class Enemy;
 
 class Shot : public GameObject {
 public:
-    Shot(const Point pos, Tower *Parent, Enemy *target, const int damage, const float angle);
+    Shot(const Point pos, Tower *Parent, Enemy *target, const int damage);
     virtual ~Shot();
 
     virtual void update();
@@ -18,7 +18,4 @@ public:
     Enemy *target;
     Tower *parent;
     int damage;
-
-private:
-    float angle;
 };

@@ -36,6 +36,14 @@ Point::Point(const float x, const float y) {
     this->y = y;
 }
 
+Point Point::operator+(const Point other) {
+    return {x + other.x, y + other.y};
+}
+
+Point Point::operator-(const Point other) {
+    return {x - other.x, y - other.y};
+}
+
 DisplayPoint Point::displayPoint() const {
     return {(int) this->x, (int) this->y};
 }

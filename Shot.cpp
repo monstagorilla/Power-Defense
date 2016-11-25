@@ -9,13 +9,12 @@
 #include <algorithm>
 #include <math.h>
 
-Shot::Shot(const Point pos, Tower* parent, Enemy* target, const int damage, const float angle) {
+Shot::Shot(const Point pos, Tower* parent, Enemy* target, const int damage) {
 	this->pos = pos;
 	this->target = target;
 	this->parent = parent;
 	this->damage = damage;
 	ID = 3;
-    this->angle = angle;
 	target->shots.push_back(this);
 }
 
