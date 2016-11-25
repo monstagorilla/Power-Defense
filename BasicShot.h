@@ -13,10 +13,5 @@ public:
     virtual ~BasicShot();
 
     virtual void update();
-    void explode();
-
-private:
-    void turnTowards(const Point target, const float turnAngle);
-    float angle;
-    float speed;
+    virtual void explode();
 };
