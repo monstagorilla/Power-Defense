@@ -36,8 +36,8 @@ void GUI::initGUI() {
                   new Symbol(std::vector<std::string>{"/assets/TowerBase.png", "/assets/TowerTurret.png"}, {1, 1},
                              GUIFunctions::onClickSymbol_BasicTower));
     addGUIElement(path_menus_buy,
-                  new Symbol(std::vector<std::string>{"/assets/TowerBase.png", "/assets/TowerTurret.png"}, {2, 1},
-                             GUIFunctions::onClickSymbol_NailGun));
+                  new Symbol(std::vector<std::string>{"/assets/TowerBase.png", "/assets/NailgunTurret.png"}, {2, 1},
+                             GUIFunctions::onClickSymbol_NailGun)); // TODO: don't hardcode this
 
     //ContainerTowerStats
     addGUIElement(path_menus_buy_container, new Label("", {1, 3}, 2, 1, COLOR_WHITE, nullptr)); //title

@@ -8,15 +8,15 @@
 
 const std::vector<TowerStats> NailGun::stat =
         //reloadTime, range, price, damage, path
-        {{10, 120, 100, 1, {"/assets/TowerBase.png", "/assets/TowerTurret.png"}},
-         {10, 120, 50,  2, {"/assets/TowerBase.png", "/assets/TowerTurret1.png"}},
-         {5,  150, 75,  3, {"/assets/TowerBase.png", "/assets/TowerTurret2.png"}},
-         {5,  200, 100, 4, {"/assets/TowerBase.png", "/assets/TowerTurret3.png"}}};
+        {{10, 120, 100, 1, {"/assets/TowerBase.png", "/assets/NailgunTurret.png"}},
+         {10, 120, 50,  2, {"/assets/TowerBase.png", "/assets/NailgunTurret.png"}},
+         {5,  150, 75,  3, {"/assets/TowerBase.png", "/assets/NailgunTurret.png"}},
+         {5,  200, 100, 4, {"/assets/TowerBase.png", "/assets/NailgunTurret.png"}}};
 
 NailGun::NailGun(const GridPoint pos) : Tower(pos, stat[0].paths) {
 
 }
-
+    
 NailGun::~NailGun() {
 
 }
@@ -66,7 +66,7 @@ void NailGun::update() {
 }
 
 void NailGun::shoot(Enemy *target, const float angle) {
-    allGameObjects.push_back(std::make_unique<BasicShot>(pos, this, target, getStats().damage, angle, 10.0));
+    allGameObjects.push_back(std::make_unique<BasicShot>(pos, this, target, getStats().damage, angle, 10.0, "/assets/Nail.png"));
 }
 
 TowerStats NailGun::getStats() {

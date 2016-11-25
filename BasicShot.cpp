@@ -3,9 +3,11 @@
 #include "Enemy.h"
 #include "util.h"
 
-BasicShot::BasicShot(const Point pos, Tower *parent, Enemy *target, const int damage, const float angle,
-                     const int speed) : Shot(pos, parent, target, damage, angle) {
+BasicShot::BasicShot(const Point pos, Tower *parent, Enemy *target, const int damage,
+                     const float angle, const int speed, std::string path)
+        : Shot(pos, parent, target, damage, angle) {
     this->speed = speed;
+	this->sprites.push_back(Sprite(this->pos, 16, 16, path));
 }
 
 BasicShot::~BasicShot() {

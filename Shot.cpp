@@ -16,7 +16,6 @@ Shot::Shot(const Point pos, Tower* parent, Enemy* target, const int damage, cons
 	this->damage = damage;
 	ID = 3;
     this->angle = angle;
-	this->sprites.push_back(Sprite(this->pos, 16, 16, "/assets/Shot.png"));
 	target->shots.push_back(this);
 }
 
