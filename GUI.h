@@ -23,7 +23,7 @@ enum pathIndex {
     path_gamestats_points = 14,
     path_mapOverlays        = 15,
     path_temp = 16,
-    path_temp_towerpreview = 17
+    path_temp_towerpreview = 17,
 };
 
 class GUI {

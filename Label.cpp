@@ -4,14 +4,14 @@
 #include "TextOutput.h"
 #include "config.h"
 
-Label::Label(const std::string text, const GridPoint pos, const int w, const int h, const SDL_Color color, void (*functptr)(), const bool leftAligned)
+Label::Label(const std::string text, const GridPoint pos, const int w, const int h, const SDL_Color color, void (*functptr)(),const bool isActivated, const bool leftAligned)
         : GUIObject::GUIObject() {
     this->pos = GridPoint{pos.x + MAP_WIDTH, pos.y}.center();
     width = w;
     height = h;
     this->text = text;
     this->color = color;
-    isActivated = false;
+    this->isActivated = false;
     onClick = functptr;
     this->leftAligned = leftAligned;
 }

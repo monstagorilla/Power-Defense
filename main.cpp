@@ -5,6 +5,8 @@
 #include <memory>
 #include <chrono>
 #include <sys/time.h>
+#include <cstdlib>
+#include <stdlib.h>
 
 #include "Point.h"
 #include "Tower.h"
@@ -20,6 +22,7 @@
 #include "GUIObject.h"
 #include "gamestats.h"
 #include "config.h"
+#include "FlyingEnemy.h"
 
 Map map;
 std::vector<std::unique_ptr<GameObject> > allGameObjects;
@@ -60,23 +63,40 @@ void gameLoop() {
     timeval tv;
     int enemyCount = 0;
     int levelCount = 1;
+    int weirdTemp = 0;
     while (isRunning) {
         gettimeofday(&tv, NULL);
         double t0 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
         double t1 = t0;
-
+        weirdTemp++;
         //spawn enemies
+        if (gameIsRunning && enemyCount % 300 == 0) {
+            levelCount++;
+        }
         if (gameIsRunning && enemyCount % 50 == 0) {
-            if (enemyCount % 300 == 0) {
-                levelCount++;
-            }
-            //allGameObjects.push_back(new Enemy(map, 100, 1.0));
             allGameObjects.push_back(std::make_unique<BasicEnemy>(map, levelCount));
         }
+        if (gameIsRunning && enemyCount % 131 == 0) {
+            switch (weirdTemp % 4){
+                case 0:
+                    allGameObjects.push_back(std::make_unique<FlyingEnemy>(map, levelCount, Point(weirdTemp % MAP_WIDTH * TILE_WIDTH, 0)));
+                    break;
+                case 1:
+                    allGameObjects.push_back(std::make_unique<FlyingEnemy>(map, levelCount, Point(weirdTemp % MAP_WIDTH*TILE_WIDTH, MAP_HEIGHT*TILE_HEIGHT - 1)));
+                    break;
+                case 2:
+                    allGameObjects.push_back(std::make_unique<FlyingEnemy>(map, levelCount, Point(0, weirdTemp % MAP_HEIGHT*TILE_HEIGHT)));
+                    break;
+                case 3:
+                    allGameObjects.push_back(std::make_unique<FlyingEnemy>(map, levelCount, Point(MAP_WIDTH*TILE_WIDTH - 1, weirdTemp % MAP_HEIGHT*TILE_HEIGHT)));
+                    break;
+            }
+        }
+
         if (gameIsRunning) {
             enemyCount++;
         }
-        
+
         map.draw();
         //drawStats();
         for (int i = 0; i < allGameObjects.size(); i++) {
@@ -114,7 +134,7 @@ void gameLoop() {
         }
 
         SDL_RenderPresent(renderer);
-        SDL_SetRenderDrawColor(renderer, 0,0,0,0);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
         gettimeofday(&tv, NULL);
         t1 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;

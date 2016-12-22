@@ -11,6 +11,9 @@
 #include "globals.h"
 #include "gamestats.h"
 #include "GUIFunctions.h"
+#include "TextOutput.h"
+#include "GUI.h"
+#include "Label.h"
 
 Enemy::Enemy(Map &map, const int level, const int maxHealth, const float speed, const int loot,
              const std::string spritePath) : map(map) {
@@ -33,9 +36,8 @@ void Enemy::update() {
     if (distance(pos, targetPos) < 0.1) {
         pathIndex++;
         if (pathIndex == map.path.size()) {
-            if (lives == 0) {
+            if (lives == 0) { // TODO: implement at different location in code
                 GUIFunctions::endGame();
-                std::cout << "GAME OVER" << std::endl;
             } else {
                 lives--;
                 std::cout << "Lives left: " << lives << std::endl;
