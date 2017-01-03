@@ -28,6 +28,7 @@ void MapOverlay::draw() {
         rect.y = corner.y;
         rect.w = TILE_WIDTH;
         rect.h = TILE_HEIGHT;
+        SDL_SetRenderDrawColor(renderer, 0,0,0,0);
         SDL_RenderDrawRect(renderer, &rect);
     }
     if (GUIFunctions::currentPos == pos.snap() && GUIFunctions::currentTower != nullptr) {

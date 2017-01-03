@@ -80,7 +80,7 @@ void gameLoop() {
             switch (weirdTemp % 4){
                 case 0:
                     allGameObjects.push_back(std::make_unique<FlyingEnemy>(map, levelCount, Point(weirdTemp % MAP_WIDTH * TILE_WIDTH, 0)));
-                    break;
+                    break;  
                 case 1:
                     allGameObjects.push_back(std::make_unique<FlyingEnemy>(map, levelCount, Point(weirdTemp % MAP_WIDTH*TILE_WIDTH, MAP_HEIGHT*TILE_HEIGHT - 1)));
                     break;
