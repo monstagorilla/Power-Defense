@@ -7,8 +7,6 @@
 #include "Graphics.h"
 #include "Tower.h"
 
-#include <iostream>
-
 MapOverlay::MapOverlay(const Point pos, const int width, const int height, void(*onClick)()) : GUIObject::GUIObject() {
     this->pos = pos;
     this->width = width;
@@ -28,11 +26,13 @@ void MapOverlay::draw() {
         rect.y = corner.y;
         rect.w = TILE_WIDTH;
         rect.h = TILE_HEIGHT;
-        SDL_SetRenderDrawColor(renderer, 0,0,0,0);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderDrawRect(renderer, &rect);
     }
     if (GUIFunctions::currentPos == pos.snap() && GUIFunctions::currentTower != nullptr) {
-        Graphics::drawTransparentCircle(DisplayPoint(pos.displayPoint().x + (int)(TILE_WIDTH/2.0), pos.displayPoint().y + (int)(TILE_HEIGHT/2.0)), (int) GUIFunctions::currentTower->getStats().range);
+        Graphics::drawTransparentCircle(DisplayPoint(pos.displayPoint().x + (int) (TILE_WIDTH / 2.0),
+                                                     pos.displayPoint().y + (int) (TILE_HEIGHT / 2.0)),
+                                        (int) GUIFunctions::currentTower->getStats().range);
     }
 }
 
@@ -48,5 +48,3 @@ void MapOverlay::update() {
         }
     }
 }
-
-

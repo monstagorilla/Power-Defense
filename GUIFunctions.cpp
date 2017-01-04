@@ -14,11 +14,11 @@
 #include "Symbol.h"
 #include "Cache.h"
 #include "SplashTower.h"
+#include "WaveManager.h"
 
 Tower *GUIFunctions::currentTower = nullptr;
 GridPoint GUIFunctions::currentPos = GridPoint();
 TowerType GUIFunctions::currentTowerType = basicTower;
-
 
 void GUIFunctions::upgradeTower() {
     if (GUIFunctions::currentTower == nullptr) {
@@ -140,9 +140,11 @@ void GUIFunctions::pause() {
     if (gameIsRunning) {
         gameIsRunning = false;
         root->getChild(GUI::paths[path_menus_main_pause])->text = "Continue";
+        root->getChild(GUI::paths[path_menus_main_newWave])->isActivated = false;
     } else {
         gameIsRunning = true;
         root->getChild(GUI::paths[path_menus_main_pause])->text = "Pause";
+        root->getChild(GUI::paths[path_menus_main_newWave])->isActivated = true;
     }
 }
 
@@ -282,5 +284,9 @@ void GUIFunctions::onClickBuyMenu_Cancel() {
     currentTowerType = basicTower;
     inactivateMenus();
     root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = false;
+}
+
+void GUIFunctions::newWave() {
+    waveManager.addWave();
 }
 

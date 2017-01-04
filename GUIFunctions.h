@@ -24,6 +24,7 @@ public:
     static void onClickTower();
     static void sellTower();
     static void startGame();
+    static void newWave();
     static void onClickGround();
     static void endGame();
     static void pause();

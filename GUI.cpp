@@ -13,7 +13,7 @@
 #include "config.h"
 #include "Container.h"
 
-std::vector<std::string> GUI::paths = {"a", "aa", "aaa", "ab", "aba", "abaa", "abac", "abae", "abag", "abai", "ace",
+std::vector<std::string> GUI::paths = {"a", "aa", "aaa","aab", "ab", "aba", "abaa", "abac", "abae", "abag", "abai", "ace",
                                        "ac", "b","bb", "bc", "c", "d", "da"};
 
 void GUI::initGUI() {
@@ -29,6 +29,7 @@ void GUI::initGUI() {
 
     //MAINMENU
     addGUIElement(path_menus_main, new Button("Start", {10, 0}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::pause));
+    addGUIElement(path_menus_main, new Button("New Wave", {10, 1}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::newWave));
 
     //BUYMENU
     addGUIElement(path_menus_buy, new Label("SHOP", {1, 0}, 5, 1, COLOR_GREEN, nullptr));
@@ -85,6 +86,7 @@ void GUI::initGUI() {
     for (auto element: root->getChild(paths[path_menus_main])->traverse()) {
         element->isActivated = true;
     }
+    root->getChild(paths[path_menus_main_newWave])->isActivated = false;
     //activate Stats
     for (auto element: root->getChild(paths[path_gamestats])->traverse()) {
         element->isActivated = true;

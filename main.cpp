@@ -23,6 +23,10 @@
 #include "gamestats.h"
 #include "config.h"
 #include "FlyingEnemy.h"
+#include "WaveManager.h"
+#include "Wave.h"
+#include "WaveItem.h"
+#include "EnemyType.h"
 
 Map map;
 std::vector<std::unique_ptr<GameObject> > allGameObjects;
@@ -31,12 +35,14 @@ SDL_Renderer *renderer;
 int lives = 5;
 Gamestats gamestats = {0, 1000};
 bool gameIsRunning = false;
+uint32_t gameLoopCounter = 0;
 
 //YOLO = YOLO_MAX;
 DisplayPoint mousePos = {0, 0};
 DisplayPoint clickedPos = {0, 0};
 bool isCLicked = false;
 bool mouseRelease = false;
+WaveManager waveManager = WaveManager();
 
 int initWindowAndRenderer(SDL_Window **window) {
     SDL_Init(SDL_INIT_VIDEO);
@@ -64,12 +70,15 @@ void gameLoop() {
     int enemyCount = 0;
     int levelCount = 1;
     int weirdTemp = 0;
+
     while (isRunning) {
         gettimeofday(&tv, NULL);
         double t0 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
         double t1 = t0;
         weirdTemp++;
+        waveManager.update();
         //spawn enemies
+        /*
         if (gameIsRunning && enemyCount % 300 == 0) {
             levelCount++;
         }
@@ -92,7 +101,7 @@ void gameLoop() {
                     break;
             }
         }
-
+        */
         if (gameIsRunning) {
             enemyCount++;
         }
@@ -136,6 +145,9 @@ void gameLoop() {
         SDL_RenderPresent(renderer);
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
+
+        gameLoopCounter++;
+
         gettimeofday(&tv, NULL);
         t1 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
         if (t1 - t0 < 1000000.0 / FRAMES_PER_SECOND) {
