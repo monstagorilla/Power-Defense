@@ -19,6 +19,7 @@ MapOverlay::~MapOverlay() {
 }
 
 void MapOverlay::draw() {
+    SDL_SetRenderTarget(renderer, destTextureMap);
     if (state == focused) {
         SDL_Rect rect;
         DisplayPoint corner = pos.snap().upperLeft();
@@ -34,6 +35,7 @@ void MapOverlay::draw() {
                                                      pos.displayPoint().y + (int) (TILE_HEIGHT / 2.0)),
                                         (int) GUIFunctions::currentTower->getStats().range);
     }
+    SDL_SetRenderTarget(renderer, destTextureGUI);
 }
 
 void MapOverlay::update() {

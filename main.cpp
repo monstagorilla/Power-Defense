@@ -32,6 +32,8 @@ Map map;
 std::vector<std::unique_ptr<GameObject> > allGameObjects;
 GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
+SDL_Texture* destTextureMap;
+SDL_Texture* destTextureGUI;
 int lives = 5;
 Gamestats gamestats = {0, 1000};
 bool gameIsRunning = false;
@@ -43,6 +45,7 @@ DisplayPoint clickedPos = {0, 0};
 bool isCLicked = false;
 bool mouseRelease = false;
 WaveManager waveManager = WaveManager();
+
 
 int initWindowAndRenderer(SDL_Window **window) {
     SDL_Init(SDL_INIT_VIDEO);
@@ -58,8 +61,9 @@ int initWindowAndRenderer(SDL_Window **window) {
             return 2;
         }
     }
+
     return 0;
-}
+    }
 
 void gameLoop() {
     bool isRunning = true;
@@ -71,7 +75,16 @@ void gameLoop() {
     int levelCount = 1;
     int weirdTemp = 0;
 
+
+    SDL_Rect destRect;
+    destRect.x = 0;
+    destRect.y = 0;
+    destRect.w = MAP_WIDTH*TILE_WIDTH ;
+    destRect.h = MAP_HEIGHT*TILE_HEIGHT;
     while (isRunning) {
+        destTextureMap = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,MAP_WIDTH * TILE_WIDTH , MAP_HEIGHT * TILE_HEIGHT); //TODO: don't know which pixelformat
+        destTextureGUI = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,WINDOW_WIDTH, WINDOW_HEIGHT); //TODO: don't know which pixelformat
+
         gettimeofday(&tv, NULL);
         double t0 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
         double t1 = t0;
@@ -89,7 +102,7 @@ void gameLoop() {
             switch (weirdTemp % 4){
                 case 0:
                     allGameObjects.push_back(std::make_unique<FlyingEnemy>(map, levelCount, Point(weirdTemp % MAP_WIDTH * TILE_WIDTH, 0)));
-                    break;  
+                    break;
                 case 1:
                     allGameObjects.push_back(std::make_unique<FlyingEnemy>(map, levelCount, Point(weirdTemp % MAP_WIDTH*TILE_WIDTH, MAP_HEIGHT*TILE_HEIGHT - 1)));
                     break;
@@ -106,6 +119,7 @@ void gameLoop() {
             enemyCount++;
         }
 
+        SDL_SetRenderTarget(renderer, destTextureMap);
         map.draw();
         //drawStats();
         for (int i = 0; i < allGameObjects.size(); i++) {
@@ -127,6 +141,7 @@ void gameLoop() {
             }
         }
 
+        SDL_SetRenderTarget(renderer, destTextureGUI);
 
         for (auto element: root->traverse()) {
             element->draw();
@@ -141,9 +156,11 @@ void gameLoop() {
                 eventHandler::handleEvent(ev);
             }
         }
-
+        SDL_SetRenderTarget(renderer, NULL);
+        SDL_RenderCopy(renderer, destTextureGUI,NULL, NULL);
+        SDL_RenderCopy(renderer, destTextureMap,NULL, &destRect);
         SDL_RenderPresent(renderer);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+        SDL_SetRenderDrawColor(renderer,0,0,0,0);
         SDL_RenderClear(renderer);
 
         gameLoopCounter++;
