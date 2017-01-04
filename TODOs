@@ -1,14 +1,18 @@
 TODOS:
 -centered text Buttons
 -print single tiles
-
-
-monstagorilla:
 -complete GUI
 -using voidptr for updating labels instead of shit
 -splash tower granade shuld not die when enemy dies
+-more gamestats like e.g. wavecount 
+-redesign GUI implementation
+-wave countdown
+-perhaps auto generate new wave types
 
+monstagorilla:
+	
 
 
 whentze:
 -Print gameplay (map+objects) to a separate texture and render this into the window
+-new enemy sprites
