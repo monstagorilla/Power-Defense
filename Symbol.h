@@ -10,7 +10,7 @@ class GridPoint;
 
 class Symbol: public GUIObject{
 public:
-    Symbol(const bool isTransparent);
+    Symbol(const bool isTransparent,const bool renderInMap = false);
     Symbol(const std::vector<std::string> paths, const GridPoint pos, void (*onCLick)());
     virtual ~Symbol();
 

@@ -61,7 +61,7 @@ void GUI::initGUI() {
                   new Button("Cancel", {1, 9}, 3, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickBuyMenu_Cancel));
 
     //TEMP
-    addGUIElement(path_temp, new Symbol(true)); //TODO: needing different solution because of rendering Symbols not into mapTexture
+    addGUIElement(path_temp, new Symbol(true, true)); //TODO: needing different solution because of rendering Symbols not into mapTexture
 
     //TOWERMENU
     addGUIElement(path_menus_tower, new Button("Upgrade", {1, 9}, 5, 1, COLOR_GREEN, COLOR_RED,

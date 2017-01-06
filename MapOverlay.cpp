@@ -7,7 +7,7 @@
 #include "Graphics.h"
 #include "Tower.h"
 
-MapOverlay::MapOverlay(const Point pos, const int width, const int height, void(*onClick)()) : GUIObject::GUIObject() {
+MapOverlay::MapOverlay(const Point pos, const int width, const int height, void(*onClick)()) : GUIObject::GUIObject(true) { //argument in GUIObject("true") because always rendering MapOverlay into Map
     this->pos = pos;
     this->width = width;
     this->height = height;
@@ -19,7 +19,11 @@ MapOverlay::~MapOverlay() {
 }
 
 void MapOverlay::draw() {
-    SDL_SetRenderTarget(renderer, destTextureMap);
+    if(renderInMap){
+        SDL_SetRenderTarget(renderer, destTextureMap);
+    }else{
+        SDL_SetRenderTarget(renderer, destTextureGUI);
+    }
     if (state == focused) {
         SDL_Rect rect;
         DisplayPoint corner = pos.snap().upperLeft();
@@ -35,7 +39,6 @@ void MapOverlay::draw() {
                                                      pos.displayPoint().y + (int) (TILE_HEIGHT / 2.0)),
                                         (int) GUIFunctions::currentTower->getStats().range);
     }
-    SDL_SetRenderTarget(renderer, destTextureGUI);
 }
 
 void MapOverlay::update() {

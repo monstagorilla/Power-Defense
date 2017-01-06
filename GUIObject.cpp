@@ -4,7 +4,7 @@
 #include "GUIObject.h"
 #include "globals.h"
 
-GUIObject::GUIObject() {
+GUIObject::GUIObject(const bool renderInMap) {
     children = std::vector<GUIObject *>();
     state = unfocused;
     isActivated = false;
@@ -14,6 +14,7 @@ GUIObject::GUIObject() {
     text = "";
     color = {0, 0, 0, 0};
     onClick = nullptr;
+    this->renderInMap = renderInMap;
 }
 
 GUIObject::~GUIObject() {

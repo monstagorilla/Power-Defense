@@ -57,6 +57,15 @@ void WaveManager::addWave() {
             break;
         default:
             std::cout << "no " << numWave << ". wave implemented" << std::endl;
+            waves.push_back(new Wave(gameLoopCounter, {{basicEnemy,  10, 0},
+                                                       {basicEnemy,  10, 50},
+                                                       {basicEnemy,  10, 100},
+                                                       {basicEnemy,  10, 150},
+                                                       {flyingEnemy, 1,  150},
+                                                       {flyingEnemy, 1,  150},
+                                                       {flyingEnemy, 1,  150},
+                                                       {basicEnemy,  10, 200},
+                                                       {basicEnemy,  10, 250}}));
     }
     numWave++;
 }

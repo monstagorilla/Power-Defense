@@ -14,7 +14,7 @@ enum state {
 
 class GUIObject{
 public:
-	GUIObject();
+	GUIObject(const bool renderInMap = false);
 	virtual ~GUIObject();
 
     virtual void update();
@@ -34,4 +34,6 @@ public:
     std::vector<GUIObject *> children;
 
     bool contains(GridPoint p);
+protected:
+	bool renderInMap;
 };

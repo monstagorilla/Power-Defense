@@ -4,8 +4,8 @@
 #include "TextOutput.h"
 #include "config.h"
 
-Label::Label(const std::string text, const GridPoint pos, const int w, const int h, const SDL_Color color, void (*functptr)(),const bool isActivated, const bool leftAligned)
-        : GUIObject::GUIObject() {
+Label::Label(const std::string text, const GridPoint pos, const int w, const int h, const SDL_Color color, void (*functptr)(),const bool isActivated,const bool renderInMap, const bool leftAligned)
+        : GUIObject::GUIObject(renderInMap) {
     this->pos = GridPoint{pos.x + MAP_WIDTH, pos.y}.center();
     width = w;
     height = h;
@@ -25,6 +25,11 @@ void Label::draw() {
     if (isActivated) {
         if (onClick != nullptr) {
             onClick();
+        }
+        if(renderInMap){
+            SDL_SetRenderTarget(renderer, destTextureMap);
+        }else{
+            SDL_SetRenderTarget(renderer, destTextureGUI);
         }
         if(leftAligned) {
             TextOutput::drawText(text, pos.snap(), 8, font1_white); //TODO: using class member color

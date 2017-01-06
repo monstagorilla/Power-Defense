@@ -6,7 +6,7 @@
 BasicShot::BasicShot(const Point pos, Tower *parent, Enemy *target, const int damage,
                      const float angle, const int speed, std::string path)
         : Shot(pos, parent, target, damage, angle, speed) {
-	this->sprites.push_back(Sprite(this->pos, 16, 16, path));
+	this->sprites.push_back(Sprite(this->pos, 16, 16, path, true));
 }
 
 BasicShot::~BasicShot() {

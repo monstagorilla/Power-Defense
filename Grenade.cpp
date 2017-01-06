@@ -12,7 +12,7 @@ Grenade::Grenade(const Point pos, Tower *parent, Enemy *target, const int damage
                                                                                                                   speed) {
     explosionRad = 100;
     destPos = target->pos;
-    this->sprites.push_back(Sprite(this->pos, 16, 16, "/assets/Grenade.png"));
+    this->sprites.push_back(Sprite(this->pos, 16, 16, "/assets/Grenade.png", true));
 }
 
 Grenade::~Grenade() {

@@ -29,7 +29,7 @@ void GUIFunctions::upgradeTower() {
         gamestats.money -= currentTower->getStats().price;
         currentTower->sprites.clear();
         for (auto path: currentTower->getStats().paths) {
-            currentTower->sprites.push_back(Sprite(currentTower->pos, TILE_WIDTH, TILE_HEIGHT, path));
+            currentTower->sprites.push_back(Sprite(currentTower->pos, TILE_WIDTH, TILE_HEIGHT, path, true));
         }
     }
     updateContainerTowerstats();
@@ -185,7 +185,7 @@ void GUIFunctions::onClickTowerSymbol() {
             range = (int) BasicTower::stat[0].range;
             cost = BasicTower::stat[0].price;
             for (auto element: BasicTower::stat[0].paths) {
-                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element));
+                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element, true));
             }
             break;
         case nailGun:
@@ -195,7 +195,7 @@ void GUIFunctions::onClickTowerSymbol() {
             range = (int) NailGun::stat[0].range;
             cost = NailGun::stat[0].price;
             for (auto element: NailGun::stat[0].paths) {
-                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element));
+                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element, true));
             }
             break;
         case splashTower:
@@ -205,7 +205,7 @@ void GUIFunctions::onClickTowerSymbol() {
             range = (int) SplashTower::stat[0].range;
             cost = SplashTower::stat[0].price;
             for (auto element: SplashTower::stat[0].paths) {
-                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element));
+                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element,true));
             }
             break;
     }
