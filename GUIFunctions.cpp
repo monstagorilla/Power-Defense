@@ -43,6 +43,10 @@ void GUIFunctions::setLabelMoney() {
     root->getChild(GUI::paths[path_gamestats_money])->text = std::to_string(gamestats.money);
 }
 
+void GUIFunctions::setLabelWaveCount() {
+    root->getChild(GUI::paths[path_gamestats_waveCount])->text = std::to_string(waveManager.nextWaveCountdown);
+}
+
 void GUIFunctions::inactivateMenus() {
     for (auto element: root->getChild(GUI::paths[path_menus_buy])->traverse()) {
         element->isActivated = false;
@@ -158,6 +162,7 @@ void GUIFunctions::onClickSymbol_NailGun() {
     onClickTowerSymbol();
 }
 
+
 void GUIFunctions::onClickSymbol_SplashTower() {
     currentTowerType = splashTower;
     onClickTowerSymbol();
@@ -220,7 +225,6 @@ void GUIFunctions::onClickTowerSymbol() {
     root->getChild(GUI::paths[path_menus_buy_apply])->isActivated = true;
     root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = true;
 }
-
 
 void GUIFunctions::onClickBuyMenu_Apply() {
     for (int i = 0; i < allGameObjects.size(); i++) {

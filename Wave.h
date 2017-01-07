@@ -12,7 +12,7 @@ public:
     virtual void update();
     bool isEmpty;
     std::vector<WaveItem> items;
-
+    uint32_t length;
 private:
     uint32_t startTime;
 };

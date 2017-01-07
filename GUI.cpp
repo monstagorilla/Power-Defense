@@ -14,7 +14,7 @@
 #include "Container.h"
 
 std::vector<std::string> GUI::paths = {"a", "aa", "aaa","aab", "ab", "aba", "abaa", "abac", "abae", "abag", "abai", "ace",
-                                       "ac", "b","bb", "bc", "c", "d", "da"};
+                                       "ac", "b","bb", "bc","bd", "c", "d", "da"};
 
 void GUI::initGUI() {
     root->children.push_back(new GUIObject()); //menus
@@ -72,6 +72,9 @@ void GUI::initGUI() {
                   new Symbol(std::vector<std::string>{"/assets/Gold.png"}, {1 - MAP_WIDTH, MAP_HEIGHT + 1}, nullptr));
     addGUIElement(path_gamestats, new Label("", {2 - MAP_WIDTH, MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelMoney));
     addGUIElement(path_gamestats, new Label("", {8 - MAP_WIDTH, MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelPoint));
+    addGUIElement(path_gamestats, new Label("", {13 , 2}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelWaveCount));
+    addGUIElement(path_gamestats, new Label("Next Wave: ", {10 , 2}, 5, 1, COLOR_WHITE, nullptr));
+
 
     //activate MapOverlays and MainMenu at the beginning of the Game
     for (int i = 0; i < MAP_WIDTH; i++) {

@@ -8,9 +8,10 @@ TODOS:
 -redesign GUI implementation
 -wave countdown
 -perhaps auto generate new wave types
+-fix bug: automatically click on activated upgrade button after buy
+-smooth transition nextWaveCounter reset
 
 monstagorilla:
--draw tower preview in MapTexture
 
 
 whentze:

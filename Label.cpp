@@ -23,7 +23,7 @@ Label::~Label() {
 
 void Label::draw() {
     if (isActivated) {
-        if (onClick != nullptr) {
+        if (onClick != nullptr) { //TODO: perhaps separate logic and drawing
             onClick();
         }
         if(renderInMap){
@@ -31,7 +31,7 @@ void Label::draw() {
         }else{
             SDL_SetRenderTarget(renderer, destTextureGUI);
         }
-        if(leftAligned) {
+        if(leftAligned) {//TODO: different drawing depending on alignment
             TextOutput::drawText(text, pos.snap(), 8, font1_white); //TODO: using class member color
         }else{
             TextOutput::drawText(text, pos.snap(), 8, font1_white);

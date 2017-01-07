@@ -4,11 +4,16 @@
 #include "BasicEnemy.h"
 #include "FlyingEnemy.h"
 #include "Point.h"
+#include "config.h"
 
 Wave::Wave(const uint32_t startTime,std::vector<WaveItem> items) {
-    this->items = std::vector<WaveItem>(items);
+    for(auto element: items){
+        this->items.push_back(element);
+        this->items.back().startTime = element.startTime * FRAMES_PER_SECOND;
+    }
     this->startTime = startTime;
     isEmpty = false;
+    length = (items.back().startTime + 60) * FRAMES_PER_SECOND;
 }
 
 Wave::~Wave() {

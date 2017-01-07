@@ -21,6 +21,7 @@ public:
     static void upgradeTower();
     static void setLabelPoint();
     static void setLabelMoney();
+    static void setLabelWaveCount();
     static void onClickTower();
     static void sellTower();
     static void startGame();

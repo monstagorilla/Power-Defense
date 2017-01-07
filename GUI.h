@@ -22,9 +22,10 @@ enum pathIndex {
     path_gamestats          = 13,
     path_gamestats_money = 14,
     path_gamestats_points = 15,
-    path_mapOverlays        = 16,
-    path_temp = 17,
-    path_temp_towerpreview = 18,
+    path_gamestats_waveCount = 16,
+    path_mapOverlays        = 17,
+    path_temp = 18,
+    path_temp_towerpreview = 19,
 };
 
 class GUI {

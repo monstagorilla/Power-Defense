@@ -3,18 +3,32 @@
 #include "EnemyType.h"
 #include "Wave.h"
 #include "globals.h"
+#include "config.h"
 
 WaveManager::WaveManager() {
     numWave = 0;
+    startLastWave = 0;
+    startFirstWave = 60;
+    nextWaveCountdown = startFirstWave;
 }
 
 void WaveManager::update() {
-    for(auto it = waves.begin(); it != waves.end(); it++){
-        if((*it)->isEmpty){
-            waves.erase(it);
-            continue;
+    if (gameIsRunning) {
+        if (nextWaveCountdown <= 0) {
+            addWave();
         }
-        (*it)->update();
+        if (!waves.empty()) {
+            for (auto it = waves.begin(); it != waves.end(); it++) {
+                if ((*it)->isEmpty) {
+                    waves.erase(it);
+                    continue;
+                }
+                (*it)->update();
+            }
+            nextWaveCountdown = (startLastWave - gameLoopCounter + waves.back()->length) / FRAMES_PER_SECOND;
+        } else {
+            nextWaveCountdown = startFirstWave - gameLoopCounter / FRAMES_PER_SECOND;
+        }
     }
 }
 
@@ -22,50 +36,51 @@ void WaveManager::addWave() {
     switch (numWave) {
         case 0:
             waves.push_back(new Wave(gameLoopCounter, {{basicEnemy, 1, 0},
-                                           {basicEnemy, 1, 50},
-                                           {basicEnemy, 1, 100},
-                                           {basicEnemy, 1, 150},
-                                           {basicEnemy, 1, 200},
-                                           {basicEnemy, 1, 250}}));
+                                                       {basicEnemy, 1, 2},
+                                                       {basicEnemy, 1, 4},
+                                                       {basicEnemy, 1, 6},
+                                                       {basicEnemy, 1, 8},
+                                                       {basicEnemy, 1, 10}}));
             break;
         case 1:
             waves.push_back(new Wave(gameLoopCounter, {{basicEnemy, 2, 0},
-                                           {basicEnemy, 2, 50},
-                                           {basicEnemy, 2, 100},
-                                           {basicEnemy, 2, 150},
-                                           {basicEnemy, 2, 200},
-                                           {basicEnemy, 2, 250}}));
+                                                       {basicEnemy, 2, 2},
+                                                       {basicEnemy, 2, 4},
+                                                       {basicEnemy, 2, 8},
+                                                       {basicEnemy, 2, 10},
+                                                       {basicEnemy, 2, 12}}));
             break;
         case 2:
             waves.push_back(new Wave(gameLoopCounter, {{basicEnemy, 3, 0},
-                                           {basicEnemy, 3, 50},
-                                           {basicEnemy, 3, 100},
-                                           {basicEnemy, 3, 150},
-                                           {basicEnemy, 3, 200},
-                                           {basicEnemy, 3, 250}}));
+                                                       {basicEnemy, 3, 2},
+                                                       {basicEnemy, 3, 4},
+                                                       {basicEnemy, 3, 6},
+                                                       {basicEnemy, 3, 8},
+                                                       {basicEnemy, 3, 10}}));
             break;
         case 3:
             waves.push_back(new Wave(gameLoopCounter, {{basicEnemy,  10, 0},
-                                           {basicEnemy,  10, 50},
-                                           {basicEnemy,  10, 100},
-                                           {basicEnemy,  10, 150},
-                                           {flyingEnemy, 1,  150},
-                                           {flyingEnemy, 1,  150},
-                                           {flyingEnemy, 1,  150},
-                                           {basicEnemy,  10, 200},
-                                           {basicEnemy,  10, 250}}));
+                                                       {basicEnemy,  10, 2},
+                                                       {basicEnemy,  10, 4},
+                                                       {basicEnemy,  10, 6},
+                                                       {flyingEnemy, 1,  8},
+                                                       {flyingEnemy, 1,  10},
+                                                       {flyingEnemy, 1,  12},
+                                                       {basicEnemy,  10, 14},
+                                                       {basicEnemy,  10, 16}}));
             break;
         default:
             std::cout << "no " << numWave << ". wave implemented" << std::endl;
             waves.push_back(new Wave(gameLoopCounter, {{basicEnemy,  10, 0},
-                                                       {basicEnemy,  10, 50},
-                                                       {basicEnemy,  10, 100},
-                                                       {basicEnemy,  10, 150},
-                                                       {flyingEnemy, 1,  150},
-                                                       {flyingEnemy, 1,  150},
-                                                       {flyingEnemy, 1,  150},
-                                                       {basicEnemy,  10, 200},
-                                                       {basicEnemy,  10, 250}}));
+                                                       {basicEnemy,  10, 2},
+                                                       {basicEnemy,  10, 4},
+                                                       {basicEnemy,  10, 6},
+                                                       {flyingEnemy, 1,  8},
+                                                       {flyingEnemy, 1,  10},
+                                                       {flyingEnemy, 1,  12},
+                                                       {basicEnemy,  10, 14},
+                                                       {basicEnemy,  10, 16}}));
     }
     numWave++;
+    startLastWave = gameLoopCounter;
 }

@@ -32,8 +32,8 @@ Map map;
 std::vector<std::unique_ptr<GameObject> > allGameObjects;
 GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
-SDL_Texture* destTextureMap;
-SDL_Texture* destTextureGUI;
+SDL_Texture *destTextureMap;
+SDL_Texture *destTextureGUI;
 int lives = 5;
 Gamestats gamestats = {0, 1000};
 bool gameIsRunning = false; //game is not paused
@@ -63,7 +63,7 @@ int initWindowAndRenderer(SDL_Window **window) {
     }
 
     return 0;
-    }
+}
 
 void gameLoop() {
     bool isRunning = true; //game is running
@@ -79,12 +79,15 @@ void gameLoop() {
     SDL_Rect destRect;
     destRect.x = 0;
     destRect.y = 0;
-    destRect.w = MAP_WIDTH*TILE_WIDTH ;
-    destRect.h = MAP_HEIGHT*TILE_HEIGHT;
+    destRect.w = MAP_WIDTH * TILE_WIDTH;
+    destRect.h = MAP_HEIGHT * TILE_HEIGHT;
 
     //textures for renderTarget
-    destTextureMap = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,MAP_WIDTH * TILE_WIDTH , MAP_HEIGHT * TILE_HEIGHT); //TODO: don't know which pixelformat
-    destTextureGUI = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,WINDOW_WIDTH, WINDOW_HEIGHT); //TODO: don't know which pixelformat
+    destTextureMap = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
+                                       MAP_WIDTH * TILE_WIDTH,
+                                       MAP_HEIGHT * TILE_HEIGHT); //TODO: don't know which pixelformat
+    destTextureGUI = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, WINDOW_WIDTH,
+                                       WINDOW_HEIGHT); //TODO: don't know which pixelformat
     while (isRunning) {
         //update time variables
         gettimeofday(&tv, NULL);
@@ -139,15 +142,17 @@ void gameLoop() {
 
         //render everything on screen
         SDL_SetRenderTarget(renderer, NULL);
-        SDL_RenderCopy(renderer, destTextureGUI,NULL, NULL);
-        SDL_RenderCopy(renderer, destTextureMap,NULL, &destRect);
+        SDL_RenderCopy(renderer, destTextureGUI, NULL, NULL);
+        SDL_RenderCopy(renderer, destTextureMap, NULL, &destRect);
         SDL_RenderPresent(renderer);
-        SDL_SetRenderDrawColor(renderer,0,0,0,0);
-
-        gameLoopCounter++;
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 
         //handling real time issues for constant frame rate
         gettimeofday(&tv, NULL);
+
+        if (gameIsRunning) {
+            gameLoopCounter++;
+        }
         t1 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
         if (t1 - t0 < 1000000.0 / FRAMES_PER_SECOND) {
             usleep((__useconds_t) (1000000.0 / FRAMES_PER_SECOND - (t1 - t0)));
