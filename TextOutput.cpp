@@ -2,6 +2,7 @@
 #include "config.h"
 
 void TextOutput::drawText(const std::string text, GridPoint pos, const int size, FontType fontType) {
+    SDL_SetRenderTarget(renderer, destTextureGUI);
     SDL_Rect destRect;
     destRect.x = pos.upperLeft().x;
     destRect.y = pos.upperLeft().y;
@@ -12,6 +13,7 @@ void TextOutput::drawText(const std::string text, GridPoint pos, const int size,
 
 void TextOutput::drawTextAndRect(const std::string text, GridPoint pos, const int w, const int h, const int size,
                      const FontType fontType, const SDL_Color backgroundColor) {
+    SDL_SetRenderTarget(renderer, destTextureGUI);
     SDL_Rect rectBorder;
     rectBorder.x = pos.upperLeft().x;
     rectBorder.y = pos.upperLeft().y;

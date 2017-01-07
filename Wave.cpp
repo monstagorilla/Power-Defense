@@ -13,7 +13,8 @@ Wave::Wave(const uint32_t startTime,std::vector<WaveItem> items) {
     }
     this->startTime = startTime;
     isEmpty = false;
-    length = (items.back().startTime + 60) * FRAMES_PER_SECOND;
+    length = (items.back().startTime + TIME_TO_PREPARE) * FRAMES_PER_SECOND;
+
 }
 
 Wave::~Wave() {

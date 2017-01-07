@@ -36,11 +36,10 @@ void Enemy::update() {
     if (distance(pos, targetPos) < 0.1) {
         pathIndex++;
         if (pathIndex == map.path.size()) {
-            if (lives == 0) { // TODO: implement at different location in code
+            if (gamestats.lives == 0) { // TODO: implement at different location in code
                 GUIFunctions::endGame();
             } else {
-                lives--;
-                std::cout << "Lives left: " << lives << std::endl;
+                gamestats.lives--;
             }
             die();
         }

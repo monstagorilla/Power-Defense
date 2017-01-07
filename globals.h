@@ -18,7 +18,6 @@ extern SDL_Renderer* renderer;
 extern SDL_Texture* destTextureMap;
 extern SDL_Texture* destTextureGUI;
 extern GUIObject *root;
-extern int lives;
 extern Gamestats gamestats;
 extern bool gameIsRunning;
 extern uint32_t gameLoopCounter;

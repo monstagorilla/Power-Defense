@@ -4,12 +4,13 @@
 #include "Wave.h"
 #include "globals.h"
 #include "config.h"
+#include "gamestats.h"
 
 WaveManager::WaveManager() {
     numWave = 0;
     startLastWave = 0;
-    startFirstWave = 60;
-    nextWaveCountdown = startFirstWave;
+    startFirstWave = TIME_TO_PREPARE;
+    nextWaveCountdown = TIME_TO_PREPARE;
 }
 
 void WaveManager::update() {
@@ -29,6 +30,7 @@ void WaveManager::update() {
         } else {
             nextWaveCountdown = startFirstWave - gameLoopCounter / FRAMES_PER_SECOND;
         }
+        gamestats.nextWave = nextWaveCountdown;
     }
 }
 
@@ -70,7 +72,7 @@ void WaveManager::addWave() {
                                                        {basicEnemy,  10, 16}}));
             break;
         default:
-            std::cout << "no " << numWave << ". wave implemented" << std::endl;
+            std::cout << "no " << numWave + 1 << ". wave implemented" << std::endl;
             waves.push_back(new Wave(gameLoopCounter, {{basicEnemy,  10, 0},
                                                        {basicEnemy,  10, 2},
                                                        {basicEnemy,  10, 4},
@@ -82,5 +84,6 @@ void WaveManager::addWave() {
                                                        {basicEnemy,  10, 16}}));
     }
     numWave++;
+    gamestats.level = numWave;
     startLastWave = gameLoopCounter;
 }

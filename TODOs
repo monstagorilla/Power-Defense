@@ -10,6 +10,8 @@ TODOS:
 -perhaps auto generate new wave types
 -fix bug: automatically click on activated upgrade button after buy
 -smooth transition nextWaveCounter reset
+-display upgrade stats in tower menu
+-sell button
 
 monstagorilla:
 

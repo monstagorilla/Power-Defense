@@ -34,8 +34,7 @@ GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
 SDL_Texture *destTextureMap;
 SDL_Texture *destTextureGUI;
-int lives = 5;
-Gamestats gamestats = {0, 1000};
+Gamestats gamestats = {0, START_MONEY,0,TIME_TO_PREPARE, START_LIVES};
 bool gameIsRunning = false; //game is not paused
 uint32_t gameLoopCounter = 0;
 
@@ -94,6 +93,7 @@ void gameLoop() {
         double t0 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
         double t1 = t0;
 
+
         //clear renderTargets
         SDL_SetRenderTarget(renderer, destTextureMap);
         SDL_RenderClear(renderer);
@@ -129,7 +129,6 @@ void gameLoop() {
         for (auto element: root->traverse()) {
             element->draw();
         }
-
         //handling events
         while (SDL_PollEvent(&ev) != 0) {
             if (ev.type == SDL_QUIT) {

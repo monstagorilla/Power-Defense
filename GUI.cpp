@@ -12,9 +12,10 @@
 #include "Symbol.h"
 #include "config.h"
 #include "Container.h"
+#include "gamestats.h"
 
 std::vector<std::string> GUI::paths = {"a", "aa", "aaa","aab", "ab", "aba", "abaa", "abac", "abae", "abag", "abai", "ace",
-                                       "ac", "b","bb", "bc","bd", "c", "d", "da"};
+                                       "ac", "b","bb", "bc","bd","be","bf", "c", "d", "da"};
 
 void GUI::initGUI() {
     root->children.push_back(new GUIObject()); //menus
@@ -68,12 +69,16 @@ void GUI::initGUI() {
                                                GUIFunctions::upgradeTower));
 
     //GAMESTATS
-    addGUIElement(path_gamestats,
-                  new Symbol(std::vector<std::string>{"/assets/Gold.png"}, {1 - MAP_WIDTH, MAP_HEIGHT + 1}, nullptr));
+    addGUIElement(path_gamestats, new Symbol(std::vector<std::string>{"/assets/Gold.png"}, {1 - MAP_WIDTH, MAP_HEIGHT + 1}, nullptr));
     addGUIElement(path_gamestats, new Label("", {2 - MAP_WIDTH, MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelMoney));
-    addGUIElement(path_gamestats, new Label("", {8 - MAP_WIDTH, MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelPoint));
+    addGUIElement(path_gamestats, new Label("", {5 - MAP_WIDTH, MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelPoint));
     addGUIElement(path_gamestats, new Label("", {13 , 2}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelWaveCount));
+    addGUIElement(path_gamestats, new Label("", {10 - MAP_WIDTH,MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelLevel));
+    addGUIElement(path_gamestats, new Label(std::to_string(gamestats.lives), {16 - MAP_WIDTH,MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelLives));
+    addGUIElement(path_gamestats, new Symbol(std::vector<std::string>{"/assets/Doodads.png"}, {4 - MAP_WIDTH, MAP_HEIGHT + 1}, nullptr));
     addGUIElement(path_gamestats, new Label("Next Wave: ", {10 , 2}, 5, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_gamestats, new Label("Level: ", {8 - MAP_WIDTH, MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_gamestats, new Symbol(std::vector<std::string>{"/assets/heart.png"}, {15 - MAP_WIDTH, MAP_HEIGHT + 1}, nullptr));
 
 
     //activate MapOverlays and MainMenu at the beginning of the Game

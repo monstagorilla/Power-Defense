@@ -9,6 +9,7 @@
 #include "BasicTower.h"
 #include "Map.h"
 #include "config.h"
+
 #include "NailGun.h"
 #include "GameObject.h"
 #include "Symbol.h"
@@ -44,7 +45,15 @@ void GUIFunctions::setLabelMoney() {
 }
 
 void GUIFunctions::setLabelWaveCount() {
-    root->getChild(GUI::paths[path_gamestats_waveCount])->text = std::to_string(waveManager.nextWaveCountdown);
+    root->getChild(GUI::paths[path_gamestats_waveCount])->text = std::to_string(gamestats.nextWave);
+}
+
+void GUIFunctions::setLabelLevel() {
+    root->getChild(GUI::paths[path_gamestats_level])->text = std::to_string(gamestats.level);
+}
+
+void GUIFunctions::setLabelLives() {
+    root->getChild(GUI::paths[path_gamestats_lives])->text = std::to_string(gamestats.lives);
 }
 
 void GUIFunctions::inactivateMenus() {
@@ -97,7 +106,7 @@ void GUIFunctions::updateContainerTowerstats() {
         root->getChild(GUI::paths[path_menus_buy_container_reloadTime])->text = std::to_string(
                 currentTower->getStats().reloadTime);
         root->getChild(GUI::paths[path_menus_buy_container_range])->text = std::to_string(
-                (int)currentTower->getStats().range);
+                (int) currentTower->getStats().range);
         root->getChild(GUI::paths[path_menus_buy_container_cost])->text = std::to_string(
                 currentTower->getStats().price);
     }
@@ -152,22 +161,22 @@ void GUIFunctions::pause() {
     }
 }
 
+
 void GUIFunctions::onClickSymbol_BasicTower() {
     currentTowerType = basicTower;
     onClickTowerSymbol();
 }
+
 
 void GUIFunctions::onClickSymbol_NailGun() {
     currentTowerType = nailGun;
     onClickTowerSymbol();
 }
 
-
 void GUIFunctions::onClickSymbol_SplashTower() {
     currentTowerType = splashTower;
     onClickTowerSymbol();
 }
-
 
 void GUIFunctions::onClickTowerSymbol() {
     for (auto object: root->getChild(GUI::paths[path_menus_buy_container])->children) {
@@ -210,7 +219,7 @@ void GUIFunctions::onClickTowerSymbol() {
             range = (int) SplashTower::stat[0].range;
             cost = SplashTower::stat[0].price;
             for (auto element: SplashTower::stat[0].paths) {
-                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element,true));
+                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element, true));
             }
             break;
     }
@@ -277,7 +286,7 @@ void GUIFunctions::onClickBuyMenu_Apply() {
         for (auto object: root->getChild(GUI::paths[path_menus_tower])->children) {
             object->isActivated = true;
         }
-        for(auto element: root->getChild(GUI::paths[path_menus_buy_container])->children){
+        for (auto element: root->getChild(GUI::paths[path_menus_buy_container])->children) {
             element->isActivated = true;
         }
         root->getChild(GUI::paths[path_menus_buy_container])->isActivated = true;
@@ -293,4 +302,3 @@ void GUIFunctions::onClickBuyMenu_Cancel() {
 void GUIFunctions::newWave() {
     waveManager.addWave();
 }
-
