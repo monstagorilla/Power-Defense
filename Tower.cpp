@@ -49,3 +49,7 @@ void Tower::update() {
 void Tower::shoot(Enemy *target) {
 
 }
+
+TowerStats Tower::getStatsPrev() {
+    return TowerStats();
+}

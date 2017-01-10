@@ -6,7 +6,6 @@ TODOS:
 -splash tower granade shuld not die when enemy dies
 -more gamestats like e.g. wavecount 
 -redesign GUI implementation
--wave countdown
 -perhaps auto generate new wave types
 -fix bug: automatically click on activated upgrade button after buy
 -smooth transition nextWaveCounter reset

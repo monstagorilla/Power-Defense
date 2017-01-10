@@ -46,15 +46,15 @@ void GUI::initGUI() {
                              GUIFunctions::onClickSymbol_SplashTower));
 
     //ContainerTowerStats
-    addGUIElement(path_menus_buy_container, new Label("", {1, 3}, 2, 1, COLOR_WHITE, nullptr)); //title
+    addGUIElement(path_menus_buy_container, new Label("", {1, 3}, 4, 1, COLOR_WHITE, nullptr)); //title
     addGUIElement(path_menus_buy_container, new Label("Damage: ", {1, 4}, 5, 1, COLOR_WHITE, nullptr));
-    addGUIElement(path_menus_buy_container, new Label("", {6, 4}, 2, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("", {5, 4}, 4, 1, COLOR_WHITE, nullptr));
     addGUIElement(path_menus_buy_container, new Label("ReloadTime: ", {1, 5}, 5, 1, COLOR_WHITE, nullptr));
-    addGUIElement(path_menus_buy_container, new Label("", {6, 5}, 2, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("", {5, 5}, 4, 1, COLOR_WHITE, nullptr));
     addGUIElement(path_menus_buy_container, new Label("Range: ", {1, 6}, 5, 1, COLOR_WHITE, nullptr));
-    addGUIElement(path_menus_buy_container, new Label("", {6, 6}, 2, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("", {5, 6}, 4, 1, COLOR_WHITE, nullptr));
     addGUIElement(path_menus_buy_container, new Label("Cost: ", {1, 7}, 5, 1, COLOR_WHITE, nullptr));
-    addGUIElement(path_menus_buy_container, new Label("", {6, 7}, 2, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("", {5, 7}, 4, 1, COLOR_WHITE, nullptr));
 
     addGUIElement(path_menus_buy,
                   new Button("OK", {5, 9}, 3, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickBuyMenu_Apply));

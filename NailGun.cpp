@@ -69,6 +69,14 @@ TowerStats NailGun::getStats() {
     return stat[currentUpgrade];
 }
 
+TowerStats NailGun::getStatsPrev() {
+    if(currentUpgrade + 1 < stat.size()) {
+        return stat[currentUpgrade + 1];
+    }else{
+        return TowerStats{};
+    }
+}
+
 int NailGun::getMaxUpgrade() {
     return (int) stat.size() - 1;
 }

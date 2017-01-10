@@ -17,7 +17,7 @@ SDL_Texture *Cache::getTexture(const std::string path) {
     } catch (std::out_of_range) {
         SDL_Surface *surface = IMG_Load((std::string(CMAKE_SOURCE_DIR) + path).c_str());
         if (surface == nullptr) {
-            std::cout << "Failed to load surface " << " error : " << SDL_GetError() << std::endl;
+            std::cout << "Failed sto load surface " << " error : " << SDL_GetError() << std::endl;
         }
         texture = SDL_CreateTextureFromSurface(renderer, surface);
         if (texture == nullptr) {

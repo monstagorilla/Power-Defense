@@ -52,6 +52,14 @@ TowerStats SplashTower::getStats() {
     return stat[currentUpgrade];
 }
 
+TowerStats SplashTower::getStatsPrev() {
+    if(currentUpgrade + 1 < stat.size()) {
+        return stat[currentUpgrade + 1];
+    }else{
+        return TowerStats{};
+    }
+}
+
 int SplashTower::getMaxUpgrade() {
     return (int) stat.size() - 1;
 }

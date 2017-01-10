@@ -29,6 +29,7 @@ public:
     virtual void shoot(Enemy *target);
 
     virtual TowerStats getStats();
+    virtual TowerStats getStatsPrev();
 
     virtual int getMaxUpgrade();
 
