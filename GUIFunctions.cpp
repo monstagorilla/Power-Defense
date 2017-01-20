@@ -20,6 +20,7 @@
 Tower *GUIFunctions::currentTower = nullptr;
 GridPoint GUIFunctions::currentPos = GridPoint();
 TowerType GUIFunctions::currentTowerType = basicTower;
+bool GUIFunctions::hasStarted = false;
 
 void GUIFunctions::upgradeTower() {
     if (GUIFunctions::currentTower == nullptr) {
@@ -32,6 +33,7 @@ void GUIFunctions::upgradeTower() {
         for (auto path: currentTower->getStats().paths) {
             currentTower->sprites.push_back(Sprite(currentTower->pos, TILE_WIDTH, TILE_HEIGHT, path, true));
         }
+        Mix_PlayChannel(-1, Cache::getSound("/audio/upgrade.wav"),0);
     }
     updateContainerTowerstats();
 }
@@ -108,8 +110,8 @@ void GUIFunctions::updateContainerTowerstats() {
                 std::to_string(currentTower->getStats().reloadTime) + "  (->" +
                 std::to_string(currentTower->getStatsPrev().reloadTime) + ")";
         root->getChild(GUI::paths[path_menus_buy_container_range])->text =
-                std::to_string((int)currentTower->getStats().range) + "  (->" +
-                std::to_string((int)currentTower->getStatsPrev().range) + ")";
+                std::to_string((int) currentTower->getStats().range) + "  (->" +
+                std::to_string((int) currentTower->getStatsPrev().range) + ")";
         root->getChild(GUI::paths[path_menus_buy_container_cost])->text = std::to_string(
                 currentTower->getStats().price);
     }
@@ -153,6 +155,9 @@ void GUIFunctions::endGame() {
 }
 
 void GUIFunctions::pause() {
+    if (!hasStarted) {
+        hasStarted = true;
+    }
     if (gameIsRunning) {
         gameIsRunning = false;
         root->getChild(GUI::paths[path_menus_main_pause])->text = "Continue";
@@ -320,6 +325,7 @@ void GUIFunctions::onClickBuyMenu_Apply() {
             element->isActivated = true;
         }
         root->getChild(GUI::paths[path_menus_buy_container])->isActivated = true;
+        Mix_PlayChannel(-1, Cache::getSound("/audio/upgrade.wav"),0);
     }
 }
 
@@ -332,3 +338,24 @@ void GUIFunctions::onClickBuyMenu_Cancel() {
 void GUIFunctions::newWave() {
     waveManager.addWave();
 }
+
+void GUIFunctions::onClickMusicMute() {
+    if (Cache::isMusicMuted) {
+        root->getChild(GUI::paths[path_menus_main_muteMusic])->text = "Music Off";
+        Mix_VolumeMusic(64);
+    }else{
+        root->getChild(GUI::paths[path_menus_main_muteMusic])->text = "Music On";
+        Mix_VolumeMusic(0);
+    }
+    Cache::isMusicMuted = !Cache::isMusicMuted;
+}
+
+void GUIFunctions::onCLickSoundsMute() {
+    if (Cache::isSoundMuted) {
+        root->getChild(GUI::paths[path_menus_main_muteSounds])->text = "Fx Off";
+    }else{
+        root->getChild(GUI::paths[path_menus_main_muteSounds])->text = "Fx On";
+    }
+    Cache::isSoundMuted = !Cache::isSoundMuted;
+}
+

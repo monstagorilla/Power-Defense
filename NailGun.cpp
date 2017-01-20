@@ -1,10 +1,12 @@
 #include <algorithm>
+#include <SDL2/SDL_mixer.h>
 #include "NailGun.h"
 #include "globals.h"
 #include "BasicShot.h"
 #include "util.h"
 #include "Point.h"
 #include "Enemy.h"
+#include "Cache.h"
 
 const std::vector<TowerStats> NailGun::stat =
         //reloadTime, range, price, damage, path
@@ -63,6 +65,7 @@ void NailGun::update() {
 
 void NailGun::shoot(Enemy *target, const float angle) {
     allGameObjects.push_back(std::make_unique<BasicShot>(pos, this, target, getStats().damage, angle - 90.0f, 10.0, "/assets/Nail.png"));
+    Mix_PlayChannel(-1, Cache::getSound("/audio/brrt.wav"), 0);
 }
 
 TowerStats NailGun::getStats() {

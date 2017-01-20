@@ -40,6 +40,7 @@ void Enemy::update() {
                 GUIFunctions::endGame();
             } else {
                 gamestats.lives--;
+                Mix_PlayChannel(-1, Cache::getSound("/audio/rip.wav"),0);
             }
             die();
         }
@@ -138,8 +139,9 @@ void Enemy::die() {
             (*it)->dead = true;
             gamestats.money += getStat().loot;
             gamestats.points += getStat().loot;
+            Mix_PlayChannel(-1, Cache::getSound("/audio/burr.wav") ,0);
         }
-        if ((*it)->ID == 3) {
+        if ((*it)->ID == 3) { //delete Shot
             if (((Shot *) (*it).get())->target == this) {
                 (*it)->dead = true;
             }

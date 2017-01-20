@@ -36,9 +36,13 @@ public:
     static void onClickSymbol_SplashTower();
     static void onClickBuyMenu_Apply();
     static void onClickBuyMenu_Cancel();
+    static void onClickMusicMute();
+    static void onCLickSoundsMute();
 
 private:
     static void onClickTowerSymbol();
     static void inactivateMenus();
     static void updateContainerTowerstats();
+
+    static bool hasStarted;
 };

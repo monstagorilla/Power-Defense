@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include <string>
 #include <unistd.h>
 #include <memory>
@@ -48,6 +49,8 @@ WaveManager waveManager = WaveManager();
 
 int initWindowAndRenderer(SDL_Window **window) {
     SDL_Init(SDL_INIT_VIDEO);
+    SDL_Init(SDL_INIT_AUDIO);
+    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 1, 4096);
     TTF_Init();
     *window = SDL_CreateWindow("PowerDefense", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
     if (*window == NULL) {
@@ -87,6 +90,9 @@ void gameLoop() {
                                        MAP_HEIGHT * TILE_HEIGHT); //TODO: don't know which pixelformat
     destTextureGUI = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, WINDOW_WIDTH,
                                        WINDOW_HEIGHT); //TODO: don't know which pixelformat
+
+    Mix_PlayMusic(Cache::getMusic("/audio/beat1.wav"), -1);
+
     while (isRunning) {
         //update time variables
         gettimeofday(&tv, NULL);

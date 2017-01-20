@@ -2,6 +2,7 @@
 
 #include "Enemy.h"
 #include "util.h"
+#include "Cache.h"
 
 BasicShot::BasicShot(const Point pos, Tower *parent, Enemy *target, const int damage,
                      const float angle, const int speed, std::string path)

@@ -1,10 +1,12 @@
 #include <iostream>
+#include <SDL2/SDL_mixer.h>
 #include "WaveManager.h"
 #include "EnemyType.h"
 #include "Wave.h"
 #include "globals.h"
 #include "config.h"
 #include "gamestats.h"
+#include "Cache.h"
 
 WaveManager::WaveManager() {
     numWave = 0;
@@ -35,6 +37,7 @@ void WaveManager::update() {
 }
 
 void WaveManager::addWave() {
+    Mix_PlayChannel(-1, Cache::getSound("/audio/squad.wav"),0);
     switch (numWave) {
         case 0:
             waves.push_back(new Wave(gameLoopCounter, {{basicEnemy, 1, 0},

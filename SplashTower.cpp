@@ -1,9 +1,11 @@
+#include <SDL2/SDL_mixer.h>
 #include "SplashTower.h"
 #include "Point.h"
 #include "globals.h"
 #include "Enemy.h"
 #include "util.h"
 #include "Grenade.h"
+#include "Cache.h"
 
 const std::vector<TowerStats> SplashTower::stat =
         //reloadTime, range, price, damage path
@@ -46,6 +48,7 @@ void SplashTower::update() {
 
 void SplashTower::shoot(Enemy *target, const float angle) {
     allGameObjects.push_back(std::make_unique<Grenade>(pos, this, target, getStats().damage, angle - 90.0f, 6.0));
+    Mix_PlayChannel(-1, Cache::getSound("/audio/bam.wav"), 0);
 }
 
 TowerStats SplashTower::getStats() {

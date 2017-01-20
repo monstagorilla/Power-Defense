@@ -7,8 +7,13 @@ std::unordered_map<std::string, SDL_Texture *> Cache::textureCache;
 std::vector<std::unordered_map<std::string, SDL_Texture *>> Cache::textCache = {
         std::unordered_map<std::string, SDL_Texture *>(),
         std::unordered_map<std::string, SDL_Texture *>(),
-        std::unordered_map<std::string, SDL_Texture *>()}; //hardcoded size of vector
+        std::unordered_map<std::string, SDL_Texture *>()}; //TODO: dynamic size of vector
 std::unordered_map<std::string, TTF_Font *> Cache::fontCache;
+std::unordered_map<std::string, Mix_Chunk *> Cache::soundCache;
+std::unordered_map<std::string, Mix_Music *> Cache::musicCache;
+
+bool Cache::isSoundMuted = false;
+bool Cache::isMusicMuted = false;
 
 SDL_Texture *Cache::getTexture(const std::string path) {
     SDL_Texture *texture = nullptr;
@@ -76,4 +81,36 @@ TTF_Font *Cache::getFont(const std::string path) {
         }
     }
     return font;
+}
+
+Mix_Chunk *Cache::getSound(const std::string path) {
+    Mix_Chunk *sound = nullptr;
+    try {
+        sound = soundCache.at(path);
+    } catch (std::out_of_range) {
+        sound = Mix_LoadWAV((std::string(CMAKE_SOURCE_DIR) + path).c_str());
+        if (sound == nullptr) {
+            std::cout << "Failed to load audio " << SDL_GetError();
+        } else {
+            soundCache[path] = sound;
+        }
+    }
+    isSoundMuted ? Mix_VolumeChunk(sound, 0): Mix_VolumeChunk(sound, 256);
+    return sound;
+}
+
+Mix_Music *Cache::getMusic(const std::string path) {
+    Mix_Music *music = nullptr;
+    try {
+        music = musicCache.at(path);
+    } catch (std::out_of_range) {
+        music = Mix_LoadMUS((std::string(CMAKE_SOURCE_DIR) + path).c_str());
+        Mix_VolumeMusic(64);
+        if (music == nullptr) {
+            std::cout << "Failed to load audio " << SDL_GetError();
+        } else {
+            musicCache[path] = music;
+        }
+    }
+    return music;
 }

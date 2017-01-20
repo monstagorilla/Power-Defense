@@ -4,6 +4,7 @@
 #include "GUIFunctions.h"
 #include "Map.h"
 #include "gamestats.h"
+#include "Cache.h"
 
 FlyingEnemy::FlyingEnemy(Map &map, const int level, const Point pos) : Enemy::Enemy(map, level, 10, 3.0, 100,
                                                                                     "/assets/Enemy.png") {
@@ -23,6 +24,7 @@ void FlyingEnemy::update() {
             std::cout << "GAME OVER" << std::endl;
         } else {
             gamestats.lives--;
+            Mix_PlayChannel(-1, Cache::getSound("/audio/rip.wav"),0);
         }
         die();
     }
