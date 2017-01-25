@@ -67,14 +67,12 @@ Map::Map(const std::string &filename) {
     destRect.x = 10 * TILE_WIDTH;
     destRect.y = 5 * TILE_HEIGHT;
     SDL_RenderCopyEx(renderer, Cache::getTexture("/assets/Doodads.png"), NULL, &destRect, 0, NULL, SDL_FLIP_NONE);
-    sprite = Sprite({0, 0}, TILE_WIDTH * MAP_WIDTH,
-                    TILE_HEIGHT * MAP_HEIGHT, destTexture, true);
 
     SDL_RenderPresent(renderer);
+    SDL_DestroyTexture(srcTexture);
+
     sprite = Sprite({TILE_WIDTH * MAP_WIDTH / 2, TILE_HEIGHT * MAP_HEIGHT / 2}, TILE_WIDTH * MAP_WIDTH,
                     TILE_HEIGHT * MAP_HEIGHT, destTexture, true);
-
-    SDL_DestroyTexture(srcTexture);
     isFocused = false;
     focusedTile = {0, 0};
 }

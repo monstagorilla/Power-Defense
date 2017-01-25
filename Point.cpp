@@ -61,10 +61,12 @@ DisplayPoint::DisplayPoint() {
     x = 0;
     y = 0;
 }
+
 GridPoint::GridPoint() {
     x = 0;
     y = 0;
 }
+
 Point DisplayPoint::point() const {
     return {(float) this->x, (float) this->y};
 }
