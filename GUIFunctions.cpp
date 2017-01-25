@@ -152,6 +152,8 @@ void GUIFunctions::startGame() {
 
 void GUIFunctions::endGame() {
     gameIsRunning = false;
+    Mix_PlayChannel(-1, Cache::getSound("/audio/nein.wav"),0);
+    Mix_PauseMusic();
 }
 
 void GUIFunctions::pause() {

@@ -21,7 +21,6 @@ void FlyingEnemy::update() {
     if (distance(pos, targetPos) < 0.1) {
         if (gamestats.lives == 0) {
             GUIFunctions::endGame();
-            std::cout << "GAME OVER" << std::endl;
         } else {
             gamestats.lives--;
             Mix_PlayChannel(-1, Cache::getSound("/audio/rip.wav"),0);
