@@ -11,6 +11,9 @@
 #include "globals.h"
 #include "gamestats.h"
 #include "GUIFunctions.h"
+#include "TextOutput.h"
+#include "GUI.h"
+#include "Label.h"
 
 Enemy::Enemy(Map &map, const int level, const int maxHealth, const float speed, const int loot,
              const std::string spritePath) : map(map) {
@@ -19,7 +22,7 @@ Enemy::Enemy(Map &map, const int level, const int maxHealth, const float speed, 
     stat = {maxHealth, speed, loot};
     this->level = level;
     ID = 1;
-    sprites.push_back(Sprite(pos, TILE_WIDTH-6, TILE_WIDTH-6, spritePath));
+    sprites.push_back(Sprite(pos, TILE_WIDTH - 6, TILE_WIDTH - 6, spritePath, true));
     health = getStat().maxHealth;
 }
 
@@ -33,20 +36,19 @@ void Enemy::update() {
     if (distance(pos, targetPos) < 0.1) {
         pathIndex++;
         if (pathIndex == map.path.size()) {
-            if (lives == 0) {
+            if (gamestats.lives == 0) { // TODO: implement at different location in code
                 GUIFunctions::endGame();
-                std::cout << "GAME OVER" << std::endl;
             } else {
-                lives--;
-                std::cout << "Lives left: " << lives << std::endl;
+                gamestats.lives--;
+                Mix_PlayChannel(-1, Cache::getSound("/audio/rip.wav"),0);
             }
             die();
         }
     }
 
     for (int i = 0; i < sprites.size(); i++) {
-        sprites[i].pos      = this->pos;
-        sprites[i].rotation = atan2(targetPos.y - this->pos.y, targetPos.x - this->pos.x)*180/M_PI;
+        sprites[i].pos = this->pos;
+        sprites[i].rotation = atan2(targetPos.y - this->pos.y, targetPos.x - this->pos.x) * 180 / M_PI;
     }
 }
 
@@ -137,8 +139,9 @@ void Enemy::die() {
             (*it)->dead = true;
             gamestats.money += getStat().loot;
             gamestats.points += getStat().loot;
+            Mix_PlayChannel(-1, Cache::getSound("/audio/burr.wav") ,0);
         }
-        if ((*it)->ID == 3) {
+        if ((*it)->ID == 3) { //delete Shot
             if (((Shot *) (*it).get())->target == this) {
                 (*it)->dead = true;
             }
@@ -153,6 +156,7 @@ EnemyStats Enemy::getStat() {
 
 void Enemy::draw() {
     if (health < getStat().maxHealth) {
+        SDL_SetRenderTarget(renderer, destTextureMap);
         drawHealthbar();
     }
 }

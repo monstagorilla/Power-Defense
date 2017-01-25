@@ -15,7 +15,7 @@ Tower::Tower(): GameObject::GameObject() {
     cooldown = 0;
     sprites = std::vector<Sprite>();
     for (auto path: stat[0].paths) {
-        sprites.push_back(Sprite(pos, TILE_WIDTH, TILE_HEIGHT, path));
+        sprites.push_back(Sprite(pos, TILE_WIDTH, TILE_HEIGHT, path, true));
     }
 }
 
@@ -26,7 +26,7 @@ Tower::Tower(const GridPoint pos, const std::vector<std::string> paths) : GameOb
     cooldown = 0;
     sprites = std::vector<Sprite>();
     for (auto path: paths) {
-        sprites.push_back(Sprite(pos.center(), TILE_WIDTH, TILE_HEIGHT, path));
+        sprites.push_back(Sprite(pos.center(), TILE_WIDTH, TILE_HEIGHT, path, true));
     }
 }
 
@@ -48,4 +48,8 @@ void Tower::update() {
 
 void Tower::shoot(Enemy *target) {
 
+}
+
+TowerStats Tower::getStatsPrev() {
+    return TowerStats();
 }

@@ -10,14 +10,18 @@ class GameObject;
 class Map;
 class GUIObject;
 class DisplayPoint;
+class WaveManager;
 
 extern Map map;
 extern std::vector< std::unique_ptr< GameObject > > allGameObjects;
 extern SDL_Renderer* renderer;
+extern SDL_Texture* destTextureMap;
+extern SDL_Texture* destTextureGUI;
 extern GUIObject *root;
-extern int lives;
 extern Gamestats gamestats;
 extern bool gameIsRunning;
+extern uint32_t gameLoopCounter;
+extern WaveManager waveManager;
 
 extern DisplayPoint mousePos;
 extern DisplayPoint clickedPos;

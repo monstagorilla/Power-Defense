@@ -12,7 +12,7 @@
 #include "SplashTower.h"
 
 
-Symbol::Symbol(const bool isTranparent) : GUIObject::GUIObject() {
+Symbol::Symbol(const bool isTranparent, const bool renderInMap) : GUIObject::GUIObject(renderInMap) {
     this->isTransparent = isTranparent;
 }
 
@@ -22,7 +22,7 @@ Symbol::Symbol(std::vector<std::string> paths, const GridPoint pos, void (*onCLi
     this->pos = GridPoint(pos.x + MAP_WIDTH, pos.y).center();
     isTransparent = false;
     for (auto element: paths) {
-        sprites.push_back(Sprite(GridPoint(MAP_WIDTH + pos.x, pos.y).center(), TILE_WIDTH, TILE_HEIGHT, element));
+        sprites.push_back(Sprite(GridPoint(MAP_WIDTH + pos.x, pos.y).center(), TILE_WIDTH, TILE_HEIGHT, element, renderInMap));
     }
 }
 
@@ -36,6 +36,11 @@ void Symbol::update() {
 
 void Symbol::draw() {
     if (isActivated) {
+        if(renderInMap){
+            SDL_SetRenderTarget(renderer, destTextureMap);
+        }else{
+            SDL_SetRenderTarget(renderer, destTextureGUI);
+        }
         if (isTransparent) {
             for (auto element: sprites) {
                 SDL_SetTextureAlphaMod(element.texture, 200);

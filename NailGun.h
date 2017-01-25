@@ -10,6 +10,7 @@ public:
     virtual void update();
     virtual void shoot(Enemy * target, const float angle);
     virtual TowerStats getStats();
+    virtual TowerStats getStatsPrev();
     virtual int getMaxUpgrade();
 
     const static std::vector<TowerStats> stat;

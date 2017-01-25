@@ -1,10 +1,13 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
 #include <string>
 #include <unistd.h>
 #include <memory>
 #include <chrono>
 #include <sys/time.h>
+#include <cstdlib>
+#include <stdlib.h>
 
 #include "Point.h"
 #include "Tower.h"
@@ -20,23 +23,34 @@
 #include "GUIObject.h"
 #include "gamestats.h"
 #include "config.h"
+#include "FlyingEnemy.h"
+#include "WaveManager.h"
+#include "Wave.h"
+#include "WaveItem.h"
+#include "EnemyType.h"
 
 Map map;
 std::vector<std::unique_ptr<GameObject> > allGameObjects;
 GUIObject *root = new GUIObject();
 SDL_Renderer *renderer;
-int lives = 5;
-Gamestats gamestats = {0, 1000};
-bool gameIsRunning = false;
+SDL_Texture *destTextureMap;
+SDL_Texture *destTextureGUI;
+Gamestats gamestats = {0, START_MONEY,0,TIME_TO_PREPARE, START_LIVES};
+bool gameIsRunning = false; //game is not paused
+uint32_t gameLoopCounter = 0;
 
 //YOLO = YOLO_MAX;
 DisplayPoint mousePos = {0, 0};
 DisplayPoint clickedPos = {0, 0};
 bool isCLicked = false;
 bool mouseRelease = false;
+WaveManager waveManager = WaveManager();
+
 
 int initWindowAndRenderer(SDL_Window **window) {
     SDL_Init(SDL_INIT_VIDEO);
+    SDL_Init(SDL_INIT_AUDIO);
+    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 1, 4096);
     TTF_Init();
     *window = SDL_CreateWindow("PowerDefense", 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
     if (*window == NULL) {
@@ -49,36 +63,54 @@ int initWindowAndRenderer(SDL_Window **window) {
             return 2;
         }
     }
+
     return 0;
 }
 
 void gameLoop() {
-    bool isRunning = true;
+    bool isRunning = true; //game is running
+
+    //variables for event manager
     SDL_Event ev;
     Point mousePos = {0, 0};
 
+    //variables for real time issues
     timeval tv;
-    int enemyCount = 0;
-    int levelCount = 1;
+
+    //destination rect for map rendering
+    SDL_Rect destRect;
+    destRect.x = 0;
+    destRect.y = 0;
+    destRect.w = MAP_WIDTH * TILE_WIDTH;
+    destRect.h = MAP_HEIGHT * TILE_HEIGHT;
+
+    //textures for renderTarget
+    destTextureMap = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
+                                       MAP_WIDTH * TILE_WIDTH,
+                                       MAP_HEIGHT * TILE_HEIGHT); //TODO: don't know which pixelformat
+    destTextureGUI = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, WINDOW_WIDTH,
+                                       WINDOW_HEIGHT); //TODO: don't know which pixelformat
+
+    Mix_PlayMusic(Cache::getMusic("/audio/beat1.wav"), -1);
+
     while (isRunning) {
+        //update time variables
         gettimeofday(&tv, NULL);
         double t0 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
         double t1 = t0;
 
-        //spawn enemies
-        if (gameIsRunning && enemyCount % 50 == 0) {
-            if (enemyCount % 300 == 0) {
-                levelCount++;
-            }
-            //allGameObjects.push_back(new Enemy(map, 100, 1.0));
-            allGameObjects.push_back(std::make_unique<BasicEnemy>(map, levelCount));
-        }
-        if (gameIsRunning) {
-            enemyCount++;
-        }
-        
+
+        //clear renderTargets
+        SDL_SetRenderTarget(renderer, destTextureMap);
+        SDL_RenderClear(renderer);
+        SDL_SetRenderTarget(renderer, destTextureGUI);
+        SDL_RenderClear(renderer);
+
+        //waveHandling
+        waveManager.update();
+
+        //update and draw GameObjects
         map.draw();
-        //drawStats();
         for (int i = 0; i < allGameObjects.size(); i++) {
             auto object = allGameObjects[i].get();
             if (gameIsRunning) {
@@ -89,6 +121,7 @@ void gameLoop() {
             }
             object->draw();
         }
+
         //clean up dead objects
         for (auto it = allGameObjects.begin(); it != allGameObjects.end();) {
             if ((*it)->dead) {
@@ -98,11 +131,10 @@ void gameLoop() {
             }
         }
 
-
+        //draw GUI
         for (auto element: root->traverse()) {
             element->draw();
         }
-
         //handling events
         while (SDL_PollEvent(&ev) != 0) {
             if (ev.type == SDL_QUIT) {
@@ -113,10 +145,19 @@ void gameLoop() {
             }
         }
 
+        //render everything on screen
+        SDL_SetRenderTarget(renderer, NULL);
+        SDL_RenderCopy(renderer, destTextureGUI, NULL, NULL);
+        SDL_RenderCopy(renderer, destTextureMap, NULL, &destRect);
         SDL_RenderPresent(renderer);
-        SDL_SetRenderDrawColor(renderer, 0,0,0,0);
-        SDL_RenderClear(renderer);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+
+        //handling real time issues for constant frame rate
         gettimeofday(&tv, NULL);
+
+        if (gameIsRunning) {
+            gameLoopCounter++;
+        }
         t1 = (double) (tv.tv_sec) + 0.000001 * tv.tv_usec;
         if (t1 - t0 < 1000000.0 / FRAMES_PER_SECOND) {
             usleep((__useconds_t) (1000000.0 / FRAMES_PER_SECOND - (t1 - t0)));

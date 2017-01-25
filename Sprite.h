@@ -9,7 +9,7 @@
 class Sprite {
 public:
     Sprite();
-    Sprite(const Point pos, const int width, const int height, std::string path);
+    Sprite(const Point pos, const int width, const int height, const std::string path, const bool renderInMap);
     ~Sprite();
     void draw();
 
@@ -20,4 +20,6 @@ public:
 
     float rotation;
     float scale;
+private:
+    bool renderInMap;
 };

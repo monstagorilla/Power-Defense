@@ -6,7 +6,7 @@
 #include "config.h"
 
 Button::Button(const std::string text, const GridPoint pos, const int w, const int h, const SDL_Color color,
-               const SDL_Color colorPressed, void (*onCLick)()) : GUIObject::GUIObject() {
+               const SDL_Color colorPressed, void (*onCLick)(), const bool renderInMap) : GUIObject::GUIObject(renderInMap) {
     this->pos = GridPoint(pos.x + MAP_WIDTH, pos.y).center();
     width = w;
     height = h;
@@ -31,6 +31,11 @@ void Button::draw() {
         } else if (state == pressed) {
             foregroundColor = colorPressed;
             fontType = font1_red;
+        }
+        if(renderInMap){
+            SDL_SetRenderTarget(renderer, destTextureMap);
+        }else{
+            SDL_SetRenderTarget(renderer, destTextureGUI);
         }
         TextOutput::drawTextAndRect(text, pos.snap(), width, height, 8, fontType, foregroundColor);
     }

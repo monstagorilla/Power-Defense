@@ -9,16 +9,18 @@
 #include "BasicTower.h"
 #include "Map.h"
 #include "config.h"
+
 #include "NailGun.h"
 #include "GameObject.h"
 #include "Symbol.h"
 #include "Cache.h"
 #include "SplashTower.h"
+#include "WaveManager.h"
 
 Tower *GUIFunctions::currentTower = nullptr;
 GridPoint GUIFunctions::currentPos = GridPoint();
 TowerType GUIFunctions::currentTowerType = basicTower;
-
+bool GUIFunctions::hasStarted = false;
 
 void GUIFunctions::upgradeTower() {
     if (GUIFunctions::currentTower == nullptr) {
@@ -29,8 +31,9 @@ void GUIFunctions::upgradeTower() {
         gamestats.money -= currentTower->getStats().price;
         currentTower->sprites.clear();
         for (auto path: currentTower->getStats().paths) {
-            currentTower->sprites.push_back(Sprite(currentTower->pos, TILE_WIDTH, TILE_HEIGHT, path));
+            currentTower->sprites.push_back(Sprite(currentTower->pos, TILE_WIDTH, TILE_HEIGHT, path, true));
         }
+        Mix_PlayChannel(-1, Cache::getSound("/audio/upgrade.wav"),0);
     }
     updateContainerTowerstats();
 }
@@ -41,6 +44,18 @@ void GUIFunctions::setLabelPoint() {
 
 void GUIFunctions::setLabelMoney() {
     root->getChild(GUI::paths[path_gamestats_money])->text = std::to_string(gamestats.money);
+}
+
+void GUIFunctions::setLabelWaveCount() {
+    root->getChild(GUI::paths[path_gamestats_waveCount])->text = std::to_string(gamestats.nextWave);
+}
+
+void GUIFunctions::setLabelLevel() {
+    root->getChild(GUI::paths[path_gamestats_level])->text = std::to_string(gamestats.level);
+}
+
+void GUIFunctions::setLabelLives() {
+    root->getChild(GUI::paths[path_gamestats_lives])->text = std::to_string(gamestats.lives);
 }
 
 void GUIFunctions::inactivateMenus() {
@@ -88,12 +103,15 @@ void GUIFunctions::updateContainerTowerstats() {
     }
     root->getChild(GUI::paths[path_menus_buy_container_type])->text = type;
     if (currentTower != nullptr) {
-        root->getChild(GUI::paths[path_menus_buy_container_damage])->text = std::to_string(
-                currentTower->getStats().damage);
-        root->getChild(GUI::paths[path_menus_buy_container_reloadTime])->text = std::to_string(
-                currentTower->getStats().reloadTime);
-        root->getChild(GUI::paths[path_menus_buy_container_range])->text = std::to_string(
-                (int)currentTower->getStats().range);
+        root->getChild(GUI::paths[path_menus_buy_container_damage])->text =
+                std::to_string(currentTower->getStats().damage) + "  (->" +
+                std::to_string(currentTower->getStatsPrev().damage) + ")";
+        root->getChild(GUI::paths[path_menus_buy_container_reloadTime])->text =
+                std::to_string(currentTower->getStats().reloadTime) + "  (->" +
+                std::to_string(currentTower->getStatsPrev().reloadTime) + ")";
+        root->getChild(GUI::paths[path_menus_buy_container_range])->text =
+                std::to_string((int) currentTower->getStats().range) + "  (->" +
+                std::to_string((int) currentTower->getStatsPrev().range) + ")";
         root->getChild(GUI::paths[path_menus_buy_container_cost])->text = std::to_string(
                 currentTower->getStats().price);
     }
@@ -137,19 +155,26 @@ void GUIFunctions::endGame() {
 }
 
 void GUIFunctions::pause() {
+    if (!hasStarted) {
+        hasStarted = true;
+    }
     if (gameIsRunning) {
         gameIsRunning = false;
         root->getChild(GUI::paths[path_menus_main_pause])->text = "Continue";
+        root->getChild(GUI::paths[path_menus_main_newWave])->isActivated = false;
     } else {
         gameIsRunning = true;
         root->getChild(GUI::paths[path_menus_main_pause])->text = "Pause";
+        root->getChild(GUI::paths[path_menus_main_newWave])->isActivated = true;
     }
 }
+
 
 void GUIFunctions::onClickSymbol_BasicTower() {
     currentTowerType = basicTower;
     onClickTowerSymbol();
 }
+
 
 void GUIFunctions::onClickSymbol_NailGun() {
     currentTowerType = nailGun;
@@ -161,7 +186,6 @@ void GUIFunctions::onClickSymbol_SplashTower() {
     onClickTowerSymbol();
 }
 
-
 void GUIFunctions::onClickTowerSymbol() {
     for (auto object: root->getChild(GUI::paths[path_menus_buy_container])->children) {
         object->isActivated = true;
@@ -171,6 +195,9 @@ void GUIFunctions::onClickTowerSymbol() {
     int reloadTime = 0;
     int range = 0;
     int cost = 0;
+    int damagePrev = 0;
+    int reloadTimePrev = 0;
+    int rangePrev = 0;
     Symbol *towerPreview = (Symbol *) root->getChild(GUI::paths[path_temp_towerpreview]);
     towerPreview->sprites.clear();
     std::vector<std::string> towerSprites;
@@ -178,32 +205,53 @@ void GUIFunctions::onClickTowerSymbol() {
     switch (currentTowerType) {
         case basicTower:
             type = "BASIC TOWER";
-            damage = BasicTower::stat[0].damage;
-            reloadTime = BasicTower::stat[0].reloadTime;
-            range = (int) BasicTower::stat[0].range;
-            cost = BasicTower::stat[0].price;
+            if (BasicTower::stat.size() >= 2) {
+                damage = BasicTower::stat[0].damage;
+                damagePrev = BasicTower::stat[1].damage;
+                reloadTime = BasicTower::stat[0].reloadTime;
+                reloadTimePrev = BasicTower::stat[1].reloadTime;
+                range = (int) BasicTower::stat[0].range;
+                rangePrev = (int) BasicTower::stat[1].range;
+                cost = BasicTower::stat[0].price;
+            } else {
+                std::cout << "too small stat vector to display stats!" << std::endl;
+            }
             for (auto element: BasicTower::stat[0].paths) {
-                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element));
+                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element, true));
             }
             break;
         case nailGun:
             type = "NAIL GUN";
-            damage = NailGun::stat[0].damage;
-            reloadTime = NailGun::stat[0].reloadTime;
-            range = (int) NailGun::stat[0].range;
-            cost = NailGun::stat[0].price;
+            if (NailGun::stat.size() >= 2) {
+                damage = NailGun::stat[0].damage;
+                damagePrev = NailGun::stat[1].damage;
+                reloadTime = NailGun::stat[0].reloadTime;
+                reloadTimePrev = NailGun::stat[1].reloadTime;
+                range = (int) NailGun::stat[0].range;
+                rangePrev = (int) NailGun::stat[1].range;
+                cost = NailGun::stat[0].price;
+            } else {
+                std::cout << "too small stat vector to display stats!" << std::endl;
+            }
             for (auto element: NailGun::stat[0].paths) {
-                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element));
+                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element, true));
             }
             break;
         case splashTower:
             type = "SPLASH TOWER";
-            damage = SplashTower::stat[0].damage;
-            reloadTime = SplashTower::stat[0].reloadTime;
-            range = (int) SplashTower::stat[0].range;
-            cost = SplashTower::stat[0].price;
+            if (SplashTower::stat.size() >= 2) {
+                damage = SplashTower::stat[0].damage;
+                damagePrev = SplashTower::stat[1].damage;
+                reloadTime = SplashTower::stat[0].reloadTime;
+                reloadTimePrev = SplashTower::stat[1].reloadTime;
+                range = (int) SplashTower::stat[0].range;
+                rangePrev = (int) SplashTower::stat[1].range;
+                cost = SplashTower::stat[0].price;
+            } else {
+                std::cout << "too small stat vector to display stats!" << std::endl;
+            }
             for (auto element: SplashTower::stat[0].paths) {
-                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element));
+                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element, true));
             }
             break;
     }
@@ -211,14 +259,16 @@ void GUIFunctions::onClickTowerSymbol() {
     towerPreview->pos.y = currentPos.center().y;
 
     root->getChild(GUI::paths[path_menus_buy_container_type])->text = type;
-    root->getChild(GUI::paths[path_menus_buy_container_damage])->text = std::to_string(damage);
-    root->getChild(GUI::paths[path_menus_buy_container_reloadTime])->text = std::to_string(reloadTime);
-    root->getChild(GUI::paths[path_menus_buy_container_range])->text = std::to_string(range);
+    root->getChild(GUI::paths[path_menus_buy_container_damage])->text =
+            std::to_string(damage) + "  (->" + std::to_string(damagePrev) + ")";
+    root->getChild(GUI::paths[path_menus_buy_container_reloadTime])->text =
+            std::to_string(reloadTime) + "  (->" + std::to_string(reloadTimePrev) + ")";
+    root->getChild(GUI::paths[path_menus_buy_container_range])->text =
+            std::to_string(range) + "  (->" + std::to_string(rangePrev) + ")";
     root->getChild(GUI::paths[path_menus_buy_container_cost])->text = std::to_string(cost);
     root->getChild(GUI::paths[path_menus_buy_apply])->isActivated = true;
     root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = true;
 }
-
 
 void GUIFunctions::onClickBuyMenu_Apply() {
     for (int i = 0; i < allGameObjects.size(); i++) {
@@ -271,10 +321,11 @@ void GUIFunctions::onClickBuyMenu_Apply() {
         for (auto object: root->getChild(GUI::paths[path_menus_tower])->children) {
             object->isActivated = true;
         }
-        for(auto element: root->getChild(GUI::paths[path_menus_buy_container])->children){
+        for (auto element: root->getChild(GUI::paths[path_menus_buy_container])->children) {
             element->isActivated = true;
         }
         root->getChild(GUI::paths[path_menus_buy_container])->isActivated = true;
+        Mix_PlayChannel(-1, Cache::getSound("/audio/upgrade.wav"),0);
     }
 }
 
@@ -282,5 +333,29 @@ void GUIFunctions::onClickBuyMenu_Cancel() {
     currentTowerType = basicTower;
     inactivateMenus();
     root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = false;
+}
+
+void GUIFunctions::newWave() {
+    waveManager.addWave();
+}
+
+void GUIFunctions::onClickMusicMute() {
+    if (Cache::isMusicMuted) {
+        root->getChild(GUI::paths[path_menus_main_muteMusic])->text = "Music Off";
+        Mix_VolumeMusic(64);
+    }else{
+        root->getChild(GUI::paths[path_menus_main_muteMusic])->text = "Music On";
+        Mix_VolumeMusic(0);
+    }
+    Cache::isMusicMuted = !Cache::isMusicMuted;
+}
+
+void GUIFunctions::onCLickSoundsMute() {
+    if (Cache::isSoundMuted) {
+        root->getChild(GUI::paths[path_menus_main_muteSounds])->text = "Fx Off";
+    }else{
+        root->getChild(GUI::paths[path_menus_main_muteSounds])->text = "Fx On";
+    }
+    Cache::isSoundMuted = !Cache::isSoundMuted;
 }
 

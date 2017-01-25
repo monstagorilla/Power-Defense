@@ -1,10 +1,12 @@
 #include <iostream>
+#include <SDL2/SDL_mixer.h>
 
 #include "Point.h"
 #include "GUIObject.h"
 #include "globals.h"
+#include "Cache.h"
 
-GUIObject::GUIObject() {
+GUIObject::GUIObject(const bool renderInMap) {
     children = std::vector<GUIObject *>();
     state = unfocused;
     isActivated = false;
@@ -14,6 +16,7 @@ GUIObject::GUIObject() {
     text = "";
     color = {0, 0, 0, 0};
     onClick = nullptr;
+    this->renderInMap = renderInMap;
 }
 
 GUIObject::~GUIObject() {
@@ -28,10 +31,12 @@ void GUIObject::update() {
             if (mouseRelease) {
                 if (onClick != nullptr) {
                     onClick();
+                    Mix_PlayChannel(-1, Cache::getSound("/audio/mouse_up.wav"),0);
                 }
                 state = focused;
             } else if (isCLicked) {
                 state = pressed;
+                Mix_PlayChannel(-1, Cache::getSound("/audio/mouse_down.wav"),0);
             } else {
                 state = focused;
             }

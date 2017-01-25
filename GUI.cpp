@@ -12,9 +12,10 @@
 #include "Symbol.h"
 #include "config.h"
 #include "Container.h"
+#include "gamestats.h"
 
-std::vector<std::string> GUI::paths = {"a", "aa", "aaa", "ab", "aba", "abaa", "abac", "abae", "abag", "abai", "ace",
-                                       "ac", "b","bb", "bc", "c", "d", "da"};
+std::vector<std::string> GUI::paths = {"a", "aa", "aaa","aab","aac", "aad", "ab", "aba", "abaa", "abac", "abae", "abag", "abai", "ace",
+                                       "ac", "b","bb", "bc","bd","be","bf", "c", "d", "da"};
 
 void GUI::initGUI() {
     root->children.push_back(new GUIObject()); //menus
@@ -29,6 +30,9 @@ void GUI::initGUI() {
 
     //MAINMENU
     addGUIElement(path_menus_main, new Button("Start", {10, 0}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::pause));
+    addGUIElement(path_menus_main, new Button("New Wave", {10, 1}, 5, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::newWave));
+    addGUIElement(path_menus_main, new Button("Fx Off", {10, 2}, 2, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onCLickSoundsMute));
+    addGUIElement(path_menus_main, new Button("Music Off", {12, 2}, 3, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickMusicMute));
 
     //BUYMENU
     addGUIElement(path_menus_buy, new Label("SHOP", {1, 0}, 5, 1, COLOR_GREEN, nullptr));
@@ -44,15 +48,15 @@ void GUI::initGUI() {
                              GUIFunctions::onClickSymbol_SplashTower));
 
     //ContainerTowerStats
-    addGUIElement(path_menus_buy_container, new Label("", {1, 3}, 2, 1, COLOR_WHITE, nullptr)); //title
+    addGUIElement(path_menus_buy_container, new Label("", {1, 3}, 4, 1, COLOR_WHITE, nullptr)); //title
     addGUIElement(path_menus_buy_container, new Label("Damage: ", {1, 4}, 5, 1, COLOR_WHITE, nullptr));
-    addGUIElement(path_menus_buy_container, new Label("", {6, 4}, 2, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("", {5, 4}, 4, 1, COLOR_WHITE, nullptr));
     addGUIElement(path_menus_buy_container, new Label("ReloadTime: ", {1, 5}, 5, 1, COLOR_WHITE, nullptr));
-    addGUIElement(path_menus_buy_container, new Label("", {6, 5}, 2, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("", {5, 5}, 4, 1, COLOR_WHITE, nullptr));
     addGUIElement(path_menus_buy_container, new Label("Range: ", {1, 6}, 5, 1, COLOR_WHITE, nullptr));
-    addGUIElement(path_menus_buy_container, new Label("", {6, 6}, 2, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("", {5, 6}, 4, 1, COLOR_WHITE, nullptr));
     addGUIElement(path_menus_buy_container, new Label("Cost: ", {1, 7}, 5, 1, COLOR_WHITE, nullptr));
-    addGUIElement(path_menus_buy_container, new Label("", {6, 7}, 2, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_menus_buy_container, new Label("", {5, 7}, 4, 1, COLOR_WHITE, nullptr));
 
     addGUIElement(path_menus_buy,
                   new Button("OK", {5, 9}, 3, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickBuyMenu_Apply));
@@ -60,17 +64,24 @@ void GUI::initGUI() {
                   new Button("Cancel", {1, 9}, 3, 1, COLOR_GREEN, COLOR_RED, GUIFunctions::onClickBuyMenu_Cancel));
 
     //TEMP
-    addGUIElement(path_temp, new Symbol(true));
+    addGUIElement(path_temp, new Symbol(true, true)); //TODO: needing different solution because of rendering Symbols not into mapTexture
 
     //TOWERMENU
     addGUIElement(path_menus_tower, new Button("Upgrade", {1, 9}, 5, 1, COLOR_GREEN, COLOR_RED,
                                                GUIFunctions::upgradeTower));
 
     //GAMESTATS
-    addGUIElement(path_gamestats,
-                  new Symbol(std::vector<std::string>{"/assets/Gold.png"}, {1 - MAP_WIDTH, MAP_HEIGHT + 1}, nullptr));
-    addGUIElement(path_gamestats, new Label("", {2 - MAP_WIDTH, MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelMoney));
-    addGUIElement(path_gamestats, new Label("", {8 - MAP_WIDTH, MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelPoint));
+    addGUIElement(path_gamestats, new Symbol(std::vector<std::string>{"/assets/Gold.png"}, {-MAP_WIDTH, MAP_HEIGHT + 1}, nullptr));
+    addGUIElement(path_gamestats, new Label("", {1 - MAP_WIDTH, MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelMoney));
+    addGUIElement(path_gamestats, new Label("", {4 - MAP_WIDTH, MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelPoint));
+    addGUIElement(path_gamestats, new Label("", {12 - MAP_WIDTH , MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelWaveCount));
+    addGUIElement(path_gamestats, new Label("", {8 - MAP_WIDTH,MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelLevel));
+    addGUIElement(path_gamestats, new Label(std::to_string(gamestats.lives), {15 - MAP_WIDTH,MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, GUIFunctions::setLabelLives));
+    addGUIElement(path_gamestats, new Symbol(std::vector<std::string>{"/assets/Doodads.png"}, {3 - MAP_WIDTH, MAP_HEIGHT + 1}, nullptr));
+    addGUIElement(path_gamestats, new Label("Next Wave: ", {9 - MAP_WIDTH ,MAP_HEIGHT+  1}, 5, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_gamestats, new Label("Wave: ", {6 - MAP_WIDTH, MAP_HEIGHT + 1}, 5, 1, COLOR_WHITE, nullptr));
+    addGUIElement(path_gamestats, new Symbol(std::vector<std::string>{"/assets/heart.png"}, {14 - MAP_WIDTH, MAP_HEIGHT + 1}, nullptr));
+
 
     //activate MapOverlays and MainMenu at the beginning of the Game
     for (int i = 0; i < MAP_WIDTH; i++) {
@@ -85,6 +96,7 @@ void GUI::initGUI() {
     for (auto element: root->getChild(paths[path_menus_main])->traverse()) {
         element->isActivated = true;
     }
+    root->getChild(paths[path_menus_main_newWave])->isActivated = false;
     //activate Stats
     for (auto element: root->getChild(paths[path_gamestats])->traverse()) {
         element->isActivated = true;

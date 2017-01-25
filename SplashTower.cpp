@@ -1,16 +1,18 @@
+#include <SDL2/SDL_mixer.h>
 #include "SplashTower.h"
 #include "Point.h"
 #include "globals.h"
 #include "Enemy.h"
 #include "util.h"
 #include "Grenade.h"
+#include "Cache.h"
 
 const std::vector<TowerStats> SplashTower::stat =
         //reloadTime, range, price, damage path
-        {{20, 100, 100, 10, {"/assets/TowerBase.png", "/assets/GrenadeTurret.png"}},
-         {20, 120, 50,  20, {"/assets/TowerBase.png", "/assets/GrenadeTurret1.png"}},
-         {20, 150, 75,  30, {"/assets/TowerBase.png", "/assets/GrenadeTurret2.png"}},
-         {15, 200, 100, 40, {"/assets/TowerBase.png", "/assets/GrenadeTurret3.png"}}};
+        {{50, 100, 100, 20, {"/assets/TowerBase.png", "/assets/GrenadeTurret.png"}},
+         {50, 120, 50,  30, {"/assets/TowerBase.png", "/assets/GrenadeTurret1.png"}},
+         {50, 150, 75,  40, {"/assets/TowerBase.png", "/assets/GrenadeTurret2.png"}},
+         {40, 200, 100, 60, {"/assets/TowerBase.png", "/assets/GrenadeTurret3.png"}}};
 
 SplashTower::SplashTower(const GridPoint pos) : Tower::Tower(pos, stat[0].paths) {
 
@@ -46,10 +48,19 @@ void SplashTower::update() {
 
 void SplashTower::shoot(Enemy *target, const float angle) {
     allGameObjects.push_back(std::make_unique<Grenade>(pos, this, target, getStats().damage, angle - 90.0f, 6.0));
+    Mix_PlayChannel(-1, Cache::getSound("/audio/bam.wav"), 0);
 }
 
 TowerStats SplashTower::getStats() {
     return stat[currentUpgrade];
+}
+
+TowerStats SplashTower::getStatsPrev() {
+    if(currentUpgrade + 1 < stat.size()) {
+        return stat[currentUpgrade + 1];
+    }else{
+        return TowerStats{};
+    }
 }
 
 int SplashTower::getMaxUpgrade() {

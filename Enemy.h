@@ -32,13 +32,14 @@ public:
     int level;
 
 protected:
+    void die();
+
     Enemy(Map &map,const int level, const int health,const float speed, const int loot, const std::string spritePath);
+    Map &map;
+    std::vector<Point>::size_type pathIndex;
 
 private:
     EnemyStats stat;
-    int health;
-    std::vector<Point>::size_type pathIndex;
-    Map &map;
 
-    void die();
+    int health;
 };

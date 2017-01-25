@@ -7,9 +7,7 @@
 #include "Graphics.h"
 #include "Tower.h"
 
-#include <iostream>
-
-MapOverlay::MapOverlay(const Point pos, const int width, const int height, void(*onClick)()) : GUIObject::GUIObject() {
+MapOverlay::MapOverlay(const Point pos, const int width, const int height, void(*onClick)()) : GUIObject::GUIObject(true) { //argument in GUIObject("true") because always rendering MapOverlay into Map
     this->pos = pos;
     this->width = width;
     this->height = height;
@@ -21,6 +19,11 @@ MapOverlay::~MapOverlay() {
 }
 
 void MapOverlay::draw() {
+    if(renderInMap){
+        SDL_SetRenderTarget(renderer, destTextureMap);
+    }else{
+        SDL_SetRenderTarget(renderer, destTextureGUI);
+    }
     if (state == focused) {
         SDL_Rect rect;
         DisplayPoint corner = pos.snap().upperLeft();
@@ -28,10 +31,13 @@ void MapOverlay::draw() {
         rect.y = corner.y;
         rect.w = TILE_WIDTH;
         rect.h = TILE_HEIGHT;
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderDrawRect(renderer, &rect);
     }
     if (GUIFunctions::currentPos == pos.snap() && GUIFunctions::currentTower != nullptr) {
-        Graphics::drawTransparentCircle(DisplayPoint(pos.displayPoint().x + (int)(TILE_WIDTH/2.0), pos.displayPoint().y + (int)(TILE_HEIGHT/2.0)), (int) GUIFunctions::currentTower->getStats().range);
+        Graphics::drawTransparentCircle(DisplayPoint(pos.displayPoint().x + (int) (TILE_WIDTH / 2.0),
+                                                     pos.displayPoint().y + (int) (TILE_HEIGHT / 2.0)),
+                                        (int) GUIFunctions::currentTower->getStats().range);
     }
 }
 
@@ -47,5 +53,3 @@ void MapOverlay::update() {
         }
     }
 }
-
-
