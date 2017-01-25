@@ -7,11 +7,11 @@
 #include "Map.h"
 #include "globals.h"
 #include "config.h"
+#include "Cache.h"
 
 Map::Map() {
     tmxmap = nullptr;
-    terrain = std::vector <std::vector<tiletype >> ();
-    sprite = Sprite();
+    terrain = std::vector<std::vector<tiletype >>();
     isFocused = false;
     focusedTile = GridPoint();
     path = std::vector<Point>();
@@ -33,10 +33,19 @@ Map::Map(const std::string &filename) {
     terrain = std::vector<std::vector<tiletype >>(tmxmap->GetWidth(),
                                                   std::vector<tiletype>(tmxmap->GetHeight(), Ground));
     auto tileLayer = tmxmap->GetTileLayer(0);
+    SDL_Rect srcRect;
+    srcRect.w = TILE_WIDTH;
+    srcRect.h = TILE_HEIGHT;
+    SDL_Rect destRect;
+    destRect.w = TILE_WIDTH;
+    destRect.h = TILE_HEIGHT;
+    SDL_Texture *srcTexture = Cache::getTexture("/assets/GreenTiles.png");
+    destTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBX8888, SDL_TEXTUREACCESS_TARGET,
+                                    TILE_WIDTH * MAP_WIDTH, TILE_HEIGHT * MAP_HEIGHT);
+    SDL_SetRenderTarget(renderer, destTexture);
     for (int y = 0; y < tmxmap->GetHeight(); y++) {
         for (int x = 0; x < tmxmap->GetWidth(); x++) {
-            unsigned tileId = tileLayer->GetTileId(x, y);
-            switch (tileId) {
+            switch (tileLayer->GetTileId(x, y)) {
                 case 12:
                 case 11:
                 case 10:
@@ -48,11 +57,24 @@ Map::Map(const std::string &filename) {
                 default:
                     terrain[x][y] = Wall;
             }
+            srcRect.x = tileLayer->GetTileId(x, y) % 5 * TILE_WIDTH;
+            srcRect.y = (int) (tileLayer->GetTileId(x, y) / 5) * TILE_HEIGHT;
+            destRect.x = (int) (((double) x - 0.5) * TILE_WIDTH);
+            destRect.y = (int) (((double) y - 0.5) * TILE_HEIGHT);
+            SDL_RenderCopyEx(renderer, srcTexture, &srcRect, &destRect, 0, NULL, SDL_FLIP_NONE);
         }
     }
-    sprite = Sprite({MAP_WIDTH * TILE_WIDTH / 2, MAP_HEIGHT*TILE_HEIGHT / 2}, TILE_WIDTH * (MAP_WIDTH + 1),
-                    TILE_HEIGHT * (MAP_HEIGHT + 1),
-                    "/assets/map1.png", true);
+    destRect.x = 10 * TILE_WIDTH;
+    destRect.y = 5 * TILE_HEIGHT;
+    SDL_RenderCopyEx(renderer, Cache::getTexture("/assets/Doodads.png"), NULL, &destRect, 0, NULL, SDL_FLIP_NONE);
+    sprite = Sprite({0, 0}, TILE_WIDTH * MAP_WIDTH,
+                    TILE_HEIGHT * MAP_HEIGHT, destTexture, true);
+
+    SDL_RenderPresent(renderer);
+    sprite = Sprite({TILE_WIDTH * MAP_WIDTH / 2, TILE_HEIGHT * MAP_HEIGHT / 2}, TILE_WIDTH * MAP_WIDTH,
+                    TILE_HEIGHT * MAP_HEIGHT, destTexture, true);
+
+    SDL_DestroyTexture(srcTexture);
     isFocused = false;
     focusedTile = {0, 0};
 }

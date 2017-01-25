@@ -25,6 +25,16 @@ Sprite::Sprite(const Point pos, const int width, const int height, const std::st
     this->renderInMap = renderInMap;
 }
 
+Sprite::Sprite(const Point pos, const int width, const int height, SDL_Texture* texture, const bool renderInMap) {
+    this->pos = Point(pos.x, pos.y);
+    this->width = width;
+    this->height = height;
+    rotation = 0;
+    scale = 0;
+    this->texture = texture;
+    this->renderInMap = renderInMap;
+}
+
 Sprite::~Sprite() {
 
 }

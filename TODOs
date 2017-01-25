@@ -1,17 +1,17 @@
 TODOS:
 -centered text Buttons
 -print single tiles
--change title in buy menu/ upgrade menu when clicked on tower
 -complete GUI
 -using voidptr for updating labels instead of shit
 -splash tower granade shuld not die when enemy dies
--more gamestats like e.g. wavecount 
 -redesign GUI implementation
 -perhaps auto generate new wave types
 -fix bug: automatically click on activated upgrade button after buy
 -smooth transition nextWaveCounter reset
 -sell button
-
+-dynamic doodad sprite
+-logic and framerate?
+-tiled path offset bug
 -map with different ground height that has influence on tower range (SCUURR) #caf (#creativeasfuck) ;)
 -bug: burr sound if enemy reaches end path
 

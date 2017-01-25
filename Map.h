@@ -14,30 +14,26 @@ class Point;
 class Tower;
 
 #include "Sprite.h"
-class Map {
-private:
-    Tmx::Map *tmxmap;
-    std::vector<std::vector<tiletype>> terrain;
-    Sprite sprite;
 
+class Map {
 public:
     Map();
-
     Map(const std::string &filename);
+    virtual ~Map();
 
-    ~Map();
+    int getHeight();
+    int getWidth();
+    bool isGround(GridPoint p);
+    Tower *getTowerAt(GridPoint p);
+    void draw();
 
     bool isFocused;
     GridPoint focusedTile;
     std::vector<Point> path;
 
-    int getHeight();
-
-    int getWidth();
-
-    bool isGround(GridPoint p);
-
-    Tower *getTowerAt(GridPoint p);
-
-    void draw();
+private:
+    Tmx::Map *tmxmap;
+    std::vector<std::vector<tiletype>> terrain;
+    Sprite sprite;
+    SDL_Texture* destTexture;
 };

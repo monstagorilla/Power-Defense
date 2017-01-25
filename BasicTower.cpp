@@ -50,6 +50,9 @@ void BasicTower::update() {
             shoot(nearest, rotation);
             cooldown = getStats().reloadTime;
         }
+    }else{
+        rotation++;
+        sprites[1].rotation = rotation;
     }
     cooldown--;
 }

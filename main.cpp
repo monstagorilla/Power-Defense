@@ -172,7 +172,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     GUI::initGUI();
-    map = Map("/assets/map1.tmx");
+    map = Map("/assets/map2.tmx");
 
     gameLoop();
     SDL_DestroyWindow(window);
