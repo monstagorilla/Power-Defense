@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Point.h"
+#include "enumGUI.h"
 
 enum state {
     unfocused = 0,
@@ -14,14 +15,15 @@ enum state {
 
 class GUIObject{
 public:
-	GUIObject(const bool renderInMap = false);
+	GUIObject(const eGUI identifier, const bool renderInMap = false);
 	virtual ~GUIObject();
 
     virtual void update();
     virtual void draw();
-    GUIObject *getChild(const std::string path);
+    GUIObject *getChild(const eGUI identifier);
     std::vector<GUIObject*> traverse();
 
+	eGUI identifier;
 	Point pos;
 	int width;
 	int height;
@@ -33,7 +35,6 @@ public:
     void (*onClick)();
     std::vector<GUIObject *> children;
 
-    bool contains(GridPoint p);
 protected:
 	bool renderInMap;
 };

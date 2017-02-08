@@ -39,30 +39,30 @@ void GUIFunctions::upgradeTower() {
 }
 
 void GUIFunctions::setLabelPoint() {
-    root->getChild(GUI::paths[path_gamestats_points])->text = std::to_string(gamestats.points);
+    root->getChild(lblPoint)->text = std::to_string(gamestats.points);
 }
 
 void GUIFunctions::setLabelMoney() {
-    root->getChild(GUI::paths[path_gamestats_money])->text = std::to_string(gamestats.money);
+    root->getChild(lblMoney)->text = std::to_string(gamestats.money);
 }
 
 void GUIFunctions::setLabelWaveCount() {
-    root->getChild(GUI::paths[path_gamestats_waveCount])->text = std::to_string(gamestats.nextWave);
+    root->getChild(lblWaveCount)->text = std::to_string(gamestats.nextWave);
 }
 
 void GUIFunctions::setLabelLevel() {
-    root->getChild(GUI::paths[path_gamestats_level])->text = std::to_string(gamestats.level);
+    root->getChild(lblLevel)->text = std::to_string(gamestats.level);
 }
 
 void GUIFunctions::setLabelLives() {
-    root->getChild(GUI::paths[path_gamestats_lives])->text = std::to_string(gamestats.lives);
+    root->getChild(lblLives)->text = std::to_string(gamestats.lives);
 }
 
 void GUIFunctions::inactivateMenus() {
-    for (auto element: root->getChild(GUI::paths[path_menus_buy])->traverse()) {
+    for (auto element: root->getChild(menus_buy)->traverse()) {
         element->isActivated = false;
     }
-    for (auto element: root->getChild(GUI::paths[path_menus_tower])->traverse()) {
+    for (auto element: root->getChild(menus_tower)->traverse()) {
         element->isActivated = false;
     }
 }
@@ -70,14 +70,14 @@ void GUIFunctions::inactivateMenus() {
 void GUIFunctions::onClickTower() {
     inactivateMenus();
     currentPos = mousePos.snap();
-    for (auto element: root->getChild(GUI::paths[path_menus_tower])->children) {
+    for (auto element: root->getChild(menus_tower)->children) {
         element->isActivated = true;
     }
 
-    for (auto element : root->getChild(GUI::paths[path_menus_buy_container])->children) {
+    for (auto element : root->getChild(menus_buy_container)->children) {
         element->isActivated = true;
     }
-    root->getChild(GUI::paths[path_menus_buy_container])->isActivated = true;
+    root->getChild(menus_buy_container)->isActivated = true;
 
     for (int i = 0; i < allGameObjects.size(); i++) {
         if (allGameObjects[i]->ID == 2 && allGameObjects[i]->pos.snap() == currentPos) {
@@ -101,18 +101,18 @@ void GUIFunctions::updateContainerTowerstats() {
             type = "SPLASH TOWER";
             break;
     }
-    root->getChild(GUI::paths[path_menus_buy_container_type])->text = type;
+    root->getChild(lblBuyTitleMain)->text = type;
     if (currentTower != nullptr) {
-        root->getChild(GUI::paths[path_menus_buy_container_damage])->text =
+        root->getChild(lblBuyDamage)->text =
                 std::to_string(currentTower->getStats().damage) + "  (->" +
                 std::to_string(currentTower->getStatsPrev().damage) + ")";
-        root->getChild(GUI::paths[path_menus_buy_container_reloadTime])->text =
+        root->getChild(lblBuyReloadTime)->text =
                 std::to_string(currentTower->getStats().reloadTime) + "  (->" +
                 std::to_string(currentTower->getStatsPrev().reloadTime) + ")";
-        root->getChild(GUI::paths[path_menus_buy_container_range])->text =
+        root->getChild(lblBuyRange)->text =
                 std::to_string((int) currentTower->getStats().range) + "  (->" +
                 std::to_string((int) currentTower->getStatsPrev().range) + ")";
-        root->getChild(GUI::paths[path_menus_buy_container_cost])->text = std::to_string(
+        root->getChild(lblBuyCost)->text = std::to_string(
                 currentTower->getStats().price);
     }
 }
@@ -122,24 +122,16 @@ void GUIFunctions::onClickGround() {
         return;
     }
     inactivateMenus();
-    for (auto element: root->getChild(GUI::paths[path_menus_buy])->children) {
+    for (auto element: root->getChild(menus_buy)->children) {
         element->isActivated = true;
     }
-    root->getChild(GUI::paths[path_menus_buy_apply])->isActivated = false;
+    root->getChild(buttonBuyOK)->isActivated = false;
     currentPos = mousePos.snap();
-    //currentTowerType = basicTower;
     currentTower = nullptr;
-    /*
-    root->getChild(GUI::paths[path_menus_buy_container_type])->text = "";
-    root->getChild(GUI::paths[path_menus_buy_container_damage])->text = "";
-    root->getChild(GUI::paths[path_menus_buy_container_reloadTime])->text = "";
-    root->getChild(GUI::paths[path_menus_buy_container_range])->text = "";
-    root->getChild(GUI::paths[path_menus_buy_container_cost])->text = "";
-     */
-    for (auto object: root->getChild(GUI::paths[path_menus_buy_container])->children) {
+    for (auto object: root->getChild(menus_buy_container)->children) {
         object->isActivated = false;
     }
-    root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = false;
+    root->getChild(symbolTemp)->isActivated = false;
 }
 
 void GUIFunctions::sellTower() {
@@ -162,12 +154,12 @@ void GUIFunctions::pause() {
     }
     if (gameIsRunning) {
         gameIsRunning = false;
-        root->getChild(GUI::paths[path_menus_main_pause])->text = "Continue";
-        root->getChild(GUI::paths[path_menus_main_newWave])->isActivated = false;
+        root->getChild(buttonStart)->text = "Continue";
+        root->getChild(buttonNewWave)->isActivated = false;
     } else {
         gameIsRunning = true;
-        root->getChild(GUI::paths[path_menus_main_pause])->text = "Pause";
-        root->getChild(GUI::paths[path_menus_main_newWave])->isActivated = true;
+        root->getChild(buttonStart)->text = "Pause";
+        root->getChild(buttonNewWave)->isActivated = true;
     }
 }
 
@@ -189,7 +181,7 @@ void GUIFunctions::onClickSymbol_SplashTower() {
 }
 
 void GUIFunctions::onClickTowerSymbol() {
-    for (auto object: root->getChild(GUI::paths[path_menus_buy_container])->children) {
+    for (auto object: root->getChild(menus_buy_container)->children) {
         object->isActivated = true;
     }
     std::string type = "";
@@ -200,7 +192,7 @@ void GUIFunctions::onClickTowerSymbol() {
     int damagePrev = 0;
     int reloadTimePrev = 0;
     int rangePrev = 0;
-    Symbol *towerPreview = (Symbol *) root->getChild(GUI::paths[path_temp_towerpreview]);
+    Symbol *towerPreview = (Symbol *) root->getChild(symbolTemp);
     towerPreview->sprites.clear();
     std::vector<std::string> towerSprites;
 
@@ -260,16 +252,16 @@ void GUIFunctions::onClickTowerSymbol() {
     towerPreview->pos.x = currentPos.center().x;
     towerPreview->pos.y = currentPos.center().y;
 
-    root->getChild(GUI::paths[path_menus_buy_container_type])->text = type;
-    root->getChild(GUI::paths[path_menus_buy_container_damage])->text =
+    root->getChild(lblBuyTitleMain)->text = type;
+    root->getChild(lblBuyDamage)->text =
             std::to_string(damage) + "  (->" + std::to_string(damagePrev) + ")";
-    root->getChild(GUI::paths[path_menus_buy_container_reloadTime])->text =
+    root->getChild(lblBuyReloadTime)->text =
             std::to_string(reloadTime) + "  (->" + std::to_string(reloadTimePrev) + ")";
-    root->getChild(GUI::paths[path_menus_buy_container_range])->text =
+    root->getChild(lblBuyRange)->text =
             std::to_string(range) + "  (->" + std::to_string(rangePrev) + ")";
-    root->getChild(GUI::paths[path_menus_buy_container_cost])->text = std::to_string(cost);
-    root->getChild(GUI::paths[path_menus_buy_apply])->isActivated = true;
-    root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = true;
+    root->getChild(lblBuyCost)->text = std::to_string(cost);
+    root->getChild(buttonBuyOK)->isActivated = true;
+    root->getChild(symbolTemp)->isActivated = true;
 }
 
 void GUIFunctions::onClickBuyMenu_Apply() {
@@ -306,27 +298,27 @@ void GUIFunctions::onClickBuyMenu_Apply() {
                 break;
         }
         gamestats.money -= price;
-        root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = false;
+        root->getChild(symbolTemp)->isActivated = false;
         for (int i = 0; i < allGameObjects.size(); i++) {
             if (allGameObjects[i]->ID == 2 && allGameObjects[i]->pos.snap() == currentPos) {
                 currentTower = (Tower *) allGameObjects[i].get();
                 break;
             }
         }
-        for (auto element: root->getChild(GUI::paths[path_mapOverlays])->children) {
+        for (auto element: root->getChild(mapOverlays)->children) {
             if (element->pos.snap() == currentPos) {
                 element->onClick = onClickTower;
                 inactivateMenus();
                 break;
             }
         }
-        for (auto object: root->getChild(GUI::paths[path_menus_tower])->children) {
+        for (auto object: root->getChild(menus_tower)->children) {
             object->isActivated = true;
         }
-        for (auto element: root->getChild(GUI::paths[path_menus_buy_container])->children) {
+        for (auto element: root->getChild(menus_buy_container)->children) {
             element->isActivated = true;
         }
-        root->getChild(GUI::paths[path_menus_buy_container])->isActivated = true;
+        root->getChild(menus_buy_container)->isActivated = true;
         Mix_PlayChannel(-1, Cache::getSound("/audio/upgrade.wav"),0);
     }
 }
@@ -334,7 +326,7 @@ void GUIFunctions::onClickBuyMenu_Apply() {
 void GUIFunctions::onClickBuyMenu_Cancel() {
     currentTowerType = basicTower;
     inactivateMenus();
-    root->getChild(GUI::paths[path_temp_towerpreview])->isActivated = false;
+    root->getChild(symbolTemp)->isActivated = false;
 }
 
 void GUIFunctions::newWave() {
@@ -343,10 +335,10 @@ void GUIFunctions::newWave() {
 
 void GUIFunctions::onClickMusicMute() {
     if (Cache::isMusicMuted) {
-        root->getChild(GUI::paths[path_menus_main_muteMusic])->text = "Music Off";
+        root->getChild(buttonMusic)->text = "Music Off";
         Mix_VolumeMusic(64);
     }else{
-        root->getChild(GUI::paths[path_menus_main_muteMusic])->text = "Music On";
+        root->getChild(buttonMusic)->text = "Music On";
         Mix_VolumeMusic(0);
     }
     Cache::isMusicMuted = !Cache::isMusicMuted;
@@ -354,10 +346,9 @@ void GUIFunctions::onClickMusicMute() {
 
 void GUIFunctions::onCLickSoundsMute() {
     if (Cache::isSoundMuted) {
-        root->getChild(GUI::paths[path_menus_main_muteSounds])->text = "Fx Off";
+        root->getChild(buttonFX)->text = "Fx Off";
     }else{
-        root->getChild(GUI::paths[path_menus_main_muteSounds])->text = "Fx On";
+        root->getChild(buttonFX)->text = "Fx On";
     }
     Cache::isSoundMuted = !Cache::isSoundMuted;
 }
-

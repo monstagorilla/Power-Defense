@@ -6,11 +6,12 @@
 #include "globals.h"
 #include "Cache.h"
 
-GUIObject::GUIObject(const bool renderInMap) {
+GUIObject::GUIObject(const eGUI identifier, const bool renderInMap) {
+    this->identifier = identifier;
     children = std::vector<GUIObject *>();
     state = unfocused;
     isActivated = false;
-    pos = Point(0,0);
+    pos = Point(0, 0);
     width = 1;
     height = 1;
     text = "";
@@ -31,12 +32,12 @@ void GUIObject::update() {
             if (mouseRelease) {
                 if (onClick != nullptr) {
                     onClick();
-                    Mix_PlayChannel(-1, Cache::getSound("/audio/mouse_up.wav"),0);
+                    Mix_PlayChannel(-1, Cache::getSound("/audio/mouse_up.wav"), 0);
                 }
                 state = focused;
             } else if (isCLicked) {
                 state = pressed;
-                Mix_PlayChannel(-1, Cache::getSound("/audio/mouse_down.wav"),0);
+                Mix_PlayChannel(-1, Cache::getSound("/audio/mouse_down.wav"), 0);
             } else {
                 state = focused;
             }
@@ -48,17 +49,19 @@ void GUIObject::draw() {
 
 }
 
-bool GUIObject::contains(GridPoint p) {
-    return p.x >= this->pos.snap().x && p.x < this->pos.snap().x + this->width &&
-           p.y >= this->pos.snap().y && p.y < this->pos.snap().y + this->height;
-}
 
-GUIObject *GUIObject::getChild(const std::string path) {
-    if (path.length() > 0 && this->children.size() > (int) path.at(0) - 97) { //48 is the value of '0' in ASCII //
-        return children[(int) path.at(0) - 97]->getChild(path.substr(1, path.length() - 1));
-    } else {
+GUIObject *GUIObject::getChild(const eGUI identifier) {
+    if(this->identifier == identifier){
         return this;
     }
+    for (auto element: children) {
+        if(element->identifier == identifier){
+            return element;
+        }else if(element->getChild(identifier)) {
+            return element->getChild(identifier);
+        }
+    }
+    return nullptr;
 }
 
 std::vector<GUIObject *> GUIObject::traverse() {

@@ -31,7 +31,7 @@
 
 Map map;
 std::vector<std::unique_ptr<GameObject> > allGameObjects;
-GUIObject *root = new GUIObject();
+GUIObject *root = new GUIObject(defaultValue);
 SDL_Renderer *renderer;
 SDL_Texture *destTextureMap;
 SDL_Texture *destTextureGUI;

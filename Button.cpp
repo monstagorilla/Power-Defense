@@ -5,8 +5,8 @@
 #include "TextOutput.h"
 #include "config.h"
 
-Button::Button(const std::string text, const GridPoint pos, const int w, const int h, const SDL_Color color,
-               const SDL_Color colorPressed, void (*onCLick)(), const bool renderInMap) : GUIObject::GUIObject(renderInMap) {
+Button::Button(const eGUI identifier,const std::string text, const GridPoint pos, const int w, const int h, const SDL_Color color,
+               const SDL_Color colorPressed, void (*onCLick)(), const bool renderInMap) : GUIObject::GUIObject(identifier, renderInMap) {
     this->pos = GridPoint(pos.x + MAP_WIDTH, pos.y).center();
     width = w;
     height = h;

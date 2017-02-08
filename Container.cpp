@@ -3,7 +3,7 @@
 #include "config.h"
 #include "colors.h"
 
-Container::Container() : GUIObject::GUIObject() {
+Container::Container(const eGUI identifier) : GUIObject::GUIObject(identifier) {
 }
 
 Container::~Container() {

@@ -4,7 +4,7 @@
 
 class Container : public GUIObject{
 public:
-    Container();
+    Container(const eGUI identifier);
     virtual ~Container();
 
     virtual void update();

@@ -10,8 +10,8 @@ class GridPoint;
 
 class Symbol: public GUIObject{
 public:
-    Symbol(const bool isTransparent,const bool renderInMap = false);
-    Symbol(const std::vector<std::string> paths, const GridPoint pos, void (*onCLick)());
+    Symbol(const eGUI identifier, const bool isTransparent,const bool renderInMap = false);
+    Symbol(const eGUI identifier, const std::vector<std::string> paths, const GridPoint pos, void (*onCLick)());
     virtual ~Symbol();
 
     virtual void update();

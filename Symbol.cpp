@@ -12,11 +12,11 @@
 #include "SplashTower.h"
 
 
-Symbol::Symbol(const bool isTranparent, const bool renderInMap) : GUIObject::GUIObject(renderInMap) {
+Symbol::Symbol(const eGUI identifier, const bool isTranparent, const bool renderInMap) : GUIObject::GUIObject(identifier, renderInMap) {
     this->isTransparent = isTranparent;
 }
 
-Symbol::Symbol(std::vector<std::string> paths, const GridPoint pos, void (*onCLick)()) : GUIObject::GUIObject() {
+Symbol::Symbol(const eGUI identifier, std::vector<std::string> paths, const GridPoint pos, void (*onCLick)()) : GUIObject::GUIObject(identifier) {
     this->onClick = onCLick;
     isActivated = false;
     this->pos = GridPoint(pos.x + MAP_WIDTH, pos.y).center();
