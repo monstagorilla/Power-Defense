@@ -17,8 +17,8 @@ public:
     void moveTowards(const Point other, float length);
     GridPoint snap() const;
     DisplayPoint displayPoint() const;
-    Point operator+(const Point other);
-    Point operator-(const Point other);
+    Point operator+(const Point other) const;
+    Point operator-(const Point other) const;
     Point operator*(const float scalar) const;
 };
 
