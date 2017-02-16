@@ -19,6 +19,7 @@ public:
     DisplayPoint displayPoint() const;
     Point operator+(const Point other);
     Point operator-(const Point other);
+    Point operator*(const float scalar) const;
 };
 
 class DisplayPoint{

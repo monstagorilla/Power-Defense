@@ -28,6 +28,7 @@
 #include "Wave.h"
 #include "WaveItem.h"
 #include "EnemyType.h"
+#include "Lightning.h"
 
 Map map;
 std::vector<std::unique_ptr<GameObject> > allGameObjects;
@@ -173,7 +174,7 @@ int main(int argc, char *argv[]) {
     }
     GUI::initGUI();
     map = Map("/assets/map2.tmx");
-
+    allGameObjects.push_back(std::make_unique<Lightning>(Point{100.0, 50.0}, Point{200.0, 50.0},5.0));
     gameLoop();
     SDL_DestroyWindow(window);
     SDL_Quit();
