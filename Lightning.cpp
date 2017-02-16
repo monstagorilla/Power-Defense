@@ -36,7 +36,6 @@ void Lightning::draw() {
     auto particle = Cache::getTexture("/assets/LightningParticle.png");
     SDL_SetTextureBlendMode(particle, SDL_BLENDMODE_ADD);
     SDL_SetRenderTarget(renderer, destTextureMap);
-    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
     for(auto point : points){
         draw_particle(point, particle);
     }
