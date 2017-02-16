@@ -21,7 +21,7 @@ TeslaCoil::~TeslaCoil() {
 }
 
 void TeslaCoil::shoot(TeslaGround* target) {
-    allGameObjects.push_back(std::make_unique<Lightning>(pos, target->pos, 1));
+    allGameObjects.push_back(std::make_unique<Lightning>(pos, target->pos, 0.2));
     Mix_PlayChannel(-1, Cache::getSound("/audio/bao.wav"),0);
 }
 

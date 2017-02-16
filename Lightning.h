@@ -8,7 +8,7 @@ class Point;
 
 class Lightning : public GameObject {
 public:
-    Lightning(const Point start, const Point end, const int duration);
+    Lightning(const Point start, const Point end, const float duration);
     virtual void draw();
     virtual void update();
     virtual ~Lightning();

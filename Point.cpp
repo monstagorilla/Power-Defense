@@ -36,6 +36,10 @@ Point::Point(const float x, const float y) {
     this->y = y;
 }
 
+float Point::abs() const {
+    return sqrt(x*x + y*y);
+}
+
 Point Point::operator+(const Point other) const{
     return {x + other.x, y + other.y};
 }
