@@ -7,10 +7,10 @@ public:
     TeslaGround(const GridPoint pos);
     virtual ~TeslaGround();
 
-    /*
+
     virtual void shoot();
     virtual void update();
-    */
+
     virtual TowerStats getStats();
     virtual TowerStats getStatsPrev();
     virtual int getMaxUpgrade();

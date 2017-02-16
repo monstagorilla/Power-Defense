@@ -174,10 +174,6 @@ int main(int argc, char *argv[]) {
     srand48(1337);
     GUI::initGUI();
     map = Map("/assets/map2.tmx");
-    allGameObjects.push_back(std::make_unique<TeslaGround>(GridPoint(10,2)));
-    allGameObjects.push_back(std::make_unique<TeslaGround>(GridPoint(5,4)));
-    allGameObjects.push_back(std::make_unique<TeslaGround>(GridPoint(2,2)));
-    allGameObjects.push_back(std::make_unique<TeslaCoil>(GridPoint(3,3)));
     gameLoop();
     SDL_DestroyWindow(window);
     SDL_Quit();

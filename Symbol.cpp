@@ -10,6 +10,8 @@
 #include "NailGun.h"
 #include "Cache.h"
 #include "SplashTower.h"
+#include "TeslaCoil.h"
+#include "TeslaGround.h"
 
 
 Symbol::Symbol(const eGUI identifier, const bool isTranparent, const bool renderInMap) : GUIObject::GUIObject(identifier, renderInMap) {
@@ -66,6 +68,12 @@ void Symbol::draw() {
                     break;
                 case splashTower:
                     range = (int) SplashTower::stat[0].range;
+                    break;
+                case teslaCoil:
+                    range = (int) TeslaCoil::stat[0].range;
+                    break;
+                case teslaGround:
+                    range = (int) TeslaGround::stat[0].range;
                     break;
             }
             Graphics::drawTransparentCircle(pos.displayPoint(), range);

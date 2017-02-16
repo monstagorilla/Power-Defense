@@ -2,7 +2,7 @@
 
 //reloadTime, range, price, damage path
 const std::vector<TowerStats> TeslaGround::stat =
-        {{20, 100, 100, 10, {"/assets/TowerBase.png", "/assets/TowerTurret.png"}}};
+        {{20, 0, 100, 10, {"/assets/TowerBase.png", "/assets/TowerTurret.png"}}};
 
 
 TeslaGround::TeslaGround(const GridPoint pos): Tower(pos, stat[0].paths) {
@@ -12,6 +12,8 @@ TeslaGround::TeslaGround(const GridPoint pos): Tower(pos, stat[0].paths) {
 TeslaGround::~TeslaGround() {
 
 }
+
+
 
 TowerStats TeslaGround::getStats() {
     return stat[currentUpgrade];
@@ -24,4 +26,12 @@ TowerStats TeslaGround::getStatsPrev() {
 
 int TeslaGround::getMaxUpgrade() {
     return (int) stat.size() - 1;
+}
+
+void TeslaGround::update() {
+
+}
+
+void TeslaGround::shoot() {
+
 }

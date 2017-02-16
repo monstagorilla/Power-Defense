@@ -16,6 +16,8 @@
 #include "Cache.h"
 #include "SplashTower.h"
 #include "WaveManager.h"
+#include "TeslaCoil.h"
+#include "TeslaGround.h"
 
 Tower *GUIFunctions::currentTower = nullptr;
 GridPoint GUIFunctions::currentPos = GridPoint();
@@ -33,7 +35,7 @@ void GUIFunctions::upgradeTower() {
         for (auto path: currentTower->getStats().paths) {
             currentTower->sprites.push_back(Sprite(currentTower->pos, TILE_WIDTH, TILE_HEIGHT, path, true));
         }
-        Mix_PlayChannel(-1, Cache::getSound("/audio/upgrade.wav"),0);
+        Mix_PlayChannel(-1, Cache::getSound("/audio/upgrade.wav"), 0);
     }
     updateContainerTowerstats();
 }
@@ -80,7 +82,7 @@ void GUIFunctions::onClickTower() {
     root->getChild(menus_buy_container)->isActivated = true;
 
     for (int i = 0; i < allGameObjects.size(); i++) {
-        if (allGameObjects[i]->ID == 2 && allGameObjects[i]->pos.snap() == currentPos) {
+        if ((allGameObjects[i]->ID == 2 || allGameObjects[i]->ID == 5 )&& allGameObjects[i]->pos.snap() == currentPos) {
             currentTower = (Tower *) allGameObjects[i].get();
             break;
         }
@@ -99,6 +101,12 @@ void GUIFunctions::updateContainerTowerstats() {
             break;
         case splashTower:
             type = "SPLASH TOWER";
+            break;
+        case teslaCoil:
+            type = "TESLA COIL";
+            break;
+        case teslaGround:
+            type = "TESLA GROUND";
             break;
     }
     root->getChild(lblBuyTitleMain)->text = type;
@@ -125,6 +133,7 @@ void GUIFunctions::onClickGround() {
     for (auto element: root->getChild(menus_buy)->children) {
         element->isActivated = true;
     }
+    root->getChild(lblBuyTitleMain)->text = "";
     root->getChild(buttonBuyOK)->isActivated = false;
     currentPos = mousePos.snap();
     currentTower = nullptr;
@@ -144,7 +153,7 @@ void GUIFunctions::startGame() {
 
 void GUIFunctions::endGame() {
     gameIsRunning = false;
-    Mix_PlayChannel(-1, Cache::getSound("/audio/nein.wav"),0);
+    Mix_PlayChannel(-1, Cache::getSound("/audio/nein.wav"), 0);
     Mix_PauseMusic();
 }
 
@@ -177,6 +186,16 @@ void GUIFunctions::onClickSymbol_NailGun() {
 
 void GUIFunctions::onClickSymbol_SplashTower() {
     currentTowerType = splashTower;
+    onClickTowerSymbol();
+}
+
+void GUIFunctions::onClickSymbol_TeslaCoil() {
+    currentTowerType = teslaCoil;
+    onClickTowerSymbol();
+}
+
+void GUIFunctions::onClickSymbol_TeslaGround() {
+    currentTowerType = teslaGround;
     onClickTowerSymbol();
 }
 
@@ -233,18 +252,39 @@ void GUIFunctions::onClickTowerSymbol() {
             break;
         case splashTower:
             type = "SPLASH TOWER";
-            if (SplashTower::stat.size() >= 2) {
-                damage = SplashTower::stat[0].damage;
-                damagePrev = SplashTower::stat[1].damage;
-                reloadTime = SplashTower::stat[0].reloadTime;
-                reloadTimePrev = SplashTower::stat[1].reloadTime;
-                range = (int) SplashTower::stat[0].range;
-                rangePrev = (int) SplashTower::stat[1].range;
+                damagePrev = damage = SplashTower::stat[0].damage;
+                reloadTimePrev = reloadTime = SplashTower::stat[0].reloadTime;
+                rangePrev = range = (int) SplashTower::stat[0].range;
                 cost = SplashTower::stat[0].price;
+
+            for (auto element: SplashTower::stat[0].paths) {
+                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element, true));
+            }
+            break;
+        case teslaCoil:
+            type = "TESLA COIL";
+            if (TeslaCoil::stat.size() >= 2) {
+                damage = TeslaCoil::stat[0].damage;
+                damagePrev = TeslaCoil::stat[1].damage;
+                reloadTime = TeslaCoil::stat[0].reloadTime;
+                reloadTimePrev = TeslaCoil::stat[1].reloadTime;
+                range = (int) TeslaCoil::stat[0].range;
+                rangePrev = (int) TeslaCoil::stat[1].range;
+                cost = TeslaCoil::stat[0].price;
             } else {
                 std::cout << "too small stat vector to display stats!" << std::endl;
             }
-            for (auto element: SplashTower::stat[0].paths) {
+            for (auto element: TeslaCoil::stat[0].paths) {
+                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element, true));
+            }
+            break;
+        case teslaGround:
+            type = "TESLA GROUND";
+            damagePrev = damage = TeslaGround::stat[0].damage;
+            reloadTimePrev = reloadTime = TeslaGround::stat[0].reloadTime;
+            rangePrev = range = (int) TeslaGround::stat[0].range;
+            cost = TeslaGround::stat[0].price;
+            for (auto element: TeslaGround::stat[0].paths) {
                 towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element, true));
             }
             break;
@@ -266,7 +306,7 @@ void GUIFunctions::onClickTowerSymbol() {
 
 void GUIFunctions::onClickBuyMenu_Apply() {
     for (int i = 0; i < allGameObjects.size(); i++) {
-        if (allGameObjects[i].get()->ID == 2 && allGameObjects[i].get()->pos.snap() == currentPos) {
+        if ((allGameObjects[i].get()->ID == 2 || allGameObjects[i]->ID == 5 ) && allGameObjects[i].get()->pos.snap() == currentPos) {
             return;
         }
     }
@@ -280,6 +320,12 @@ void GUIFunctions::onClickBuyMenu_Apply() {
             break;
         case splashTower:
             price = SplashTower::stat[0].price;
+            break;
+        case teslaCoil:
+            price = TeslaCoil::stat[0].price;
+            break;
+        case teslaGround:
+            price = TeslaGround::stat[0].price;
             break;
         default:
             return;
@@ -296,11 +342,17 @@ void GUIFunctions::onClickBuyMenu_Apply() {
             case splashTower:
                 allGameObjects.push_back(std::make_unique<SplashTower>(currentPos));
                 break;
+            case teslaCoil:
+                allGameObjects.push_back(std::make_unique<TeslaCoil>(currentPos));
+                break;
+            case teslaGround:
+                allGameObjects.push_back(std::make_unique<TeslaGround>(currentPos));
+                break;
         }
         gamestats.money -= price;
         root->getChild(symbolTemp)->isActivated = false;
         for (int i = 0; i < allGameObjects.size(); i++) {
-            if (allGameObjects[i]->ID == 2 && allGameObjects[i]->pos.snap() == currentPos) {
+            if ((allGameObjects[i]->ID == 2|| allGameObjects[i]->ID == 5 ) && allGameObjects[i]->pos.snap() == currentPos) {
                 currentTower = (Tower *) allGameObjects[i].get();
                 break;
             }
@@ -319,7 +371,7 @@ void GUIFunctions::onClickBuyMenu_Apply() {
             element->isActivated = true;
         }
         root->getChild(menus_buy_container)->isActivated = true;
-        Mix_PlayChannel(-1, Cache::getSound("/audio/upgrade.wav"),0);
+        Mix_PlayChannel(-1, Cache::getSound("/audio/upgrade.wav"), 0);
     }
 }
 
@@ -337,7 +389,7 @@ void GUIFunctions::onClickMusicMute() {
     if (Cache::isMusicMuted) {
         root->getChild(buttonMusic)->text = "Music Off";
         Mix_VolumeMusic(64);
-    }else{
+    } else {
         root->getChild(buttonMusic)->text = "Music On";
         Mix_VolumeMusic(0);
     }
@@ -347,7 +399,7 @@ void GUIFunctions::onClickMusicMute() {
 void GUIFunctions::onCLickSoundsMute() {
     if (Cache::isSoundMuted) {
         root->getChild(buttonFX)->text = "Fx Off";
-    }else{
+    } else {
         root->getChild(buttonFX)->text = "Fx On";
     }
     Cache::isSoundMuted = !Cache::isSoundMuted;
