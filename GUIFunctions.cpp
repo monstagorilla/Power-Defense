@@ -16,6 +16,8 @@
 #include "Cache.h"
 #include "SplashTower.h"
 #include "WaveManager.h"
+#include "TeslaCoil.h"
+#include "TeslaGround.h"
 
 Tower *GUIFunctions::currentTower = nullptr;
 GridPoint GUIFunctions::currentPos = GridPoint();
@@ -100,6 +102,12 @@ void GUIFunctions::updateContainerTowerstats() {
         case splashTower:
             type = "SPLASH TOWER";
             break;
+        case teslaCoil:
+            type = "TESLA COIL";
+            break;
+        case teslaGround:
+            type = "TESLA GROUND";
+            break;
     }
     root->getChild(lblBuyTitleMain)->text = type;
     if (currentTower != nullptr) {
@@ -180,6 +188,17 @@ void GUIFunctions::onClickSymbol_SplashTower() {
     onClickTowerSymbol();
 }
 
+void GUIFunctions::onClickSymbol_TeslaCoil() {
+    currentTowerType = teslaCoil;
+    onClickTowerSymbol();
+}
+
+void GUIFunctions::onClickSymbol_TeslaGround() {
+    currentTowerType = teslaGround;
+    onClickTowerSymbol();
+
+}
+
 void GUIFunctions::onClickTowerSymbol() {
     for (auto object: root->getChild(menus_buy_container)->children) {
         object->isActivated = true;
@@ -248,6 +267,40 @@ void GUIFunctions::onClickTowerSymbol() {
                 towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element, true));
             }
             break;
+        case teslaCoil:
+            type = "TESLA COIL";
+            if (TeslaCoil::stat.size() >= 2) {
+                damage = TeslaCoil::stat[0].damage;
+                damagePrev = TeslaCoil::stat[1].damage;
+                reloadTime = TeslaCoil::stat[0].reloadTime;
+                reloadTimePrev = TeslaCoil::stat[1].reloadTime;
+                range = (int) TeslaCoil::stat[0].range;
+                rangePrev = (int) TeslaCoil::stat[1].range;
+                cost = TeslaCoil::stat[0].price;
+            } else {
+                std::cout << "too small stat vector to display stats!" << std::endl;
+            }
+            for (auto element: TeslaCoil::stat[0].paths) {
+                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element, true));
+            }
+            break;
+        case teslaGround:
+            type = "TESLA GROUND";
+            if (TeslaGround::stat.size() >= 2) {
+                damage = TeslaGround::stat[0].damage;
+                damagePrev = TeslaGround::stat[1].damage;
+                reloadTime = TeslaGround::stat[0].reloadTime;
+                reloadTimePrev = TeslaGround::stat[1].reloadTime;
+                range = (int) TeslaGround::stat[0].range;
+                rangePrev = (int) TeslaGround::stat[1].range;
+                cost = TeslaGround::stat[0].price;
+            } else {
+                std::cout << "too small stat vector to display stats!" << std::endl;
+            }
+            for (auto element: TeslaGround::stat[0].paths) {
+                towerPreview->sprites.push_back(Sprite(currentPos.center(), TILE_WIDTH, TILE_HEIGHT, element, true));
+            }
+            break;
     }
     towerPreview->pos.x = currentPos.center().x;
     towerPreview->pos.y = currentPos.center().y;
@@ -281,6 +334,12 @@ void GUIFunctions::onClickBuyMenu_Apply() {
         case splashTower:
             price = SplashTower::stat[0].price;
             break;
+        case teslaCoil:
+            price = TeslaCoil::stat[0].price;
+            break;
+        case teslaGround:
+            price = TeslaGround::stat[0].price;
+            break;
         default:
             return;
     }
@@ -295,6 +354,12 @@ void GUIFunctions::onClickBuyMenu_Apply() {
                 break;
             case splashTower:
                 allGameObjects.push_back(std::make_unique<SplashTower>(currentPos));
+                break;
+            case teslaCoil:
+                allGameObjects.push_back(std::make_unique<TeslaCoil>(currentPos));
+                break;
+            case teslaGround:
+                allGameObjects.push_back(std::make_unique<TeslaGround>(currentPos));
                 break;
         }
         gamestats.money -= price;

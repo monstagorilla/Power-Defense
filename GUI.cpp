@@ -13,6 +13,8 @@
 #include "config.h"
 #include "Container.h"
 #include "gamestats.h"
+#include "TeslaGround.h"
+#include "TeslaCoil.h"
 
 
 void GUI::initGUI() {
@@ -29,6 +31,9 @@ void GUI::initGUI() {
     addGUIObject(menus_buy, new Symbol(symbolBasicTower, std::vector<std::string>{"/assets/TowerBase.png", "/assets/TowerTurret.png"}, {1, 1}, GUIFunctions::onClickSymbol_BasicTower));
     addGUIObject(menus_buy, new Symbol(symbolNailGun, std::vector<std::string>{"/assets/TowerBase.png", "/assets/NailgunTurret.png"}, {2, 1}, GUIFunctions::onClickSymbol_NailGun));
     addGUIObject(menus_buy, new Symbol(symbolSplashTower, std::vector<std::string>{"/assets/TowerBase.png", "/assets/GrenadeTurret.png"}, {3, 1}, GUIFunctions::onClickSymbol_SplashTower));
+    addGUIObject(menus_buy, new Symbol(symbolTeslaCoil, TeslaCoil::stat[0].paths, {4, 1}, GUIFunctions::onClickSymbol_TeslaCoil));
+    addGUIObject(menus_buy, new Symbol(symbolTeslaGround, TeslaGround::stat[0].paths, {5, 1}, GUIFunctions::onClickSymbol_TeslaGround));
+
     addGUIObject(menus_buy, new Container(menus_buy_container));
     addGUIObject(menus_buy_container, new Label(lblBuyTitleMain, "", {1, 3}, 4, 1, COLOR_WHITE, nullptr)); //title
     addGUIObject(menus_buy_container, new Label(lblBuyTitleDamage, "Damage: ", {1, 4}, 5, 1, COLOR_WHITE, nullptr));

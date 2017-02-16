@@ -7,9 +7,11 @@ class Tower;
 #include "Point.h"
 
 enum TowerType{
-    basicTower = 0,
-    nailGun = 1,
-    splashTower = 2
+    basicTower,
+    nailGun,
+    splashTower,
+    teslaCoil,
+    teslaGround
 };
 
 class GUIFunctions{
@@ -34,6 +36,8 @@ public:
     static void onClickSymbol_BasicTower();
     static void onClickSymbol_NailGun();
     static void onClickSymbol_SplashTower();
+    static void onClickSymbol_TeslaCoil();
+    static void onClickSymbol_TeslaGround();
     static void onClickBuyMenu_Apply();
     static void onClickBuyMenu_Cancel();
     static void onClickMusicMute();
