@@ -15,6 +15,8 @@ enum eGUI {
     symbolBasicTower,
     symbolNailGun,
     symbolSplashTower,
+    symbolTeslaCoil,
+    symbolTeslaGround,
     lblBuyTitleMain,
     lblBuyTitleDamage,
     lblBuyDamage,

@@ -41,7 +41,7 @@ void BasicTower::update() {
             shortestDist = distance(allGameObjects[i]->pos, this->pos);
         }
     }
-    if (nearest != NULL && shortestDist <= getStats().range) {
+    if (nearest != nullptr && shortestDist <= getStats().range) {
         rotation = atan2(nearest->pos.y - this->pos.y,
                          nearest->pos.x - this->pos.x) * 180.0 /
                    M_PI + 90;

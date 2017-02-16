@@ -1,14 +1,16 @@
 #pragma once
 
+class TeslaGround;
+
 #include "Tower.h"
 
-class NailGun :public Tower{
+class TeslaCoil: public Tower{
 public:
-    NailGun(const GridPoint pos);
-    virtual ~NailGun();
+    TeslaCoil(const GridPoint pos);
+    virtual ~TeslaCoil();
 
     virtual void update();
-    virtual void shoot(Enemy * target, const float angle);
+    virtual void shoot(TeslaGround* target);
     virtual TowerStats getStats();
     virtual TowerStats getStatsPrev();
     virtual int getMaxUpgrade();
