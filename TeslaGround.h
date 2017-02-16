@@ -2,13 +2,15 @@
 
 #include "Tower.h"
 
-class NailGun :public Tower{
+class TeslaGround: public Tower {
 public:
-    NailGun(const GridPoint pos);
-    virtual ~NailGun();
+    TeslaGround(const GridPoint pos);
+    virtual ~TeslaGround();
 
+    /*
+    virtual void shoot();
     virtual void update();
-    virtual void shoot(Enemy * target, const float angle);
+    */
     virtual TowerStats getStats();
     virtual TowerStats getStatsPrev();
     virtual int getMaxUpgrade();

@@ -7,7 +7,7 @@
 #include "config.h"
 #include "colors.h"
 
-Lightning::Lightning(const Point start, const Point end, int duration):
+Lightning::Lightning(const Point start, const Point end,const int duration):
     end(end), duration(duration * FRAMES_PER_SECOND), GameObject(start) {
     srand48(0);
     for(float s = 0.0; s < 1.0; s += 0.0001){

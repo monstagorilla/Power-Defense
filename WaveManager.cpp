@@ -37,7 +37,7 @@ void WaveManager::update() {
 }
 
 void WaveManager::addWave() {
-    Mix_PlayChannel(-1, Cache::getSound("/audio/squad.wav"),0);
+    Mix_PlayChannel(-1, Cache::getSound("/audio/squad.wav"), 0);
     switch (numWave) {
         case 0:
             waves.push_back(new Wave(gameLoopCounter, {{basicEnemy, 1, 0},

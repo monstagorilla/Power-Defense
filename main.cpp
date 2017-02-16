@@ -23,12 +23,11 @@
 #include "GUIObject.h"
 #include "gamestats.h"
 #include "config.h"
-#include "FlyingEnemy.h"
 #include "WaveManager.h"
-#include "Wave.h"
-#include "WaveItem.h"
 #include "EnemyType.h"
 #include "Lightning.h"
+#include "TeslaGround.h"
+#include "TeslaCoil.h"
 
 Map map;
 std::vector<std::unique_ptr<GameObject> > allGameObjects;
@@ -175,6 +174,10 @@ int main(int argc, char *argv[]) {
     GUI::initGUI();
     map = Map("/assets/map2.tmx");
     allGameObjects.push_back(std::make_unique<Lightning>(Point{100.0, 50.0}, Point{200.0, 50.0},5.0));
+    allGameObjects.push_back(std::make_unique<TeslaGround>(GridPoint(10,2)));
+    allGameObjects.push_back(std::make_unique<TeslaGround>(GridPoint(5,4)));
+    allGameObjects.push_back(std::make_unique<TeslaGround>(GridPoint(2,2)));
+    allGameObjects.push_back(std::make_unique<TeslaCoil>(GridPoint(3,3)));
     gameLoop();
     SDL_DestroyWindow(window);
     SDL_Quit();
