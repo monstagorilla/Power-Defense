@@ -92,7 +92,7 @@ bool Map::isGround(GridPoint p) {
 // Returns a pointer to the tower at p or nullptr if no such tower exists
 Tower *Map::getTowerAt(GridPoint p) {
     for (auto &o : allGameObjects) {
-        if (o->ID == 2 && o->pos.snap() == p) {
+        if ((o->ID == 2 || o->ID == 5 )&& o->pos.snap() == p) {
             return (Tower *) (o.get());
         }
     }
