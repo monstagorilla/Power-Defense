@@ -90,7 +90,7 @@ Mix_Chunk *Cache::getSound(const std::string path) {
     } catch (std::out_of_range) {
         sound = Mix_LoadWAV((std::string(CMAKE_SOURCE_DIR) + path).c_str());
         if (sound == nullptr) {
-            std::cout << "Failed to load audio " << SDL_GetError();
+            std::cout << "Failed to load sound " << SDL_GetError();
         } else {
             soundCache[path] = sound;
         }
@@ -107,7 +107,7 @@ Mix_Music *Cache::getMusic(const std::string path) {
         music = Mix_LoadMUS((std::string(CMAKE_SOURCE_DIR) + path).c_str());
         Mix_VolumeMusic(64);
         if (music == nullptr) {
-            std::cout << "Failed to load audio " << SDL_GetError();
+            std::cout << "Failed to load music " << SDL_GetError();
         } else {
             musicCache[path] = music;
         }

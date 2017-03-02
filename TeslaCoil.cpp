@@ -7,10 +7,10 @@
 
 const std::vector<TowerStats> TeslaCoil::stat =
         //reloadTime, range, price, damage path
-        {{100, 100, 100, 10, {"/assets/TowerBase.png", "/assets/TowerTurret.png"}},
-         {20, 120, 50,  20, {"/assets/TowerBase.png", "/assets/TowerTurret1.png"}},
-         {20, 150, 75,  30, {"/assets/TowerBase.png", "/assets/TowerTurret2.png"}},
-         {10, 200, 100, 40, {"/assets/TowerBase.png", "/assets/TowerTurret3.png"}}};
+        {{100, 100, 100, 10, {"/assets/TowerBase.png", "/assets/Coil.png"}},
+         {20, 120, 50,  20, {"/assets/TowerBase.png", "/assets/Coil.png"}},
+         {20, 150, 75,  30, {"/assets/TowerBase.png", "/assets/Coil.png"}},
+         {10, 200, 100, 40, {"/assets/TowerBase.png", "/assets/Coil.png"}}};
 
 TeslaCoil::TeslaCoil(const GridPoint pos) : Tower::Tower(pos, this->stat[0].paths) {
 

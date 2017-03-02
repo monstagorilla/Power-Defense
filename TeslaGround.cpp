@@ -2,7 +2,7 @@
 
 //reloadTime, range, price, damage path
 const std::vector<TowerStats> TeslaGround::stat =
-        {{20, 0, 100, 10, {"/assets/TowerBase.png", "/assets/TowerTurret.png"}}};
+        {{20, 0, 100, 10, {"/assets/TowerBase.png", "/assets/Ground.png"}}};
 
 
 TeslaGround::TeslaGround(const GridPoint pos): Tower(pos, stat[0].paths) {
